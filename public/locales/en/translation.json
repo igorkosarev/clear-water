@@ -103,8 +103,7 @@
   "systems": {
     "title": "Water Treatment Systems",
     "subtitle": "Browse pre-built systems for common water challenges.",
-    "back": "Back to Systems"
-  },
+    "back": "Back to Systems",
   "build": {
     "title": "Build Your System",
     "subtitle": "Assembly guides and module library.",
@@ -228,7 +227,6 @@
       "description": "Sodium dichloroisocyanurate tablets for point-of-use disinfection."
     }
   },
-  "systems": {
     "basic_boil_ceramic": {
       "name": "Basic Ceramic System",
       "description": "A simple two-stage system using a sediment pre-filter and ceramic candle. Ideal for well and surface water."

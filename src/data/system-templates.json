@@ -1,0 +1,47 @@
+[
+  {
+    "id": "basic_boil_ceramic",
+    "nameKey": "systems.basic_boil_ceramic.name",
+    "descriptionKey": "systems.basic_boil_ceramic.description",
+    "modules": ["sediment_5um", "ceramic_candle"],
+    "targetContaminants": ["bacteria", "protozoa", "turbidity"],
+    "budgetTier": "low",
+    "suitableFor": ["well", "river", "pond", "spring"]
+  },
+  {
+    "id": "biosand_system",
+    "nameKey": "systems.biosand_system.name",
+    "descriptionKey": "systems.biosand_system.description",
+    "modules": ["biosand_diy", "chlorine_tablet"],
+    "targetContaminants": ["bacteria", "viruses", "protozoa", "turbidity"],
+    "budgetTier": "low",
+    "suitableFor": ["river", "pond", "spring", "rain"]
+  },
+  {
+    "id": "tap_upgrade",
+    "nameKey": "systems.tap_upgrade.name",
+    "descriptionKey": "systems.tap_upgrade.description",
+    "modules": ["sediment_5um", "activated_carbon_block"],
+    "targetContaminants": ["chlorine", "turbidity"],
+    "budgetTier": "low",
+    "suitableFor": ["tap"]
+  },
+  {
+    "id": "mid_tier_uv",
+    "nameKey": "systems.mid_tier_uv.name",
+    "descriptionKey": "systems.mid_tier_uv.description",
+    "modules": ["sediment_5um", "activated_carbon_block", "uv_lamp_6w"],
+    "targetContaminants": ["bacteria", "viruses", "protozoa", "chlorine", "turbidity"],
+    "budgetTier": "medium",
+    "suitableFor": ["well", "tap", "spring"]
+  },
+  {
+    "id": "full_ro_system",
+    "nameKey": "systems.full_ro_system.name",
+    "descriptionKey": "systems.full_ro_system.description",
+    "modules": ["sediment_5um", "activated_carbon_block", "ro_membrane_75gpd", "uv_lamp_6w"],
+    "targetContaminants": ["bacteria", "viruses", "protozoa", "heavy_metals", "nitrates", "fluoride", "chlorine", "turbidity"],
+    "budgetTier": "high",
+    "suitableFor": ["well", "tap", "river", "spring"]
+  }
+]

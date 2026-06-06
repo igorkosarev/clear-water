@@ -1,0 +1,23 @@
+[
+  {
+    "id": "filterwater_global",
+    "name": "FilterWater.com",
+    "country": "US",
+    "url": "https://www.filterwater.com",
+    "modules": ["sediment_5um", "activated_carbon_block", "ro_membrane_75gpd", "uv_lamp_6w"]
+  },
+  {
+    "id": "pure_earth",
+    "name": "Pure Earth Filters",
+    "country": "KE",
+    "url": "https://www.pureearthfilters.com",
+    "modules": ["ceramic_candle", "biosand_diy", "slow_sand_diy"]
+  },
+  {
+    "id": "waterstep",
+    "name": "WaterStep",
+    "country": "US",
+    "url": "https://www.waterstep.org",
+    "modules": ["chlorine_tablet", "ceramic_candle"]
+  }
+]

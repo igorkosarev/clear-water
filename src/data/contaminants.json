@@ -1,0 +1,66 @@
+[
+  {
+    "id": "bacteria",
+    "nameKey": "contaminants.bacteria.name",
+    "descriptionKey": "contaminants.bacteria.description",
+    "category": "biological",
+    "icon": "🦠",
+    "color": "#ef4444"
+  },
+  {
+    "id": "viruses",
+    "nameKey": "contaminants.viruses.name",
+    "descriptionKey": "contaminants.viruses.description",
+    "category": "biological",
+    "icon": "🔬",
+    "color": "#f97316"
+  },
+  {
+    "id": "protozoa",
+    "nameKey": "contaminants.protozoa.name",
+    "descriptionKey": "contaminants.protozoa.description",
+    "category": "biological",
+    "icon": "🪱",
+    "color": "#84cc16"
+  },
+  {
+    "id": "turbidity",
+    "nameKey": "contaminants.turbidity.name",
+    "descriptionKey": "contaminants.turbidity.description",
+    "category": "physical",
+    "icon": "💧",
+    "color": "#a16207"
+  },
+  {
+    "id": "heavy_metals",
+    "nameKey": "contaminants.heavy_metals.name",
+    "descriptionKey": "contaminants.heavy_metals.description",
+    "category": "chemical",
+    "icon": "⚗️",
+    "color": "#6b7280"
+  },
+  {
+    "id": "chlorine",
+    "nameKey": "contaminants.chlorine.name",
+    "descriptionKey": "contaminants.chlorine.description",
+    "category": "chemical",
+    "icon": "🧪",
+    "color": "#0ea5e9"
+  },
+  {
+    "id": "nitrates",
+    "nameKey": "contaminants.nitrates.name",
+    "descriptionKey": "contaminants.nitrates.description",
+    "category": "chemical",
+    "icon": "🌿",
+    "color": "#22c55e"
+  },
+  {
+    "id": "fluoride",
+    "nameKey": "contaminants.fluoride.name",
+    "descriptionKey": "contaminants.fluoride.description",
+    "category": "chemical",
+    "icon": "🦷",
+    "color": "#8b5cf6"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "sediment_before_carbon",
+    "modules": ["sediment_5um", "activated_carbon_block"],
+    "compatible": true,
+    "reason": "Sediment pre-filter protects carbon block from clogging"
+  },
+  {
+    "id": "sediment_before_uv",
+    "modules": ["sediment_5um", "uv_lamp_6w"],
+    "compatible": true,
+    "reason": "Clear water required for effective UV penetration"
+  },
+  {
+    "id": "carbon_before_ro",
+    "modules": ["activated_carbon_block", "ro_membrane_75gpd"],
+    "compatible": true,
+    "reason": "Carbon removes chlorine that would damage RO membrane"
+  },
+  {
+    "id": "ro_before_uv",
+    "modules": ["ro_membrane_75gpd", "uv_lamp_6w"],
+    "compatible": true,
+    "reason": "UV provides final disinfection after RO"
+  }
+]

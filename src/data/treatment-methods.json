@@ -1,0 +1,58 @@
+[
+  {
+    "id": "boiling",
+    "nameKey": "methods.boiling.name",
+    "descriptionKey": "methods.boiling.description",
+    "removes": ["bacteria", "viruses", "protozoa"],
+    "complexity": "beginner",
+    "costTier": "low"
+  },
+  {
+    "id": "biosand",
+    "nameKey": "methods.biosand.name",
+    "descriptionKey": "methods.biosand.description",
+    "removes": ["bacteria", "protozoa", "turbidity"],
+    "complexity": "intermediate",
+    "costTier": "low"
+  },
+  {
+    "id": "ceramic_filtration",
+    "nameKey": "methods.ceramic_filtration.name",
+    "descriptionKey": "methods.ceramic_filtration.description",
+    "removes": ["bacteria", "protozoa", "turbidity"],
+    "complexity": "beginner",
+    "costTier": "low"
+  },
+  {
+    "id": "activated_carbon",
+    "nameKey": "methods.activated_carbon.name",
+    "descriptionKey": "methods.activated_carbon.description",
+    "removes": ["chlorine", "heavy_metals"],
+    "complexity": "beginner",
+    "costTier": "medium"
+  },
+  {
+    "id": "uv_disinfection",
+    "nameKey": "methods.uv_disinfection.name",
+    "descriptionKey": "methods.uv_disinfection.description",
+    "removes": ["bacteria", "viruses", "protozoa"],
+    "complexity": "intermediate",
+    "costTier": "medium"
+  },
+  {
+    "id": "reverse_osmosis",
+    "nameKey": "methods.reverse_osmosis.name",
+    "descriptionKey": "methods.reverse_osmosis.description",
+    "removes": ["bacteria", "viruses", "protozoa", "heavy_metals", "nitrates", "fluoride"],
+    "complexity": "advanced",
+    "costTier": "high"
+  },
+  {
+    "id": "chlorination",
+    "nameKey": "methods.chlorination.name",
+    "descriptionKey": "methods.chlorination.description",
+    "removes": ["bacteria", "viruses"],
+    "complexity": "beginner",
+    "costTier": "low"
+  }
+]

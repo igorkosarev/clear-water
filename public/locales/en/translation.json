@@ -1,0 +1,253 @@
+{
+  "nav": {
+    "configurator": "Configurator",
+    "learn": "Learn",
+    "systems": "Systems",
+    "build": "Build",
+    "suppliers": "Suppliers"
+  },
+  "home": {
+    "hero": {
+      "title": "Clean Water for Everyone",
+      "subtitle": "From contaminated water to a working filtration system — we guide you every step of the way.",
+      "cta": "Get Started"
+    },
+    "features": {
+      "configurator": {
+        "title": "Smart Configurator",
+        "description": "Answer 5 questions and get a personalized filtration system recommendation."
+      },
+      "learn": {
+        "title": "Learn",
+        "description": "Understand contaminants and treatment methods with clear, illustrated guides."
+      },
+      "build": {
+        "title": "Build It",
+        "description": "Step-by-step assembly guides using locally available materials."
+      }
+    }
+  },
+  "configurator": {
+    "step": "Step {{current}} of {{total}}",
+    "getResults": "Get My Results",
+    "steps": {
+      "country": {
+        "title": "Where are you located?",
+        "description": "This helps us recommend locally available materials.",
+        "placeholder": "e.g. Kenya, India, Brazil..."
+      },
+      "source": {
+        "title": "What is your water source?"
+      },
+      "problems": {
+        "title": "What problems do you notice?",
+        "description": "Select all that apply. Not sure? Select all."
+      },
+      "use": {
+        "title": "What will the water be used for?"
+      },
+      "budget": {
+        "title": "What is your budget?"
+      }
+    },
+    "sources": {
+      "well": "Well",
+      "river": "River / Stream",
+      "rain": "Rainwater",
+      "tap": "Tap / Pipe",
+      "pond": "Pond / Lake",
+      "spring": "Natural Spring"
+    },
+    "uses": {
+      "drinking": "Drinking",
+      "cooking": "Cooking",
+      "irrigation": "Irrigation",
+      "livestock": "Livestock"
+    },
+    "budget": {
+      "low": {
+        "label": "Low (Under $50)",
+        "description": "DIY solutions using local materials"
+      },
+      "medium": {
+        "label": "Medium ($50–$200)",
+        "description": "Affordable commercial components"
+      },
+      "high": {
+        "label": "Higher ($200+)",
+        "description": "Best available technology"
+      }
+    }
+  },
+  "result": {
+    "title": "Your Recommended System",
+    "subtitle": "Based on your water source and needs, here is the best solution.",
+    "bom": {
+      "title": "Bill of Materials",
+      "component": "Component",
+      "cost": "Cost (USD)",
+      "total": "Total"
+    }
+  },
+  "learn": {
+    "title": "Learn About Water",
+    "subtitle": "Understand what's in your water and how to remove it.",
+    "back": "Back to Learn",
+    "contaminants": {
+      "title": "Contaminants"
+    },
+    "methods": {
+      "title": "Treatment Methods"
+    }
+  },
+  "systems": {
+    "title": "Water Treatment Systems",
+    "subtitle": "Browse pre-built systems for common water challenges.",
+    "back": "Back to Systems"
+  },
+  "build": {
+    "title": "Build Your System",
+    "subtitle": "Assembly guides and module library.",
+    "back": "Back to Build",
+    "moduleLibrary": "Browse Modules",
+    "modules": {
+      "title": "Module Library"
+    },
+    "guide": {
+      "title": "Assembly Guide",
+      "comingSoon": "Guide coming soon"
+    }
+  },
+  "suppliers": {
+    "title": "Suppliers",
+    "subtitle": "Find components and materials near you."
+  },
+  "footer": {
+    "tagline": "Open-source water knowledge for everyone."
+  },
+  "common": {
+    "next": "Next",
+    "back": "Back",
+    "notFound": "Not found."
+  },
+  "contaminants": {
+    "bacteria": {
+      "name": "Bacteria",
+      "description": "Harmful bacteria like E. coli and Salmonella cause severe gastrointestinal illness."
+    },
+    "viruses": {
+      "name": "Viruses",
+      "description": "Waterborne viruses including Hepatitis A and Norovirus spread through contaminated water."
+    },
+    "protozoa": {
+      "name": "Protozoa",
+      "description": "Parasites like Giardia and Cryptosporidium are resistant to chlorine and cause diarrhoea."
+    },
+    "turbidity": {
+      "name": "Turbidity / Sediment",
+      "description": "Suspended particles that make water cloudy and can harbour pathogens."
+    },
+    "heavy_metals": {
+      "name": "Heavy Metals",
+      "description": "Lead, arsenic, and mercury cause serious long-term health effects."
+    },
+    "chlorine": {
+      "name": "Chlorine / Taste & Odour",
+      "description": "Residual chlorine from municipal treatment causes unpleasant taste and odour."
+    },
+    "nitrates": {
+      "name": "Nitrates",
+      "description": "High nitrate levels from agriculture are dangerous especially for infants."
+    },
+    "fluoride": {
+      "name": "Fluoride",
+      "description": "Excess fluoride causes dental and skeletal fluorosis."
+    }
+  },
+  "methods": {
+    "boiling": {
+      "name": "Boiling",
+      "description": "The most accessible disinfection method — kills bacteria, viruses, and protozoa."
+    },
+    "biosand": {
+      "name": "Biosand Filter",
+      "description": "A DIY sand filter with a biological layer that removes pathogens and turbidity."
+    },
+    "ceramic_filtration": {
+      "name": "Ceramic Filtration",
+      "description": "Porous ceramic pots remove bacteria, protozoa, and suspended solids."
+    },
+    "activated_carbon": {
+      "name": "Activated Carbon",
+      "description": "Adsorbs chlorine, pesticides, and heavy metals through a porous carbon block."
+    },
+    "uv_disinfection": {
+      "name": "UV Disinfection",
+      "description": "Ultraviolet light destroys the DNA of bacteria, viruses, and protozoa."
+    },
+    "reverse_osmosis": {
+      "name": "Reverse Osmosis",
+      "description": "A semi-permeable membrane removes virtually all dissolved contaminants."
+    },
+    "chlorination": {
+      "name": "Chlorination",
+      "description": "Adding chlorine tablets or solution disinfects water and provides residual protection."
+    }
+  },
+  "modules": {
+    "sediment_5um": {
+      "name": "Sediment Filter 5µm",
+      "description": "Removes sand, rust, and suspended particles down to 5 microns."
+    },
+    "activated_carbon_block": {
+      "name": "Activated Carbon Block",
+      "description": "Removes chlorine, taste, odour, and some heavy metals."
+    },
+    "ceramic_candle": {
+      "name": "Ceramic Candle Filter",
+      "description": "A porous ceramic element that blocks bacteria and protozoa."
+    },
+    "biosand_diy": {
+      "name": "DIY Biosand Filter",
+      "description": "A locally built sand filter with biological filtration layer."
+    },
+    "uv_lamp_6w": {
+      "name": "UV Lamp 6W",
+      "description": "A 6-watt UV lamp for disinfecting up to 6 litres per minute."
+    },
+    "ro_membrane_75gpd": {
+      "name": "RO Membrane 75 GPD",
+      "description": "Reverse osmosis membrane removing dissolved salts and contaminants."
+    },
+    "slow_sand_diy": {
+      "name": "DIY Slow Sand Filter",
+      "description": "A large-scale gravity filter using fine sand to remove pathogens."
+    },
+    "chlorine_tablet": {
+      "name": "Chlorine Tablets (NaDCC)",
+      "description": "Sodium dichloroisocyanurate tablets for point-of-use disinfection."
+    }
+  },
+  "systems": {
+    "basic_boil_ceramic": {
+      "name": "Basic Ceramic System",
+      "description": "A simple two-stage system using a sediment pre-filter and ceramic candle. Ideal for well and surface water."
+    },
+    "biosand_system": {
+      "name": "Biosand + Chlorination",
+      "description": "DIY biosand filter followed by chlorination for comprehensive protection in rural settings."
+    },
+    "tap_upgrade": {
+      "name": "Tap Water Upgrade",
+      "description": "Removes sediment and chlorine taste from municipal tap water."
+    },
+    "mid_tier_uv": {
+      "name": "UV + Carbon System",
+      "description": "Sediment, carbon, and UV combination for comprehensive multi-threat protection."
+    },
+    "full_ro_system": {
+      "name": "Full RO System",
+      "description": "Complete reverse osmosis system with UV polish — removes virtually everything."
+    }
+  }
+}

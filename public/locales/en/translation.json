@@ -5,7 +5,9 @@
     "methods": "Methods",
     "systems": "Systems",
     "build": "Build",
-    "suppliers": "Suppliers"
+    "suppliers": "Suppliers",
+    "open": "Open menu",
+    "close": "Close menu"
   },
   "home": {
     "hero": {

@@ -206,6 +206,7 @@
     "subtitle": "Find components and materials near you.",
     "showingAll": "Showing all countries — select your country in the header to filter.",
     "filteredBy": "Filtered by {{country}}",
+    "bannerInfo": "Not in the database",
     "noSuppliersForCountry": "No suppliers for {{country}} have been added to the database yet.",
     "showAll": "Show all suppliers"
   },

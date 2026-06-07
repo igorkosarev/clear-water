@@ -52,15 +52,18 @@ export default function Suppliers() {
 
       {/* Empty state banner */}
       {showEmpty && (
-        <div className="flex items-start gap-3 bg-slate-50 border border-slate-200 rounded-xl px-5 py-4 mb-6">
-          <Info size={18} className="text-slate-400 flex-shrink-0 mt-0.5" />
+        <div className="flex items-start gap-3 bg-amber-400/10 border border-amber-400/20 rounded-xl px-5 py-4 mb-6">
+          <Info size={18} className="text-amber-400 flex-shrink-0 mt-0.5" aria-label={t('suppliers.bannerInfo')} />
           <div>
-            <p className="text-sm text-slate-700">
+            <p className="text-sm font-semibold text-amber-300 mb-1">
+              {t('suppliers.bannerInfo')}
+            </p>
+            <p className="text-sm text-slate-300">
               {t('suppliers.noSuppliersForCountry', { country: countryName(country!) })}
             </p>
             <button
               type="button"
-              className="mt-2 text-sm text-blue-600 hover:underline font-medium"
+              className="mt-2 text-sm text-blue-400 hover:text-blue-300 hover:underline font-medium transition-colors"
               onClick={() => setShowAllOverride(true)}
             >
               {t('suppliers.showAll')}

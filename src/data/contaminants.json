@@ -30,7 +30,7 @@
     "detectionKey": "contaminants.protozoa.detection",
     "category": "biological",
     "icon": "🪱",
-    "color": "#f59e0b"
+    "color": "#14b8a6"
   },
   {
     "id": "turbidity",

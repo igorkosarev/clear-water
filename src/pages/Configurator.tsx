@@ -2,14 +2,16 @@ import { useState } from 'react'
 import { Wizard } from '@/components/configurator/Wizard'
 import { ResultPanel } from '@/components/configurator/Result/ResultPanel'
 import { useConfigurator } from '@/hooks/useConfigurator'
+import { useCountry } from '@/context/CountryContext'
 import type { WaterInput } from '@/types'
 
 export default function Configurator() {
   const { recommendation, configure } = useConfigurator()
+  const { country } = useCountry()
   const [done, setDone] = useState(false)
 
-  const handleComplete = (input: WaterInput) => {
-    configure(input)
+  const handleComplete = (input: Omit<WaterInput, 'country'>) => {
+    configure({ ...input, country: country ?? '' })
     setDone(true)
   }
 

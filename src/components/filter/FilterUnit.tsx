@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import {
-  Layers, Zap, Droplets, Sun, Waves, AlignJustify, Flame, FlaskConical, CircleDot,
+  Layers, Zap, Droplets, Sun, Waves, AlignJustify, Flame, FlaskConical, CircleDot, Gauge,
   type LucideIcon,
 } from 'lucide-react'
 import { FILTER_VISUAL_CONFIG } from './FilterTypes'
@@ -18,6 +18,7 @@ const ICONS: Record<FilterType, LucideIcon> = {
   slow_sand: AlignJustify,
   boiling: Flame,
   chlorination: FlaskConical,
+  booster_pump: Gauge,
 }
 
 interface FilterUnitProps {

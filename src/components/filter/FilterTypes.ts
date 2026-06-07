@@ -104,4 +104,14 @@ export const FILTER_VISUAL_CONFIG: Record<FilterType, FilterVisualConfig> = {
     iconName: 'FlaskConical',
     removes: ['bacteria', 'viruses'],
   },
+  booster_pump: {
+    label: 'Booster Pump',
+    textColor: 'text-green-700',
+    bgColor: 'bg-green-50',
+    borderColor: 'border-green-300',
+    accentBg: 'bg-green-500',
+    glowRgb: '21,128,61',
+    iconName: 'Gauge',
+    removes: [],
+  },
 }

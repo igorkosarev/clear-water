@@ -2,8 +2,8 @@ import { createBrowserRouter } from 'react-router-dom'
 import App from './App'
 import Home from './pages/Home'
 import Configurator from './pages/Configurator'
-import Learn from './pages/Learn'
-import ContaminantDetail from './pages/Learn/Contaminant'
+import Contaminants from './pages/Learn/Contaminants'
+import Methods from './pages/Learn/Methods'
 import MethodDetail from './pages/Learn/Method'
 import Systems from './pages/Systems'
 import SystemDetail from './pages/Systems/SystemDetail'
@@ -19,8 +19,8 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: 'configurator', element: <Configurator /> },
-      { path: 'learn', element: <Learn /> },
-      { path: 'learn/contaminants/:id', element: <ContaminantDetail /> },
+      { path: 'learn/contaminants', element: <Contaminants /> },
+      { path: 'learn/methods', element: <Methods /> },
       { path: 'learn/methods/:id', element: <MethodDetail /> },
       { path: 'systems', element: <Systems /> },
       { path: 'systems/:id', element: <SystemDetail /> },

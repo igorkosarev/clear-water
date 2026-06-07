@@ -7,12 +7,11 @@ interface StepProps {
   update: (patch: Partial<WaterInput>) => void
   onNext: () => void
   onBack: () => void
-  onFinish: () => void
 }
 
 const TIERS: BudgetTier[] = ['low', 'medium', 'high']
 
-export function StepBudget({ data, update, onBack, onFinish }: StepProps) {
+export function StepBudget({ data, update, onBack, onNext }: StepProps) {
   const { t } = useTranslation()
 
   return (
@@ -32,7 +31,7 @@ export function StepBudget({ data, update, onBack, onFinish }: StepProps) {
       </div>
       <div className="flex gap-3">
         <Button variant="secondary" onClick={onBack} className="flex-1">{t('common.back')}</Button>
-        <Button onClick={onFinish} disabled={!data.budget} className="flex-1">{t('configurator.getResults')}</Button>
+        <Button onClick={onNext} disabled={!data.budget} className="flex-1">{t('common.next')}</Button>
       </div>
     </div>
   )

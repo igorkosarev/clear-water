@@ -1,7 +1,8 @@
 {
   "nav": {
     "configurator": "Configurator",
-    "learn": "Learn",
+    "contaminants": "Contaminants",
+    "methods": "Methods",
     "systems": "Systems",
     "build": "Build",
     "suppliers": "Suppliers"
@@ -10,32 +11,50 @@
     "hero": {
       "title": "Clean Water for Everyone",
       "subtitle": "From contaminated water to a working filtration system — we guide you every step of the way.",
-      "cta": "Get Started"
+      "cta": "Find My Solution"
     },
-    "features": {
+    "sections": {
       "configurator": {
         "title": "Smart Configurator",
-        "description": "Answer 5 questions and get a personalized filtration system recommendation."
+        "description": "Answer 5 questions about your water source, problems, budget, and pressure — get a personalised filtration system with a full bill of materials.",
+        "cta": "Start Configurator"
       },
-      "learn": {
-        "title": "Learn",
-        "description": "Understand contaminants and treatment methods with clear, illustrated guides."
+      "contaminants": {
+        "title": "Contaminants",
+        "description": "Learn what may be in your water — bacteria, heavy metals, nitrates, and more — and understand the health risks each one carries.",
+        "cta": "Explore Contaminants"
+      },
+      "methods": {
+        "title": "Treatment Methods",
+        "description": "From boiling to reverse osmosis — understand how each filtration and disinfection method works and what it removes.",
+        "cta": "Browse Methods"
+      },
+      "systems": {
+        "title": "Ready-Made Systems",
+        "description": "Explore pre-built filtration architectures for the most common water problems, with cost estimates and assembly guides.",
+        "cta": "View Systems"
       },
       "build": {
-        "title": "Build It",
-        "description": "Step-by-step assembly guides using locally available materials."
+        "title": "Build It Yourself",
+        "description": "Step-by-step assembly guides using locally available materials. No special tools required — build a working system for under $50.",
+        "cta": "Start Building"
+      },
+      "suppliers": {
+        "title": "Find Suppliers",
+        "description": "Locate components and materials near you. Select your country in the header to see suppliers in your region.",
+        "cta": "Find Suppliers"
       }
     }
+  },
+  "country": {
+    "select": "Country",
+    "search": "Search country...",
+    "clear": "Clear selection"
   },
   "configurator": {
     "step": "Step {{current}} of {{total}}",
     "getResults": "Get My Results",
     "steps": {
-      "country": {
-        "title": "Where are you located?",
-        "description": "This helps us recommend locally available materials.",
-        "placeholder": "e.g. Kenya, India, Brazil..."
-      },
       "source": {
         "title": "What is your water source?"
       },
@@ -48,7 +67,20 @@
       },
       "budget": {
         "title": "What is your budget?"
+      },
+      "pressure": {
+        "title": "What is your inlet pressure?",
+        "description": "Your recommended system has pressure requirements. Select the range that matches your water supply.",
+        "noRequirements": "Good news — your recommended system has no special pressure requirements. It works with gravity or any flow."
       }
+    },
+    "pressure": {
+      "below": "Below {{value}} bar",
+      "between": "{{min}}–{{max}} bar",
+      "aboveOrEqual": "{{value}} bar or above",
+      "anyPressure": "Any pressure (gravity or above)",
+      "pumpAdded": "Booster pump will be added to reach required pressure",
+      "allWork": "All filters will work without a pump"
     },
     "sources": {
       "well": "Well",
@@ -90,20 +122,55 @@
     }
   },
   "learn": {
-    "title": "Learn About Water",
-    "subtitle": "Understand what's in your water and how to remove it.",
-    "back": "Back to Learn",
     "contaminants": {
-      "title": "Contaminants"
+      "title": "Contaminants",
+      "subtitle": "Understand what may be in your water, where it comes from, and how to address it.",
+      "back": "Back to Contaminants",
+      "removedBy": "Removed by",
+      "sources": "Sources",
+      "healthRisks": "Health Risks",
+      "detection": "How to Detect"
     },
     "methods": {
-      "title": "Treatment Methods"
+      "title": "Treatment Methods",
+      "subtitle": "Explore filtration and disinfection methods and what each one removes.",
+      "back": "Back to Methods",
+      "removes": "Removes"
+    }
+  },
+  "contaminant": {
+    "category": {
+      "biological": "Biological",
+      "chemical": "Chemical",
+      "physical": "Physical",
+      "radiological": "Radiological"
     }
   },
   "systems": {
     "title": "Water Treatment Systems",
     "subtitle": "Browse pre-built systems for common water challenges.",
     "back": "Back to Systems",
+    "basic_boil_ceramic": {
+      "name": "Basic Ceramic System",
+      "description": "A simple two-stage system using a sediment pre-filter and ceramic candle. Ideal for well and surface water."
+    },
+    "biosand_system": {
+      "name": "Biosand + Chlorination",
+      "description": "DIY biosand filter followed by chlorination for comprehensive protection in rural settings."
+    },
+    "tap_upgrade": {
+      "name": "Tap Water Upgrade",
+      "description": "Removes sediment and chlorine taste from municipal tap water."
+    },
+    "mid_tier_uv": {
+      "name": "UV + Carbon System",
+      "description": "Sediment, carbon, and UV combination for comprehensive multi-threat protection."
+    },
+    "full_ro_system": {
+      "name": "Full RO System",
+      "description": "Complete reverse osmosis system with UV polish — removes virtually everything."
+    }
+  },
   "build": {
     "title": "Build Your System",
     "subtitle": "Assembly guides and module library.",
@@ -119,7 +186,9 @@
   },
   "suppliers": {
     "title": "Suppliers",
-    "subtitle": "Find components and materials near you."
+    "subtitle": "Find components and materials near you.",
+    "showingAll": "Showing all countries — select your country in the header to filter.",
+    "filteredBy": "Filtered by {{country}}"
   },
   "footer": {
     "tagline": "Open-source water knowledge for everyone."
@@ -132,35 +201,59 @@
   "contaminants": {
     "bacteria": {
       "name": "Bacteria",
-      "description": "Harmful bacteria like E. coli and Salmonella cause severe gastrointestinal illness."
+      "description": "Harmful bacteria like E. coli and Salmonella cause severe gastrointestinal illness.",
+      "sources": "Open defecation, sewage overflow, animal waste near water sources, and untreated groundwater are the main entry points. Flooding dramatically increases bacterial contamination in surface water.",
+      "healthRisks": "Causes severe gastrointestinal illness — diarrhea, vomiting, cramps, and fever. Can be fatal for young children, elderly people, and those with weakened immune systems. E. coli O157:H7 can cause kidney failure.",
+      "detection": "Field test strips can detect coliform bacteria within minutes. Laboratory culture analysis confirms specific species. Assume contamination in any untreated surface water or after flooding."
     },
     "viruses": {
       "name": "Viruses",
-      "description": "Waterborne viruses including Hepatitis A and Norovirus spread through contaminated water."
+      "description": "Waterborne viruses including Hepatitis A and Norovirus spread through contaminated water.",
+      "sources": "Human sewage contamination is the primary source. Flooding, inadequate sanitation near wells, and infected individuals using shared water sources spread viral contamination rapidly.",
+      "healthRisks": "Hepatitis A causes liver inflammation and jaundice lasting weeks. Norovirus and Rotavirus cause acute vomiting and diarrhea leading to dangerous dehydration, especially in children under five.",
+      "detection": "Standard field test strips do not detect viruses. Specialized laboratory PCR or immunoassay testing is required. Treat all untreated surface water as potentially contaminated — viruses survive longer than bacteria."
     },
     "protozoa": {
       "name": "Protozoa",
-      "description": "Parasites like Giardia and Cryptosporidium are resistant to chlorine and cause diarrhoea."
+      "description": "Parasites like Giardia and Cryptosporidium are resistant to chlorine and cause diarrhoea.",
+      "sources": "Animal and human feces contaminating surface water, livestock grazing near water sources, and irrigation runoff. Cysts survive for months in cold water and resist standard chlorine disinfection doses.",
+      "healthRisks": "Giardia and Cryptosporidium cause prolonged diarrhea, cramps, and dehydration lasting weeks. Cryptosporidiosis can be life-threatening for immunocompromised individuals and young children.",
+      "detection": "Microscopic examination or immunofluorescence testing by a laboratory. Field tests are unreliable. Assume protozoan contamination in any untreated river, lake, or pond water."
     },
     "turbidity": {
       "name": "Turbidity / Sediment",
-      "description": "Suspended particles that make water cloudy and can harbour pathogens."
+      "description": "Suspended particles that make water cloudy and can harbour pathogens.",
+      "sources": "Soil erosion and runoff during rain, disturbed sediment from flooding, algae blooms, and construction near water bodies. Seasonally elevated in rivers after heavy rainfall.",
+      "healthRisks": "Suspended particles shelter and shield pathogens from disinfection, making turbid water harder to treat safely. High turbidity is a strong indicator of other contamination and makes water unsafe to drink untreated.",
+      "detection": "Visually apparent when severe — cloudy or brown water. Turbidity meters measure in NTU units. The WHO guideline is under 1 NTU for treated water. Turbid water should never be considered safe without treatment."
     },
     "heavy_metals": {
       "name": "Heavy Metals",
-      "description": "Lead, arsenic, and mercury cause serious long-term health effects."
+      "description": "Lead, arsenic, and mercury cause serious long-term health effects.",
+      "sources": "Corroding lead pipes in older plumbing, industrial discharge and mining runoff, agricultural pesticides, and natural geological deposits rich in arsenic, cadmium, or chromium.",
+      "healthRisks": "Lead causes irreversible neurological damage and developmental delays in children — there is no safe exposure level. Arsenic is a Group 1 carcinogen linked to bladder and lung cancer. Mercury damages kidneys and the nervous system over time.",
+      "detection": "Laboratory analysis or certified home test kits are required for accurate results. ICP-MS laboratory testing is the gold standard. Test strips for lead exist but have limited sensitivity. Water from buildings with old pipes should always be tested."
     },
     "chlorine": {
       "name": "Chlorine / Taste & Odour",
-      "description": "Residual chlorine from municipal treatment causes unpleasant taste and odour."
+      "description": "Residual chlorine from municipal treatment causes unpleasant taste and odour.",
+      "sources": "Intentionally added by municipal water treatment as a disinfectant. Levels are regulated but may be elevated after treatment plant interventions. Rarely present in groundwater unless industrial contamination has occurred.",
+      "healthRisks": "Residual chlorine causes unpleasant taste and odour. Chlorine reacts with organic matter to form trihalomethanes (THMs) — disinfection by-products linked to increased bladder cancer risk with decades of exposure.",
+      "detection": "Inexpensive DPD test strips and drop kits are widely available at pool and aquarium supply stores. Detectable by smell at concentrations above 0.3 mg/L. Municipal water quality reports disclose chlorine levels."
     },
     "nitrates": {
       "name": "Nitrates",
-      "description": "High nitrate levels from agriculture are dangerous especially for infants."
+      "description": "High nitrate levels from agriculture are dangerous especially for infants.",
+      "sources": "Agricultural fertilizer runoff is the dominant source. Septic system leakage, animal feedlots, and natural soil microbial decomposition also contribute. Highest risk in areas with intensive farming near water sources.",
+      "healthRisks": "Causes methemoglobinemia in infants under 6 months — nitrates prevent blood from carrying oxygen, causing bluish skin. This 'blue baby syndrome' can be rapidly fatal. Long-term adult exposure may increase colorectal cancer risk.",
+      "detection": "Nitrate test strips are widely available at aquarium and pool supply stores. Laboratory analysis is required for accurate regulatory compliance. The WHO limit is 50 mg/L for adults, but 10 mg/L for infant safety."
     },
     "fluoride": {
       "name": "Fluoride",
-      "description": "Excess fluoride causes dental and skeletal fluorosis."
+      "description": "Excess fluoride causes dental and skeletal fluorosis.",
+      "sources": "Natural volcanic rock formations and sedimentary deposits leach fluoride into groundwater — a major issue in East Africa, South Asia, and parts of China. Industrial waste from fertiliser and aluminium production also contaminates water.",
+      "healthRisks": "At levels above 1.5 mg/L (WHO guideline), fluoride causes dental fluorosis — mottled and weakened teeth. At levels above 4 mg/L, skeletal fluorosis develops, causing joint pain, bone damage, and in severe cases crippling deformity.",
+      "detection": "Requires laboratory analysis or specialized SPADNS photometric test kits. Standard field test strips have limited accuracy for fluoride. Geological maps of endemic fluoride areas provide useful preliminary information."
     }
   },
   "methods": {
@@ -225,27 +318,10 @@
     "chlorine_tablet": {
       "name": "Chlorine Tablets (NaDCC)",
       "description": "Sodium dichloroisocyanurate tablets for point-of-use disinfection."
-    }
-  },
-    "basic_boil_ceramic": {
-      "name": "Basic Ceramic System",
-      "description": "A simple two-stage system using a sediment pre-filter and ceramic candle. Ideal for well and surface water."
     },
-    "biosand_system": {
-      "name": "Biosand + Chlorination",
-      "description": "DIY biosand filter followed by chlorination for comprehensive protection in rural settings."
-    },
-    "tap_upgrade": {
-      "name": "Tap Water Upgrade",
-      "description": "Removes sediment and chlorine taste from municipal tap water."
-    },
-    "mid_tier_uv": {
-      "name": "UV + Carbon System",
-      "description": "Sediment, carbon, and UV combination for comprehensive multi-threat protection."
-    },
-    "full_ro_system": {
-      "name": "Full RO System",
-      "description": "Complete reverse osmosis system with UV polish — removes virtually everything."
+    "booster_pump": {
+      "name": "Booster Pump",
+      "description": "Increases inlet water pressure to meet the requirements of high-pressure filters such as reverse osmosis."
     }
   }
 }

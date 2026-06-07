@@ -3,6 +3,9 @@
     "id": "bacteria",
     "nameKey": "contaminants.bacteria.name",
     "descriptionKey": "contaminants.bacteria.description",
+    "sourcesKey": "contaminants.bacteria.sources",
+    "healthRisksKey": "contaminants.bacteria.healthRisks",
+    "detectionKey": "contaminants.bacteria.detection",
     "category": "biological",
     "icon": "🦠",
     "color": "#ef4444"
@@ -11,6 +14,9 @@
     "id": "viruses",
     "nameKey": "contaminants.viruses.name",
     "descriptionKey": "contaminants.viruses.description",
+    "sourcesKey": "contaminants.viruses.sources",
+    "healthRisksKey": "contaminants.viruses.healthRisks",
+    "detectionKey": "contaminants.viruses.detection",
     "category": "biological",
     "icon": "🔬",
     "color": "#f97316"
@@ -19,6 +25,9 @@
     "id": "protozoa",
     "nameKey": "contaminants.protozoa.name",
     "descriptionKey": "contaminants.protozoa.description",
+    "sourcesKey": "contaminants.protozoa.sources",
+    "healthRisksKey": "contaminants.protozoa.healthRisks",
+    "detectionKey": "contaminants.protozoa.detection",
     "category": "biological",
     "icon": "🪱",
     "color": "#84cc16"
@@ -27,6 +36,9 @@
     "id": "turbidity",
     "nameKey": "contaminants.turbidity.name",
     "descriptionKey": "contaminants.turbidity.description",
+    "sourcesKey": "contaminants.turbidity.sources",
+    "healthRisksKey": "contaminants.turbidity.healthRisks",
+    "detectionKey": "contaminants.turbidity.detection",
     "category": "physical",
     "icon": "💧",
     "color": "#a16207"
@@ -35,6 +47,9 @@
     "id": "heavy_metals",
     "nameKey": "contaminants.heavy_metals.name",
     "descriptionKey": "contaminants.heavy_metals.description",
+    "sourcesKey": "contaminants.heavy_metals.sources",
+    "healthRisksKey": "contaminants.heavy_metals.healthRisks",
+    "detectionKey": "contaminants.heavy_metals.detection",
     "category": "chemical",
     "icon": "⚗️",
     "color": "#6b7280"
@@ -43,6 +58,9 @@
     "id": "chlorine",
     "nameKey": "contaminants.chlorine.name",
     "descriptionKey": "contaminants.chlorine.description",
+    "sourcesKey": "contaminants.chlorine.sources",
+    "healthRisksKey": "contaminants.chlorine.healthRisks",
+    "detectionKey": "contaminants.chlorine.detection",
     "category": "chemical",
     "icon": "🧪",
     "color": "#0ea5e9"
@@ -51,6 +69,9 @@
     "id": "nitrates",
     "nameKey": "contaminants.nitrates.name",
     "descriptionKey": "contaminants.nitrates.description",
+    "sourcesKey": "contaminants.nitrates.sources",
+    "healthRisksKey": "contaminants.nitrates.healthRisks",
+    "detectionKey": "contaminants.nitrates.detection",
     "category": "chemical",
     "icon": "🌿",
     "color": "#22c55e"
@@ -59,6 +80,9 @@
     "id": "fluoride",
     "nameKey": "contaminants.fluoride.name",
     "descriptionKey": "contaminants.fluoride.description",
+    "sourcesKey": "contaminants.fluoride.sources",
+    "healthRisksKey": "contaminants.fluoride.healthRisks",
+    "detectionKey": "contaminants.fluoride.detection",
     "category": "chemical",
     "icon": "🦷",
     "color": "#8b5cf6"

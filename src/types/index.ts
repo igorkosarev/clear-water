@@ -18,6 +18,9 @@ export interface Contaminant {
   id: ContaminantId
   nameKey: string
   descriptionKey: string
+  sourcesKey: string
+  healthRisksKey: string
+  detectionKey: string
   category: 'biological' | 'chemical' | 'physical' | 'radiological'
   icon: string
   color: string
@@ -41,6 +44,7 @@ export interface Module {
   costUSD: number
   diyDifficulty: 'easy' | 'medium' | 'hard'
   materials: string[]
+  minPressureBar: number
 }
 
 export interface SystemTemplate {
@@ -74,6 +78,7 @@ export interface WaterInput {
   contaminants: ContaminantId[]
   use: WaterUseType
   budget: BudgetTier
+  inletPressureBar: number
 }
 
 export interface SimulationResult {
@@ -98,6 +103,7 @@ export type FilterType =
   | 'slow_sand'
   | 'boiling'
   | 'chlorination'
+  | 'booster_pump'
 
 export interface BOMLine {
   module: Module

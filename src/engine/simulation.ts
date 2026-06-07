@@ -1,4 +1,4 @@
-import type { WaterInput, SimulationResult, RankedRecommendation, SystemTemplate } from '@/types'
+import type { WaterInput, SimulationResult, RankedRecommendation, SystemTemplate, ModuleId } from '@/types'
 import systemTemplates from '@/data/system-templates.json'
 import modules from '@/data/modules.json'
 
@@ -16,14 +16,15 @@ type RawModule = {
   id: string
   costUSD: number
   removes: string[]
+  minPressureBar: number
 }
 
 export function runSimulation(input: WaterInput): SimulationResult {
   const templates = systemTemplates as RawTemplate[]
   const allModules = modules as RawModule[]
 
-  const getTemplateCost = (template: RawTemplate): number =>
-    template.modules.reduce((sum, id) => {
+  const getTemplateCost = (moduleIds: string[]): number =>
+    moduleIds.reduce((sum, id) => {
       const mod = allModules.find(m => m.id === id)
       return sum + (mod?.costUSD ?? 0)
     }, 0)
@@ -40,6 +41,8 @@ export function runSimulation(input: WaterInput): SimulationResult {
     return budgetMatch + sourceMatch + coverageScore
   }
 
+  const boosterPump = allModules.find(m => m.id === 'booster_pump')
+
   const ranked: RankedRecommendation[] = templates
     .map(template => {
       const allRemoved = template.modules.flatMap(id =>
@@ -49,12 +52,26 @@ export function runSimulation(input: WaterInput): SimulationResult {
       const removedContaminants = input.contaminants.filter(c => uniqueRemoved.includes(c))
       const remainingContaminants = input.contaminants.filter(c => !uniqueRemoved.includes(c))
 
+      const needsPump = boosterPump !== undefined && template.modules.some(id => {
+        const mod = allModules.find(m => m.id === id)
+        return mod !== undefined && mod.minPressureBar > input.inletPressureBar
+      })
+
+      const moduleIds: ModuleId[] = needsPump && boosterPump
+        ? ['booster_pump', ...template.modules]
+        : [...template.modules]
+
+      const patchedTemplate: SystemTemplate = {
+        ...(template as unknown as SystemTemplate),
+        modules: moduleIds,
+      }
+
       return {
-        template: template as unknown as SystemTemplate,
+        template: patchedTemplate,
         score: scoreTemplate(template),
         removedContaminants,
         remainingContaminants,
-        estimatedCostUSD: getTemplateCost(template),
+        estimatedCostUSD: getTemplateCost(moduleIds),
       }
     })
     .sort((a, b) => b.score - a.score)

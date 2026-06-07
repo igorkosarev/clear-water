@@ -137,7 +137,22 @@
       "title": "Treatment Methods",
       "subtitle": "Explore filtration and disinfection methods and what each one removes.",
       "back": "Back to Methods",
-      "removes": "Removes"
+      "removes": "Removes",
+      "howItWorks": "How It Works",
+      "limitations": "Limitations",
+      "typicalUse": "Typical Use"
+    }
+  },
+  "method": {
+    "complexity": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "costTier": {
+      "low": "Low Cost",
+      "medium": "Medium Cost",
+      "high": "High Cost"
     }
   },
   "contaminant": {
@@ -261,31 +276,52 @@
   "methods": {
     "boiling": {
       "name": "Boiling",
-      "description": "The most accessible disinfection method — kills bacteria, viruses, and protozoa."
+      "description": "The most accessible disinfection method — kills bacteria, viruses, and protozoa.",
+      "howItWorks": "Sustained boiling at 100 °C kills all biological pathogens by denaturing proteins and disrupting cell membranes. One minute of rolling boil is sufficient at sea level; three minutes above 2000 m altitude.",
+      "limitations": "Does not remove chemical contaminants, heavy metals, nitrates, or fluoride. Requires a reliable fuel source and adds cost and smoke exposure. Re-contamination is possible if water is stored in a dirty container.",
+      "typicalUse": "Emergency disinfection in any setting, daily household use where fuel is accessible, and as a last-resort backup when other systems fail."
     },
     "biosand": {
       "name": "Biosand Filter",
-      "description": "A DIY sand filter with a biological layer that removes pathogens and turbidity."
+      "description": "A DIY sand filter with a biological layer that removes pathogens and turbidity.",
+      "howItWorks": "Water percolates slowly through layers of fine sand and gravel. Over 2–3 weeks, a biological layer (Schmutzdecke) forms on the surface and consumes incoming pathogens. Physical straining simultaneously removes turbidity.",
+      "limitations": "Requires 1–3 weeks to establish the biological layer. Slow flow rate (0.3–0.6 L/min). Ineffective against dissolved chemicals, viruses (partial only), and taste or odour. The bio-layer dies if the filter dries out.",
+      "typicalUse": "Rural and peri-urban communities with consistently turbid surface water where local construction materials are available and initial setup can be supervised."
     },
     "ceramic_filtration": {
       "name": "Ceramic Filtration",
-      "description": "Porous ceramic pots remove bacteria, protozoa, and suspended solids."
+      "description": "Porous ceramic pots remove bacteria, protozoa, and suspended solids.",
+      "howItWorks": "Micropores in fired clay (0.1–1 µm) physically block bacteria and protozoa. Many pots are impregnated with colloidal silver for additional bactericidal effect. Water flows by gravity into a lower storage vessel.",
+      "limitations": "Slow throughput (1–3 L/hr). Fragile — cracks eliminate filtration. Requires regular cleaning to prevent clogging. No effect on viruses, dissolved chemicals, or nitrates. Storage vessel must be kept clean and covered.",
+      "typicalUse": "Household point-of-use treatment where the main concern is bacterial contamination and turbidity. Widely deployed in sub-Saharan Africa, Southeast Asia, and Central America."
     },
     "activated_carbon": {
       "name": "Activated Carbon",
-      "description": "Adsorbs chlorine, pesticides, and heavy metals through a porous carbon block."
+      "description": "Adsorbs chlorine, pesticides, and heavy metals through a porous carbon block.",
+      "howItWorks": "Highly porous activated carbon adsorbs organic molecules, chlorine by-products, pesticides, and some heavy metals onto its vast internal surface area (up to 1500 m²/g). Water passes through a solid carbon block or granular bed under gravity or pressure.",
+      "limitations": "Does not kill or remove biological pathogens alone — must be combined with disinfection. The carbon bed saturates and must be replaced every 3–6 months. Ineffective against nitrates, fluoride, and dissolved salts.",
+      "typicalUse": "Polishing stage after disinfection — improving taste, odour, and colour of chlorinated tap water, or reducing chemical load before other treatment stages."
     },
     "uv_disinfection": {
       "name": "UV Disinfection",
-      "description": "Ultraviolet light destroys the DNA of bacteria, viruses, and protozoa."
+      "description": "Ultraviolet light destroys the DNA of bacteria, viruses, and protozoa.",
+      "howItWorks": "UV-C light at 254 nm penetrates microbial cells and disrupts DNA/RNA, preventing reproduction. A UV lamp in a flow-through chamber irradiates passing water. Effective against bacteria, viruses, and protozoa including Cryptosporidium.",
+      "limitations": "No effect on turbid water — suspended particles shield microbes from UV. Provides no residual protection after treatment. Requires stable electricity and annual lamp replacement. Does not remove chemical contaminants.",
+      "typicalUse": "Final disinfection stage for water that has already been pre-filtered for turbidity. Used in household under-sink systems, community kiosks, and field water treatment trains."
     },
     "reverse_osmosis": {
       "name": "Reverse Osmosis",
-      "description": "A semi-permeable membrane removes virtually all dissolved contaminants."
+      "description": "A semi-permeable membrane removes virtually all dissolved contaminants.",
+      "howItWorks": "Pressurised water is forced through a membrane with 0.0001 µm pores, rejecting dissolved salts, heavy metals, nitrates, fluoride, and microorganisms. Rejected contaminants are flushed away as brine; purified water is collected separately.",
+      "limitations": "Wastes 3–4 litres per litre produced. Requires inlet pressure of 4–8 bar — usually needs a booster pump. Expensive to install and maintain. Removes beneficial minerals. Membranes must be replaced every 2–3 years.",
+      "typicalUse": "Households or small businesses facing dissolved contamination that cannot be addressed otherwise — high salinity, nitrates, fluoride, or heavy metals — with access to reliable electricity."
     },
     "chlorination": {
       "name": "Chlorination",
-      "description": "Adding chlorine tablets or solution disinfects water and provides residual protection."
+      "description": "Adding chlorine tablets or solution disinfects water and provides residual protection.",
+      "howItWorks": "Chlorine reacts with water to form hypochlorous acid, which penetrates microbial cell walls and disrupts vital enzymes, killing bacteria and viruses within 30 minutes. A residual of 0.2–0.5 mg/L maintains protection during storage.",
+      "limitations": "Protozoa including Cryptosporidium and Giardia are highly resistant. Reacts with organic matter to form potentially carcinogenic trihalomethanes. No effect on chemical contaminants, heavy metals, or turbidity. Taste and odour can be unpleasant.",
+      "typicalUse": "Point-of-use disinfection using tablets (NaDCC) or household bleach. Especially effective in emergencies and displacement settings where portability and low cost are critical."
     }
   },
   "modules": {

@@ -3,56 +3,91 @@
     "id": "boiling",
     "nameKey": "methods.boiling.name",
     "descriptionKey": "methods.boiling.description",
+    "howItWorksKey": "methods.boiling.howItWorks",
+    "limitationsKey": "methods.boiling.limitations",
+    "typicalUseKey": "methods.boiling.typicalUse",
     "removes": ["bacteria", "viruses", "protozoa"],
     "complexity": "beginner",
-    "costTier": "low"
+    "costTier": "low",
+    "icon": "🔥",
+    "color": "#ef4444"
   },
   {
     "id": "biosand",
     "nameKey": "methods.biosand.name",
     "descriptionKey": "methods.biosand.description",
+    "howItWorksKey": "methods.biosand.howItWorks",
+    "limitationsKey": "methods.biosand.limitations",
+    "typicalUseKey": "methods.biosand.typicalUse",
     "removes": ["bacteria", "protozoa", "turbidity"],
     "complexity": "intermediate",
-    "costTier": "low"
+    "costTier": "low",
+    "icon": "🪨",
+    "color": "#a8a29e"
   },
   {
     "id": "ceramic_filtration",
     "nameKey": "methods.ceramic_filtration.name",
     "descriptionKey": "methods.ceramic_filtration.description",
+    "howItWorksKey": "methods.ceramic_filtration.howItWorks",
+    "limitationsKey": "methods.ceramic_filtration.limitations",
+    "typicalUseKey": "methods.ceramic_filtration.typicalUse",
     "removes": ["bacteria", "protozoa", "turbidity"],
     "complexity": "beginner",
-    "costTier": "low"
+    "costTier": "low",
+    "icon": "🫙",
+    "color": "#d97706"
   },
   {
     "id": "activated_carbon",
     "nameKey": "methods.activated_carbon.name",
     "descriptionKey": "methods.activated_carbon.description",
+    "howItWorksKey": "methods.activated_carbon.howItWorks",
+    "limitationsKey": "methods.activated_carbon.limitations",
+    "typicalUseKey": "methods.activated_carbon.typicalUse",
     "removes": ["chlorine", "heavy_metals"],
     "complexity": "beginner",
-    "costTier": "medium"
+    "costTier": "medium",
+    "icon": "⬛",
+    "color": "#64748b"
   },
   {
     "id": "uv_disinfection",
     "nameKey": "methods.uv_disinfection.name",
     "descriptionKey": "methods.uv_disinfection.description",
+    "howItWorksKey": "methods.uv_disinfection.howItWorks",
+    "limitationsKey": "methods.uv_disinfection.limitations",
+    "typicalUseKey": "methods.uv_disinfection.typicalUse",
     "removes": ["bacteria", "viruses", "protozoa"],
     "complexity": "intermediate",
-    "costTier": "medium"
+    "costTier": "medium",
+    "icon": "☀️",
+    "color": "#facc15"
   },
   {
     "id": "reverse_osmosis",
     "nameKey": "methods.reverse_osmosis.name",
     "descriptionKey": "methods.reverse_osmosis.description",
+    "howItWorksKey": "methods.reverse_osmosis.howItWorks",
+    "limitationsKey": "methods.reverse_osmosis.limitations",
+    "typicalUseKey": "methods.reverse_osmosis.typicalUse",
     "removes": ["bacteria", "viruses", "protozoa", "heavy_metals", "nitrates", "fluoride"],
     "complexity": "advanced",
-    "costTier": "high"
+    "costTier": "high",
+    "icon": "🌊",
+    "color": "#0284c7"
   },
   {
     "id": "chlorination",
     "nameKey": "methods.chlorination.name",
     "descriptionKey": "methods.chlorination.description",
+    "howItWorksKey": "methods.chlorination.howItWorks",
+    "limitationsKey": "methods.chlorination.limitations",
+    "typicalUseKey": "methods.chlorination.typicalUse",
     "removes": ["bacteria", "viruses"],
     "complexity": "beginner",
-    "costTier": "low"
+    "costTier": "low",
+    "icon": "🧪",
+    "color": "#4ade80"
   }
 ]

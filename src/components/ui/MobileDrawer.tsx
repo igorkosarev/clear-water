@@ -31,7 +31,7 @@ export function MobileDrawer({ open, onClose, navItems }: MobileDrawerProps) {
         <>
           {/* Overlay */}
           <motion.div
-            className="fixed inset-0 bg-black/40 z-40 md:hidden"
+            className="fixed inset-0 bg-black/60 z-40 md:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -45,20 +45,20 @@ export function MobileDrawer({ open, onClose, navItems }: MobileDrawerProps) {
             role="dialog"
             aria-modal="true"
             aria-label={t('nav.open')}
-            className="fixed top-0 right-0 h-[100dvh] w-[280px] max-w-[80vw] bg-white z-50 flex flex-col shadow-2xl md:hidden"
+            className="fixed top-0 right-0 h-[100dvh] w-[280px] max-w-[80vw] bg-slate-900 z-50 flex flex-col shadow-2xl md:hidden border-l border-slate-700/50"
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ duration: 0.28, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
             {/* Drawer header */}
-            <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 flex-shrink-0">
-              <span className="font-bold text-lg text-blue-700">💧 Clear Water</span>
+            <div className="flex items-center justify-between px-5 py-4 border-b border-slate-700/50 flex-shrink-0">
+              <span className="font-bold text-lg text-blue-400">💧 Clear Water</span>
               <button
                 type="button"
                 aria-label={t('nav.close')}
                 onClick={onClose}
-                className="p-1.5 rounded-md text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-colors"
+                className="p-1.5 rounded-md text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"
               >
                 <X size={20} />
               </button>
@@ -72,10 +72,10 @@ export function MobileDrawer({ open, onClose, navItems }: MobileDrawerProps) {
                   to={item.to}
                   onClick={onClose}
                   className={({ isActive }) =>
-                    `block px-5 py-3.5 text-base font-medium transition-colors border-b border-gray-50 last:border-0 ${
+                    `block px-5 py-3.5 text-base font-medium transition-colors border-b border-slate-800 last:border-0 ${
                       isActive
-                        ? 'text-blue-600 bg-blue-50'
-                        : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50'
+                        ? 'text-blue-400 bg-blue-400/10'
+                        : 'text-slate-200 hover:text-white hover:bg-slate-800'
                     }`
                   }
                 >
@@ -85,7 +85,7 @@ export function MobileDrawer({ open, onClose, navItems }: MobileDrawerProps) {
             </nav>
 
             {/* Selectors at bottom */}
-            <div className="border-t border-gray-100 px-5 py-4 flex items-center gap-3 flex-shrink-0">
+            <div className="border-t border-slate-700/50 px-5 py-4 flex items-center gap-3 flex-shrink-0">
               <CountrySelector />
               <LanguageSelector />
             </div>

@@ -8,7 +8,7 @@
     "detectionKey": "contaminants.bacteria.detection",
     "category": "biological",
     "icon": "🦠",
-    "color": "#ef4444"
+    "color": "#f43f5e"
   },
   {
     "id": "viruses",
@@ -30,7 +30,7 @@
     "detectionKey": "contaminants.protozoa.detection",
     "category": "biological",
     "icon": "🪱",
-    "color": "#84cc16"
+    "color": "#14b8a6"
   },
   {
     "id": "turbidity",

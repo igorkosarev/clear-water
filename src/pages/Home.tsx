@@ -20,7 +20,7 @@ const SECTIONS: SectionConfig[] = [
 ]
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: 36 },
   visible: { opacity: 1, y: 0 },
 }
 
@@ -28,9 +28,17 @@ export default function Home() {
   const { t } = useTranslation()
 
   return (
-    <div>
+    <div className="bg-slate-900">
       {/* ── Hero ── */}
-      <section className="relative bg-gradient-to-br from-blue-900 via-blue-800 to-slate-900 text-white overflow-hidden min-h-[560px] flex items-center">
+      <section className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 text-white overflow-hidden min-h-[560px] flex items-center">
+        {/* Subtle radial glow */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'radial-gradient(ellipse at 50% 40%, rgba(59,130,246,0.12) 0%, transparent 65%)',
+          }}
+        />
+
         <div className="relative z-10 w-full max-w-5xl mx-auto px-4 py-32 text-center">
           <motion.h1
             className="text-5xl sm:text-6xl font-bold mb-6 leading-tight tracking-tight"
@@ -41,7 +49,7 @@ export default function Home() {
             {t('home.hero.title')}
           </motion.h1>
           <motion.p
-            className="text-xl text-blue-100 max-w-2xl mx-auto mb-10"
+            className="text-xl text-slate-300 max-w-2xl mx-auto mb-10"
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.15 }}
@@ -55,39 +63,11 @@ export default function Home() {
           >
             <Link
               to="/configurator"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-blue-900 font-bold rounded-full text-lg hover:bg-blue-50 transition-colors shadow-xl"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-slate-900 font-bold rounded-full text-lg hover:bg-slate-100 transition-colors shadow-xl"
             >
               {t('home.hero.cta')}
               <span aria-hidden>→</span>
             </Link>
-          </motion.div>
-        </div>
-
-        {/* Animated wave — two layers at different speeds */}
-        <div className="absolute bottom-0 left-0 right-0 overflow-hidden pointer-events-none">
-          <motion.div
-            className="flex w-[200%]"
-            animate={{ x: ['0%', '-50%'] }}
-            transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
-          >
-            <svg viewBox="0 0 1440 72" preserveAspectRatio="none" className="w-1/2 h-[72px]" fill="white">
-              <path d="M0,36 C240,72 480,0 720,36 C960,72 1200,0 1440,36 L1440,72 L0,72 Z" />
-            </svg>
-            <svg viewBox="0 0 1440 72" preserveAspectRatio="none" className="w-1/2 h-[72px]" fill="white">
-              <path d="M0,36 C240,72 480,0 720,36 C960,72 1200,0 1440,36 L1440,72 L0,72 Z" />
-            </svg>
-          </motion.div>
-          <motion.div
-            className="flex w-[200%] absolute bottom-0 opacity-30"
-            animate={{ x: ['-25%', '-75%'] }}
-            transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
-          >
-            <svg viewBox="0 0 1440 56" preserveAspectRatio="none" className="w-1/2 h-14" fill="white">
-              <path d="M0,28 C360,56 720,0 1080,28 C1260,42 1380,14 1440,28 L1440,56 L0,56 Z" />
-            </svg>
-            <svg viewBox="0 0 1440 56" preserveAspectRatio="none" className="w-1/2 h-14" fill="white">
-              <path d="M0,28 C360,56 720,0 1080,28 C1260,42 1380,14 1440,28 L1440,56 L0,56 Z" />
-            </svg>
           </motion.div>
         </div>
       </section>
@@ -96,7 +76,12 @@ export default function Home() {
       {SECTIONS.map(({ key, route, Icon }, i) => {
         const isEven = i % 2 === 0
         return (
-          <section key={key} className={`py-20 ${isEven ? 'bg-white' : 'bg-blue-50'}`}>
+          <section
+            key={key}
+            className={`py-20 border-b border-slate-800 last:border-0 ${
+              isEven ? 'bg-slate-900' : 'bg-slate-800/60'
+            }`}
+          >
             <motion.div
               className={`max-w-5xl mx-auto px-4 flex flex-col items-center gap-12 md:gap-16 ${
                 isEven ? 'md:flex-row' : 'md:flex-row-reverse'
@@ -107,22 +92,22 @@ export default function Home() {
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.6 }}
             >
-              {/* Icon */}
-              <div className="flex-shrink-0 flex items-center justify-center w-36 h-36 rounded-3xl bg-blue-600 text-white shadow-lg shadow-blue-200">
+              {/* Icon block */}
+              <div className="flex-shrink-0 flex items-center justify-center w-36 h-36 rounded-3xl bg-blue-500/15 border border-blue-500/25 text-blue-400">
                 <Icon size={60} strokeWidth={1.25} />
               </div>
 
               {/* Text */}
               <div className="flex-1 text-center md:text-left">
-                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+                <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
                   {t(`home.sections.${key}.title`)}
                 </h2>
-                <p className="text-lg text-gray-500 mb-8 max-w-lg">
+                <p className="text-lg text-slate-400 mb-8 max-w-lg">
                   {t(`home.sections.${key}.description`)}
                 </p>
                 <Link
                   to={route}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition-colors"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-500 transition-colors"
                 >
                   {t(`home.sections.${key}.cta`)}
                   <span aria-hidden>→</span>

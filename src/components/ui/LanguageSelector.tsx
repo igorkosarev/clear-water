@@ -45,7 +45,7 @@ export function LanguageSelector() {
         type="button"
         aria-expanded={open}
         aria-haspopup="listbox"
-        className="flex items-center gap-1.5 px-2 py-1 rounded-md text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
+        className="flex items-center gap-1.5 px-2 py-1 rounded-md text-sm text-slate-300 hover:text-white hover:bg-slate-700 transition-colors"
         onClick={() => setOpen(o => !o)}
       >
         <span>{current.nativeName}</span>

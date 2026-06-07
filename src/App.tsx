@@ -22,19 +22,21 @@ export default function App() {
   const [drawerOpen, setDrawerOpen] = useState(false)
 
   const navClass = ({ isActive }: { isActive: boolean }) =>
-    `text-sm font-medium transition-colors ${isActive ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'}`
+    `text-sm font-medium transition-colors ${
+      isActive ? 'text-blue-400' : 'text-slate-300 hover:text-white'
+    }`
 
   return (
     <CountryProvider>
-      <div className="min-h-screen flex flex-col bg-white">
-        <header className="border-b border-gray-200 px-4 py-3">
+      <div className="min-h-screen flex flex-col bg-slate-900">
+        <header className="bg-slate-900 border-b border-slate-700/50 px-4 py-3">
           <div className="max-w-5xl mx-auto flex items-center justify-between">
 
-            <Link to="/" className="font-bold text-lg text-blue-700 flex-shrink-0">
+            <Link to="/" className="font-bold text-lg text-blue-400 flex-shrink-0">
               💧 Clear Water
             </Link>
 
-            {/* Desktop nav — hidden on mobile */}
+            {/* Desktop nav */}
             <nav className="hidden md:flex items-center gap-6">
               {NAV_ITEMS.map(item => (
                 <NavLink key={item.to} to={item.to} className={navClass}>
@@ -43,19 +45,19 @@ export default function App() {
               ))}
             </nav>
 
-            {/* Desktop selectors — hidden on mobile */}
+            {/* Desktop selectors */}
             <div className="hidden md:flex items-center gap-2">
               <CountrySelector />
               <LanguageSelector />
             </div>
 
-            {/* Mobile burger button — hidden on desktop */}
+            {/* Mobile burger */}
             <button
               type="button"
               aria-label={t('nav.open')}
               aria-expanded={drawerOpen}
               onClick={() => setDrawerOpen(true)}
-              className="md:hidden p-1.5 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
+              className="md:hidden p-1.5 rounded-md text-slate-300 hover:text-white hover:bg-slate-700 transition-colors"
             >
               <Menu size={22} />
             </button>
@@ -72,7 +74,7 @@ export default function App() {
           <Outlet />
         </main>
 
-        <footer className="border-t border-gray-100 px-4 py-6 text-center text-sm text-gray-400">
+        <footer className="bg-slate-950 border-t border-slate-800 px-4 py-6 text-center text-sm text-slate-500">
           {t('footer.tagline')}
         </footer>
       </div>

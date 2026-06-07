@@ -352,7 +352,7 @@ function ContaminantSection({ contaminant, removingMethods, index }: SectionProp
               </p>
               <div className="flex flex-wrap gap-2">
                 {removingMethods.map(m => (
-                  <Link key={m.id} to={`/learn/methods/${m.id}`}>
+                  <Link key={m.id} to={`/learn/methods#${m.id}`}>
                     <span
                       className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium transition-all hover:brightness-125"
                       style={{

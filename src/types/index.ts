@@ -30,9 +30,14 @@ export interface TreatmentMethod {
   id: string
   nameKey: string
   descriptionKey: string
+  howItWorksKey: string
+  limitationsKey: string
+  typicalUseKey: string
   removes: ContaminantId[]
   complexity: 'beginner' | 'intermediate' | 'advanced'
   costTier: BudgetTier
+  icon: string
+  color: string
 }
 
 export interface Module {

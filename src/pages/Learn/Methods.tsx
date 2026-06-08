@@ -199,138 +199,126 @@ function MethodSection({ method, removedContaminants, index }: SectionProps) {
   const { color, icon, id } = method
   const particles = PARTICLE_CONFIGS[id] ?? []
 
+  const iconSide = isEven ? 'right' : 'left'
+
   return (
     <section
       id={id}
-      className="flex flex-col md:flex-row md:min-h-[680px] overflow-hidden"
+      className="relative bg-slate-950 overflow-hidden min-h-[620px] md:min-h-[700px]"
     >
-      {/* ── Visual panel ── */}
+      {/* ── Full-bleed radial gradient centred on icon side ── */}
       <div
-        className={`relative flex items-center justify-center overflow-hidden
-          h-72 md:h-auto md:w-2/5 bg-slate-950
-          ${isEven ? 'md:order-first' : 'md:order-last'}`}
-      >
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: `radial-gradient(ellipse at 50% 50%, ${color}44 0%, ${color}1a 45%, transparent 75%)`,
-          }}
-        />
-
-        {particles.map((p, i) => (
-          <motion.div
-            key={i}
-            className="absolute pointer-events-none"
-            style={{
-              left: `${p.x}%`,
-              top: `${p.y}%`,
-              width: p.w,
-              height: p.h,
-              borderRadius: p.r,
-              backgroundColor: color,
-            }}
-            animate={{
-              x: p.kx,
-              y: p.ky,
-              opacity: p.ko,
-              scale: p.ks,
-              ...(p.kr ? { rotate: p.kr } : {}),
-            }}
-            transition={{
-              duration: p.dur,
-              delay: p.dl,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-        ))}
-
-        <div className="relative z-10 flex items-center justify-center">
-          <motion.div
-            className="absolute rounded-full"
-            style={{ width: 200, height: 200, backgroundColor: color, filter: 'blur(60px)' }}
-            animate={{ opacity: [0.1, 0.3, 0.1], scale: [0.8, 1.12, 0.8] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-          />
-          <motion.span
-            className="relative text-7xl md:text-8xl select-none"
-            initial={{ scale: 0.4, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.15, type: 'spring', bounce: 0.4 }}
-            viewport={{ once: true }}
-            animate={{ scale: [1, 1.07, 1] }}
-            role="img"
-            aria-label={id}
-          >
-            {icon}
-          </motion.span>
-        </div>
-      </div>
-
-      {/* ── Content panel ── */}
-      <div
-        className={`flex-1 md:w-3/5 bg-slate-900 flex items-center
-          ${isEven ? 'md:order-last' : 'md:order-first'}`}
+        className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: `linear-gradient(135deg, ${color}1e 0%, ${color}0d 60%, transparent 100%)`,
+          background: iconSide === 'right'
+            ? `radial-gradient(ellipse at 75% 50%, ${color}38 0%, ${color}14 48%, transparent 72%)`
+            : `radial-gradient(ellipse at 25% 50%, ${color}38 0%, ${color}14 48%, transparent 72%)`,
         }}
-      >
+      />
+
+      {/* ── Particles — span full section ── */}
+      {particles.map((p, i) => (
         <motion.div
-          className="w-full max-w-lg mx-auto px-8 py-12 md:py-16"
+          key={i}
+          className="absolute pointer-events-none"
+          style={{
+            left: `${p.x}%`,
+            top: `${p.y}%`,
+            width: p.w,
+            height: p.h,
+            borderRadius: p.r,
+            backgroundColor: color,
+          }}
+          animate={{
+            x: p.kx,
+            y: p.ky,
+            opacity: p.ko,
+            scale: p.ks,
+            ...(p.kr ? { rotate: p.kr } : {}),
+          }}
+          transition={{ duration: p.dur, delay: p.dl, repeat: Infinity, ease: 'easeInOut' }}
+        />
+      ))}
+
+      {/* ── Glow blob on icon side ── */}
+      <motion.div
+        className="absolute top-1/2 -translate-y-1/2 rounded-full pointer-events-none"
+        style={{
+          [iconSide]: '6%',
+          width: 400,
+          height: 400,
+          backgroundColor: color,
+          filter: 'blur(110px)',
+        }}
+        animate={{ opacity: [0.1, 0.24, 0.1], scale: [0.88, 1.1, 0.88] }}
+        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+      />
+
+      {/* ── Large decorative icon — opposite side from text ── */}
+      <motion.div
+        className="absolute top-1/2 -translate-y-1/2 pointer-events-none"
+        style={{ [iconSide]: '4%' }}
+        animate={{ scale: [1, 1.06, 1] }}
+        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        <motion.span
+          className="block select-none text-[120px] md:text-[180px] leading-none"
+          style={{ opacity: 0 }}
+          initial={{ scale: 0.5, opacity: 0 }}
+          whileInView={{ scale: 1, opacity: 0.55 }}
+          transition={{ duration: 0.7, delay: 0.1, type: 'spring' as const, bounce: 0.3 }}
+          viewport={{ once: true }}
+          role="img"
+          aria-label={id}
+        >
+          {icon}
+        </motion.span>
+      </motion.div>
+
+      {/* ── Text-side gradient darkening ── */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: isEven
+            ? 'linear-gradient(to right, rgba(2,6,23,0.96) 0%, rgba(2,6,23,0.85) 35%, rgba(2,6,23,0.45) 62%, transparent 82%)'
+            : 'linear-gradient(to left,  rgba(2,6,23,0.96) 0%, rgba(2,6,23,0.85) 35%, rgba(2,6,23,0.45) 62%, transparent 82%)',
+        }}
+      />
+      {/* Mobile: full darkening overlay */}
+      <div className="absolute inset-0 bg-slate-950/72 md:hidden pointer-events-none" />
+
+      {/* ── Content — floats on darkened side ── */}
+      <div className={`relative z-10 w-full min-h-[620px] md:min-h-[700px] flex items-center ${isEven ? 'justify-start' : 'justify-end'}`}>
+        <motion.div
+          className="w-full max-w-[520px] px-8 md:px-14 py-16"
           variants={contentVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
         >
-          {/* Badges */}
           <motion.div variants={itemVariants} className="flex flex-wrap gap-2 mb-3">
-            <span
-              className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold
-                ${COMPLEXITY_CLASS[method.complexity] ?? 'text-slate-400 border border-slate-400/30 bg-slate-400/10'}`}
-            >
+            <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold ${COMPLEXITY_CLASS[method.complexity] ?? 'text-slate-400 border border-slate-400/30 bg-slate-400/10'}`}>
               {t(`method.complexity.${method.complexity}`)}
             </span>
-            <span
-              className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold
-                ${COST_CLASS[method.costTier] ?? 'text-slate-400 border border-slate-400/30 bg-slate-400/10'}`}
-            >
+            <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold ${COST_CLASS[method.costTier] ?? 'text-slate-400 border border-slate-400/30 bg-slate-400/10'}`}>
               {t(`method.costTier.${method.costTier}`)}
             </span>
           </motion.div>
 
-          {/* Title */}
           <motion.h2 variants={itemVariants} className="text-3xl font-bold text-white mb-3">
             {t(method.nameKey)}
           </motion.h2>
 
-          {/* Description */}
           <motion.p variants={itemVariants} className="text-slate-300 leading-relaxed mb-7">
             {t(method.descriptionKey)}
           </motion.p>
 
-          {/* Info rows */}
-          <motion.div
-            variants={itemVariants}
-            className="space-y-5 border-t border-slate-700/50 pt-6 mb-7"
-          >
-            <InfoRow
-              icon={<Zap size={13} />}
-              label={t('learn.methods.howItWorks')}
-              text={t(method.howItWorksKey)}
-            />
-            <InfoRow
-              icon={<AlertTriangle size={13} />}
-              label={t('learn.methods.limitations')}
-              text={t(method.limitationsKey)}
-            />
-            <InfoRow
-              icon={<Target size={13} />}
-              label={t('learn.methods.typicalUse')}
-              text={t(method.typicalUseKey)}
-            />
+          <motion.div variants={itemVariants} className="space-y-5 border-t border-slate-700/50 pt-6 mb-7">
+            <InfoRow icon={<Zap size={13} />} label={t('learn.methods.howItWorks')} text={t(method.howItWorksKey)} />
+            <InfoRow icon={<AlertTriangle size={13} />} label={t('learn.methods.limitations')} text={t(method.limitationsKey)} />
+            <InfoRow icon={<Target size={13} />} label={t('learn.methods.typicalUse')} text={t(method.typicalUseKey)} />
           </motion.div>
 
-          {/* Removes — contaminant pills */}
           {removedContaminants.length > 0 && (
             <motion.div variants={itemVariants}>
               <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
@@ -341,11 +329,7 @@ function MethodSection({ method, removedContaminants, index }: SectionProps) {
                   <Link key={c.id} to={`/learn/contaminants#${c.id}`}>
                     <span
                       className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium transition-all hover:brightness-125"
-                      style={{
-                        backgroundColor: `${c.color}22`,
-                        color: c.color,
-                        border: `1px solid ${c.color}44`,
-                      }}
+                      style={{ backgroundColor: `${c.color}22`, color: c.color, border: `1px solid ${c.color}44` }}
                     >
                       {t(c.nameKey)}
                     </span>

@@ -60,14 +60,6 @@ const sectionVariants = {
   visible: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
 }
 
-const iconVariant = {
-  hidden: { opacity: 0, scale: 0.6 },
-  visible: {
-    opacity: 1, scale: 1,
-    transition: { type: 'spring' as const, bounce: 0.45, duration: 0.75 },
-  },
-}
-
 const slideVariant = {
   hidden: { opacity: 0, y: 22 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: 'easeOut' as const } },
@@ -165,36 +157,53 @@ export default function Home() {
       {/* ── Feature sections ── */}
       {SECTIONS.map(({ key, route, Icon }, i) => {
         const isEven = i % 2 === 0
+        const iconSide = isEven ? 'right' : 'left'
+
         return (
           <section
             key={key}
-            className={`py-20 border-b border-slate-800 last:border-0 ${
-              isEven ? 'bg-slate-900' : 'bg-slate-800/60'
-            }`}
+            className="relative bg-slate-900 overflow-hidden min-h-[420px] md:min-h-[480px] border-b border-slate-800/60 last:border-0"
           >
-            <motion.div
-              className={`max-w-5xl mx-auto px-4 flex flex-col items-center gap-12 md:gap-16 ${
-                isEven ? 'md:flex-row' : 'md:flex-row-reverse'
-              }`}
-              variants={sectionVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-80px' }}
-            >
-              {/* Icon block */}
-              <motion.div variants={iconVariant} className="flex-shrink-0">
-                <motion.div
-                  className="flex items-center justify-center w-36 h-36 rounded-3xl bg-blue-500/15 border border-blue-500/25 text-blue-400 cursor-default"
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: i * 0.4 }}
-                  whileHover={{ scale: 1.08, backgroundColor: 'rgba(59,130,246,0.25)' }}
-                >
-                  <Icon size={60} strokeWidth={1.25} />
-                </motion.div>
-              </motion.div>
+            {/* Radial blue glow on icon side */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: iconSide === 'right'
+                  ? 'radial-gradient(ellipse at 78% 50%, rgba(59,130,246,0.14) 0%, rgba(59,130,246,0.05) 50%, transparent 75%)'
+                  : 'radial-gradient(ellipse at 22% 50%, rgba(59,130,246,0.14) 0%, rgba(59,130,246,0.05) 50%, transparent 75%)',
+              }}
+            />
 
-              {/* Text */}
-              <div className="flex-1 text-center md:text-left">
+            {/* Large decorative icon — opposite side from text */}
+            <motion.div
+              className="absolute top-1/2 -translate-y-1/2 text-blue-500/10 pointer-events-none"
+              style={{ [iconSide]: '4%' }}
+              animate={{ scale: [1, 1.06, 1], opacity: [0.1, 0.18, 0.1] }}
+              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: i * 0.3 }}
+            >
+              <Icon size={220} strokeWidth={0.6} />
+            </motion.div>
+
+            {/* Text-side gradient darkening */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: isEven
+                  ? 'linear-gradient(to right, rgba(15,23,42,0.98) 0%, rgba(15,23,42,0.88) 38%, rgba(15,23,42,0.4) 65%, transparent 85%)'
+                  : 'linear-gradient(to left,  rgba(15,23,42,0.98) 0%, rgba(15,23,42,0.88) 38%, rgba(15,23,42,0.4) 65%, transparent 85%)',
+              }}
+            />
+            <div className="absolute inset-0 bg-slate-900/80 md:hidden pointer-events-none" />
+
+            {/* Content */}
+            <div className={`relative z-10 w-full min-h-[420px] md:min-h-[480px] flex items-center ${isEven ? 'justify-start' : 'justify-end'}`}>
+              <motion.div
+                className="w-full max-w-[500px] px-8 md:px-14 py-14"
+                variants={sectionVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: '-80px' }}
+              >
                 <motion.h2
                   variants={slideVariant}
                   className="text-3xl sm:text-4xl font-bold text-white mb-4"
@@ -202,10 +211,7 @@ export default function Home() {
                   {t(`home.sections.${key}.title`)}
                 </motion.h2>
 
-                <motion.p
-                  variants={slideVariant}
-                  className="text-lg text-slate-400 mb-8 max-w-lg"
-                >
+                <motion.p variants={slideVariant} className="text-lg text-slate-400 mb-8 max-w-md">
                   {t(`home.sections.${key}.description`)}
                 </motion.p>
 
@@ -220,8 +226,8 @@ export default function Home() {
                     </Link>
                   </motion.div>
                 </motion.div>
-              </div>
-            </motion.div>
+              </motion.div>
+            </div>
           </section>
         )
       })}

@@ -1,11 +1,11 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Zap, AlertTriangle, Target } from 'lucide-react'
+import { Zap, AlertTriangle, Target, MapPin, Search } from 'lucide-react'
 import type { TreatmentMethod, Contaminant } from '@/types'
 import methodsData from '@/data/treatment-methods.json'
 import contaminantsData from '@/data/contaminants.json'
+import Modal from '@/components/ui/Modal'
 
 // ─── Particle system ────────────────────────────────────────────────────────
 
@@ -182,6 +182,13 @@ const COST_CLASS: Record<string, string> = {
   high:   'text-red-400    border border-red-400/30    bg-red-400/10',
 }
 
+const BADGE_CLASS: Record<string, string> = {
+  biological:   'text-red-400    border border-red-400/30    bg-red-400/10',
+  chemical:     'text-blue-400   border border-blue-400/30   bg-blue-400/10',
+  physical:     'text-amber-400  border border-amber-400/30  bg-amber-400/10',
+  radiological: 'text-purple-400 border border-purple-400/30 bg-purple-400/10',
+}
+
 // ─── Animation variants ──────────────────────────────────────────────────────
 
 const contentVariants = {
@@ -230,6 +237,7 @@ function MethodSection({ method, removedContaminants, index }: SectionProps) {
   const isEven = index % 2 === 0
   const { color, icon, id } = method
   const particles = PARTICLE_CONFIGS[id] ?? []
+  const [selectedContaminant, setSelectedContaminant] = useState<Contaminant | null>(null)
 
   const iconSide = isEven ? 'right' : 'left'
 
@@ -355,14 +363,14 @@ function MethodSection({ method, removedContaminants, index }: SectionProps) {
               </p>
               <div className="flex flex-wrap gap-2">
                 {removedContaminants.map(c => (
-                  <Link key={c.id} to={`/learn/contaminants#${c.id}`}>
-                    <span
-                      className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium transition-all hover:brightness-125"
-                      style={{ backgroundColor: `${c.color}22`, color: c.color, border: `1px solid ${c.color}44` }}
-                    >
-                      {t(c.nameKey)}
-                    </span>
-                  </Link>
+                  <button
+                    key={c.id}
+                    onClick={() => setSelectedContaminant(c)}
+                    className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium transition-all hover:brightness-125 cursor-pointer"
+                    style={{ backgroundColor: `${c.color}22`, color: c.color, border: `1px solid ${c.color}44` }}
+                  >
+                    {t(c.nameKey)}
+                  </button>
                 ))}
               </div>
             </motion.div>
@@ -370,6 +378,45 @@ function MethodSection({ method, removedContaminants, index }: SectionProps) {
         </motion.div>
         </div>
       </div>
+
+      {/* Contaminant preview modal */}
+      <Modal open={selectedContaminant !== null} onClose={() => setSelectedContaminant(null)}>
+        {selectedContaminant && (
+          <>
+            {/* Accent strip */}
+            <div className="h-1 w-full rounded-t-2xl" style={{ backgroundColor: selectedContaminant.color }} />
+            <div className="p-6">
+              {/* Header */}
+              <div className="flex items-center gap-3 mb-4 pr-8">
+                <span
+                  className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-xl text-xl"
+                  style={{ backgroundColor: `${selectedContaminant.color}22` }}
+                >
+                  {selectedContaminant.icon}
+                </span>
+                <div>
+                  <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-semibold mb-1 ${BADGE_CLASS[selectedContaminant.category] ?? ''}`}>
+                    {t(`contaminant.category.${selectedContaminant.category}`)}
+                  </span>
+                  <h3 className="text-lg font-bold text-white leading-tight">
+                    {t(selectedContaminant.nameKey)}
+                  </h3>
+                </div>
+              </div>
+
+              <p className="text-slate-300 text-sm leading-relaxed mb-5">
+                {t(selectedContaminant.descriptionKey)}
+              </p>
+
+              <div className="space-y-4 border-t border-slate-700/50 pt-5">
+                <InfoRow icon={<MapPin size={13} />} label={t('learn.contaminants.sources')} text={t(selectedContaminant.sourcesKey)} />
+                <InfoRow icon={<AlertTriangle size={13} />} label={t('learn.contaminants.healthRisks')} text={t(selectedContaminant.healthRisksKey)} />
+                <InfoRow icon={<Search size={13} />} label={t('learn.contaminants.detection')} text={t(selectedContaminant.detectionKey)} />
+              </div>
+            </div>
+          </>
+        )}
+      </Modal>
     </section>
   )
 }

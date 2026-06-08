@@ -1,11 +1,11 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { MapPin, AlertTriangle, Search } from 'lucide-react'
+import { MapPin, AlertTriangle, Search, Zap, Target } from 'lucide-react'
 import type { Contaminant, TreatmentMethod } from '@/types'
 import contaminantsData from '@/data/contaminants.json'
 import methodsData from '@/data/treatment-methods.json'
+import Modal from '@/components/ui/Modal'
 
 // ─── Particle system ────────────────────────────────────────────────────────
 
@@ -199,6 +199,18 @@ const BADGE_CLASS: Record<string, string> = {
   radiological: 'text-purple-400 border border-purple-400/30 bg-purple-400/10',
 }
 
+const COMPLEXITY_CLASS: Record<string, string> = {
+  beginner:     'text-emerald-400 border border-emerald-400/30 bg-emerald-400/10',
+  intermediate: 'text-amber-400  border border-amber-400/30  bg-amber-400/10',
+  advanced:     'text-red-400    border border-red-400/30    bg-red-400/10',
+}
+
+const COST_CLASS: Record<string, string> = {
+  low:    'text-emerald-400 border border-emerald-400/30 bg-emerald-400/10',
+  medium: 'text-amber-400  border border-amber-400/30  bg-amber-400/10',
+  high:   'text-red-400    border border-red-400/30    bg-red-400/10',
+}
+
 // ─── Animation variants ──────────────────────────────────────────────────────
 
 const contentVariants = {
@@ -247,6 +259,7 @@ function ContaminantSection({ contaminant, removingMethods, index }: SectionProp
   const isEven = index % 2 === 0
   const { color, icon, id } = contaminant
   const particles = PARTICLE_CONFIGS[id as string] ?? []
+  const [selectedMethod, setSelectedMethod] = useState<TreatmentMethod | null>(null)
 
   const iconSide = isEven ? 'right' : 'left'
 
@@ -374,14 +387,14 @@ function ContaminantSection({ contaminant, removingMethods, index }: SectionProp
               </p>
               <div className="flex flex-wrap gap-2">
                 {removingMethods.map(m => (
-                  <Link key={m.id} to={`/learn/methods#${m.id}`}>
-                    <span
-                      className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium transition-all hover:brightness-125"
-                      style={{ backgroundColor: `${color}22`, color, border: `1px solid ${color}44` }}
-                    >
-                      {t(m.nameKey)}
-                    </span>
-                  </Link>
+                  <button
+                    key={m.id}
+                    onClick={() => setSelectedMethod(m)}
+                    className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium transition-all hover:brightness-125 cursor-pointer"
+                    style={{ backgroundColor: `${color}22`, color, border: `1px solid ${color}44` }}
+                  >
+                    {t(m.nameKey)}
+                  </button>
                 ))}
               </div>
             </motion.div>
@@ -389,6 +402,50 @@ function ContaminantSection({ contaminant, removingMethods, index }: SectionProp
         </motion.div>
         </div>
       </div>
+
+      {/* Method preview modal */}
+      <Modal open={selectedMethod !== null} onClose={() => setSelectedMethod(null)}>
+        {selectedMethod && (
+          <>
+            {/* Accent strip */}
+            <div className="h-1 w-full rounded-t-2xl" style={{ backgroundColor: selectedMethod.color }} />
+            <div className="p-6">
+              {/* Header */}
+              <div className="flex items-center gap-3 mb-4 pr-8">
+                <span
+                  className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-xl text-xl"
+                  style={{ backgroundColor: `${selectedMethod.color}22` }}
+                >
+                  {selectedMethod.icon}
+                </span>
+                <div>
+                  <div className="flex flex-wrap gap-1.5 mb-1">
+                    <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-semibold ${COMPLEXITY_CLASS[selectedMethod.complexity] ?? ''}`}>
+                      {t(`method.complexity.${selectedMethod.complexity}`)}
+                    </span>
+                    <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-semibold ${COST_CLASS[selectedMethod.costTier] ?? ''}`}>
+                      {t(`method.costTier.${selectedMethod.costTier}`)}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-bold text-white leading-tight">
+                    {t(selectedMethod.nameKey)}
+                  </h3>
+                </div>
+              </div>
+
+              <p className="text-slate-300 text-sm leading-relaxed mb-5">
+                {t(selectedMethod.descriptionKey)}
+              </p>
+
+              <div className="space-y-4 border-t border-slate-700/50 pt-5">
+                <InfoRow icon={<Zap size={13} />} label={t('learn.methods.howItWorks')} text={t(selectedMethod.howItWorksKey)} />
+                <InfoRow icon={<AlertTriangle size={13} />} label={t('learn.methods.limitations')} text={t(selectedMethod.limitationsKey)} />
+                <InfoRow icon={<Target size={13} />} label={t('learn.methods.typicalUse')} text={t(selectedMethod.typicalUseKey)} />
+              </div>
+            </div>
+          </>
+        )}
+      </Modal>
     </section>
   )
 }

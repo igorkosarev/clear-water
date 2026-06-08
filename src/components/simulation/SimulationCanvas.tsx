@@ -1,4 +1,5 @@
-import { useMemo } from 'react'
+import { useMemo, Fragment } from 'react'
+import type { CSSProperties } from 'react'
 import { motion } from 'framer-motion'
 import { Droplets, CheckCircle, AlertTriangle } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
@@ -10,71 +11,85 @@ import contaminantsData from '@/data/contaminants.json'
 
 // ── Layout constants ──────────────────────────────────────────────────────────
 
-const PIPE_W = 40        // pipe visual width in px
-const PIPE_H = 52        // pipe segment height in px
-const PARTICLE_PX = 5   // particle diameter in px
-const HALF_PX = PARTICLE_PX >> 1
+const HPIPE_W = 48   // horizontal pipe stub width px
+const HPIPE_H = 16   // horizontal pipe tube height px (pipe "diameter")
+const UTURN_H = 40   // U-turn connector total height px
+const PARTICLE_PX = 5
+const HALF_PX = 2    // floor(PARTICLE_PX / 2)
 
-// ── Deterministic particle slot definitions ───────────────────────────────────
-// Each slot: [xOffset from pipe centre (px), delay (s), duration (s)]
-// 8 slots — for up to 8 contaminants, 2 particles each (slot i and slot i+4)
+// ── Deterministic particle slots ──────────────────────────────────────────────
 
-type Slot = readonly [number, number, number]
-
-const SLOTS: Slot[] = [
-  [-9, 0.0, 2.2],
-  [ 7, 1.5, 2.7],
-  [ 8, 0.7, 2.9],
-  [-4, 2.1, 2.1],
-  [-3, 1.3, 2.5],
-  [ 6, 0.2, 3.0],
-  [ 4, 1.9, 2.3],
-  [-8, 0.9, 2.8],
+// Horizontal pipe: [delay(s), duration(s), yOffset from centre(px)]
+const HSLOTS: readonly [number, number, number][] = [
+  [0.0, 1.6, -2],
+  [0.7, 1.9,  2],
+  [1.3, 2.0, -3],
+  [1.9, 1.7,  3],
+  [0.4, 1.8,  0],
+  [1.0, 2.1, -2],
+  [1.6, 1.6,  2],
+  [0.2, 2.0,  0],
 ]
 
-const SLOTS_LEN = SLOTS.length   // 8
-const HALF_SLOTS = SLOTS_LEN >> 1  // 4
+// U-turn pipe: [delay(s), duration(s), xOffset from base(px)]
+const VSLOTS: readonly [number, number, number][] = [
+  [0.0, 1.4, -3],
+  [0.8, 1.6,  2],
+  [1.5, 1.5, -2],
+  [0.4, 1.7,  3],
+  [1.2, 1.4,  0],
+  [0.3, 1.6, -2],
+  [0.9, 1.5,  3],
+  [1.6, 1.4,  0],
+]
 
-// ── Local components ──────────────────────────────────────────────────────────
+// ── Particle type helpers ─────────────────────────────────────────────────────
 
-interface Particle {
-  id: string
-  x: number
-  delay: number
-  dur: number
-  color: string
-}
+interface HP { id: string; delay: number; dur: number; yOff: number; color: string }
+interface VP { id: string; delay: number; dur: number; xOff: number; color: string }
 
-function buildParticles(contaminants: Contaminant[]): Particle[] {
-  return contaminants.flatMap((c, j) => {
-    const [x0, delay0, dur0] = SLOTS[j % SLOTS_LEN]
-    const [x1, delay1, dur1] = SLOTS[(j + HALF_SLOTS) % SLOTS_LEN]
-    return [
-      { id: `${c.id}-a`, x: x0, delay: delay0, dur: dur0, color: c.color },
-      { id: `${c.id}-b`, x: x1, delay: delay1, dur: dur1, color: c.color },
-    ]
+function hParticles(cs: Contaminant[]): HP[] {
+  return cs.map((c, j) => {
+    const [delay, dur, yOff] = HSLOTS[j % HSLOTS.length]
+    return { id: `${c.id}-h`, delay, dur, yOff, color: c.color }
   })
 }
 
-function PipeSegment({ contaminants }: { contaminants: Contaminant[] }) {
-  const particles = useMemo(() => buildParticles(contaminants), [contaminants])
+function vParticles(cs: Contaminant[]): VP[] {
+  return cs.map((c, j) => {
+    const [delay, dur, xOff] = VSLOTS[j % VSLOTS.length]
+    return { id: `${c.id}-v`, delay, dur, xOff, color: c.color }
+  })
+}
+
+// ── HorizontalPipe ────────────────────────────────────────────────────────────
+
+function HorizontalPipe({
+  direction,
+  contaminants,
+}: {
+  direction: 'ltr' | 'rtl'
+  contaminants: Contaminant[]
+}) {
+  const particles = useMemo(() => hParticles(contaminants), [contaminants])
+  const ltr = direction === 'ltr'
+  const xStart = ltr ? -PARTICLE_PX : HPIPE_W + PARTICLE_PX
+  const xEnd   = ltr ? HPIPE_W + PARTICLE_PX : -PARTICLE_PX
 
   return (
     <div
-      className="relative mx-auto flex-shrink-0"
-      style={{ width: PIPE_W, height: PIPE_H, overflow: 'visible' }}
+      className="flex-shrink-0 relative"
+      style={{ width: HPIPE_W, height: HPIPE_H, overflow: 'visible' }}
       aria-hidden
     >
-      {/* Tube visual */}
       <div
         className="absolute inset-0"
         style={{
-          background: 'linear-gradient(to right, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
+          background: 'linear-gradient(to bottom, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
           border: '1px solid #334155',
           borderRadius: 4,
         }}
       />
-      {/* Flowing particles */}
       {particles.map(p => (
         <motion.div
           key={p.id}
@@ -82,18 +97,82 @@ function PipeSegment({ contaminants }: { contaminants: Contaminant[] }) {
           style={{
             width: PARTICLE_PX,
             height: PARTICLE_PX,
-            left: `calc(50% + ${p.x}px - ${HALF_PX}px)`,
-            top: 0,
+            left: 0,
+            top: `calc(50% + ${p.yOff}px - ${HALF_PX}px)`,
             backgroundColor: p.color,
             boxShadow: `0 0 5px ${p.color}`,
           }}
-          animate={{ y: [-PARTICLE_PX, PIPE_H + PARTICLE_PX] }}
+          animate={{ x: [xStart, xEnd] }}
           transition={{ duration: p.dur, delay: p.delay, repeat: Infinity, ease: 'linear' as const }}
         />
       ))}
     </div>
   )
 }
+
+// ── UTurnConnector ────────────────────────────────────────────────────────────
+
+function UTurnConnector({
+  side,
+  contaminants,
+}: {
+  side: 'left' | 'right'
+  contaminants: Contaminant[]
+}) {
+  const particles = useMemo(() => vParticles(contaminants), [contaminants])
+  const radius = UTURN_H / 2
+  // Particles cluster toward the inner wall of the bend
+  const xBase = side === 'right' ? HPIPE_W * 0.28 : HPIPE_W * 0.72
+
+  const tubeStyle: CSSProperties =
+    side === 'right'
+      ? {
+          background: 'linear-gradient(to right, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
+          borderTop: '1px solid #334155',
+          borderRight: '1px solid #334155',
+          borderBottom: '1px solid #334155',
+          borderLeft: 'none',
+          borderRadius: `0 ${radius}px ${radius}px 0`,
+        }
+      : {
+          background: 'linear-gradient(to right, #1e293b 0%, #1e293b 50%, #0f172a 100%)',
+          borderTop: '1px solid #334155',
+          borderLeft: '1px solid #334155',
+          borderBottom: '1px solid #334155',
+          borderRight: 'none',
+          borderRadius: `${radius}px 0 0 ${radius}px`,
+        }
+
+  return (
+    <div className={`w-full flex ${side === 'right' ? 'justify-end' : 'justify-start'}`}>
+      <div
+        className="relative overflow-hidden"
+        style={{ width: HPIPE_W, height: UTURN_H }}
+        aria-hidden
+      >
+        <div className="absolute inset-0" style={tubeStyle} />
+        {particles.map(p => (
+          <motion.div
+            key={p.id}
+            className="absolute rounded-full pointer-events-none"
+            style={{
+              width: PARTICLE_PX,
+              height: PARTICLE_PX,
+              left: xBase + p.xOff - HALF_PX,
+              top: 0,
+              backgroundColor: p.color,
+              boxShadow: `0 0 5px ${p.color}`,
+            }}
+            animate={{ y: [-PARTICLE_PX, UTURN_H + PARTICLE_PX] }}
+            transition={{ duration: p.dur, delay: p.delay, repeat: Infinity, ease: 'linear' as const }}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// ── ContaminantChip ───────────────────────────────────────────────────────────
 
 function ContaminantChip({ contaminant }: { contaminant: Contaminant }) {
   const { t } = useTranslation()
@@ -106,16 +185,13 @@ function ContaminantChip({ contaminant }: { contaminant: Contaminant }) {
         border: `1px solid ${contaminant.color}44`,
       }}
     >
-      <span
-        className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-        style={{ backgroundColor: contaminant.color }}
-      />
+      <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: contaminant.color }} />
       {t(contaminant.nameKey, { defaultValue: contaminant.id.replace(/_/g, ' ') })}
     </span>
   )
 }
 
-// ── Main component ────────────────────────────────────────────────────────────
+// ── SimulationCanvas ──────────────────────────────────────────────────────────
 
 interface SimulationCanvasProps {
   filters: FilterType[]
@@ -129,7 +205,7 @@ export function SimulationCanvas({ filters, inputContaminants }: SimulationCanva
     return m
   }, [])
 
-  // stageContaminants[i] = contaminant IDs entering filter i
+  // stageContaminants[i] = IDs entering filter i; [filters.length] = final output
   const stageContaminants = useMemo<ContaminantId[][]>(() => {
     const stages: ContaminantId[][] = [inputContaminants]
     let current = [...inputContaminants]
@@ -140,7 +216,6 @@ export function SimulationCanvas({ filters, inputContaminants }: SimulationCanva
     return stages
   }, [filters, inputContaminants])
 
-  // Resolve contaminant objects for each stage (stable reference when stageContaminants is stable)
   const stageObjects = useMemo<Contaminant[][]>(
     () =>
       stageContaminants.map(ids =>
@@ -149,46 +224,59 @@ export function SimulationCanvas({ filters, inputContaminants }: SimulationCanva
     [stageContaminants, contaminantMap]
   )
 
-  const inputObjects = stageObjects[0]
   const remainingObjects = stageObjects[stageObjects.length - 1]
   const allClear = remainingObjects.length === 0
 
   return (
-    <div className="flex flex-col items-center w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto">
+    <div className="flex flex-col w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto">
       {/* ── Inlet ── */}
-      <div className="w-full rounded-2xl bg-slate-900/80 border border-slate-800 p-4">
+      <div className="w-full rounded-2xl bg-slate-900/80 border border-slate-800 p-4 mb-2">
         <div className="flex items-center gap-2 mb-3">
           <Droplets size={14} className="text-blue-400 flex-shrink-0" />
-          <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-            Water In
-          </span>
+          <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Water In</span>
         </div>
         <div className="flex flex-wrap gap-1.5">
-          {inputObjects.map(c => (
-            <ContaminantChip key={c.id} contaminant={c} />
-          ))}
+          {stageObjects[0].map(c => <ContaminantChip key={c.id} contaminant={c} />)}
         </div>
       </div>
 
-      {/* ── Filter stages with animated pipes ── */}
-      {filters.map((f, i) => (
-        <div key={i} className="w-full flex flex-col items-center">
-          <PipeSegment contaminants={stageObjects[i]} />
-          <FilterUnit
-            type={f}
-            inputContaminants={stageContaminants[i]}
-            outputContaminants={stageContaminants[i + 1]}
-            animated
-          />
-        </div>
-      ))}
+      {/* ── Snake filter layout ── */}
+      {filters.map((f, i) => {
+        const isLTR = i % 2 === 0
+        const dir = isLTR ? 'ltr' as const : 'rtl' as const
+        // LTR: water enters left, exits right
+        // RTL: water enters right (from U-turn above), exits left
+        const leftPipe  = isLTR ? stageObjects[i]     : stageObjects[i + 1]
+        const rightPipe = isLTR ? stageObjects[i + 1] : stageObjects[i]
 
-      {/* ── Final pipe after last filter ── */}
-      <PipeSegment contaminants={remainingObjects} />
+        return (
+          <Fragment key={i}>
+            {/* Filter row: [H-pipe] [FilterUnit] [H-pipe] */}
+            <div className="flex items-center w-full">
+              <HorizontalPipe direction={dir} contaminants={leftPipe} />
+              <FilterUnit
+                type={f}
+                inputContaminants={stageContaminants[i]}
+                outputContaminants={stageContaminants[i + 1]}
+                animated
+              />
+              <HorizontalPipe direction={dir} contaminants={rightPipe} />
+            </div>
+
+            {/* U-turn between rows (skip after last filter) */}
+            {i < filters.length - 1 && (
+              <UTurnConnector
+                side={isLTR ? 'right' : 'left'}
+                contaminants={stageObjects[i + 1]}
+              />
+            )}
+          </Fragment>
+        )
+      })}
 
       {/* ── Outlet ── */}
       <div
-        className="w-full rounded-2xl border p-4"
+        className="w-full rounded-2xl border p-4 mt-2"
         style={{
           backgroundColor: allClear ? 'rgba(5,46,22,0.35)' : 'rgba(69,26,3,0.35)',
           borderColor: allClear ? 'rgba(34,197,94,0.35)' : 'rgba(245,158,11,0.35)',
@@ -200,11 +288,7 @@ export function SimulationCanvas({ filters, inputContaminants }: SimulationCanva
           ) : (
             <AlertTriangle size={14} className="text-amber-400 flex-shrink-0" />
           )}
-          <span
-            className={`text-xs font-semibold uppercase tracking-wider ${
-              allClear ? 'text-emerald-400' : 'text-amber-400'
-            }`}
-          >
+          <span className={`text-xs font-semibold uppercase tracking-wider ${allClear ? 'text-emerald-400' : 'text-amber-400'}`}>
             {allClear ? 'Clean Water' : 'Partially Filtered'}
           </span>
         </div>
@@ -212,9 +296,7 @@ export function SimulationCanvas({ filters, inputContaminants }: SimulationCanva
           <p className="text-xs text-emerald-500/60">All detected contaminants removed</p>
         ) : (
           <div className="flex flex-wrap gap-1.5">
-            {remainingObjects.map(c => (
-              <ContaminantChip key={c.id} contaminant={c} />
-            ))}
+            {remainingObjects.map(c => <ContaminantChip key={c.id} contaminant={c} />)}
           </div>
         )}
       </div>

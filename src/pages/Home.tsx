@@ -8,15 +8,16 @@ interface SectionConfig {
   key: string
   route: string
   Icon: LucideIcon
+  color: string
 }
 
 const SECTIONS: SectionConfig[] = [
-  { key: 'configurator', route: '/configurator', Icon: Wand2 },
-  { key: 'contaminants', route: '/learn/contaminants', Icon: FlaskConical },
-  { key: 'methods', route: '/learn/methods', Icon: Filter },
-  { key: 'systems', route: '/systems', Icon: Layers },
-  { key: 'build', route: '/build', Icon: Wrench },
-  { key: 'suppliers', route: '/suppliers', Icon: MapPin },
+  { key: 'configurator', route: '/configurator', Icon: Wand2,        color: '#3b82f6' },
+  { key: 'contaminants', route: '/learn/contaminants', Icon: FlaskConical, color: '#10b981' },
+  { key: 'methods',      route: '/learn/methods',      Icon: Filter,  color: '#f59e0b' },
+  { key: 'systems',      route: '/systems',            Icon: Layers,  color: '#8b5cf6' },
+  { key: 'build',        route: '/build',              Icon: Wrench,  color: '#f97316' },
+  { key: 'suppliers',    route: '/suppliers',          Icon: MapPin,  color: '#06b6d4' },
 ]
 
 // ─── Hero particles — deterministic, no Math.random() ────────────────────────
@@ -155,78 +156,105 @@ export default function Home() {
       </section>
 
       {/* ── Feature sections ── */}
-      {SECTIONS.map(({ key, route, Icon }, i) => {
+      {SECTIONS.map(({ key, route, Icon, color }, i) => {
         const isEven = i % 2 === 0
         const iconSide = isEven ? 'right' : 'left'
 
         return (
           <section
             key={key}
-            className="relative bg-slate-900 overflow-hidden min-h-[420px] md:min-h-[480px] border-b border-slate-800/60 last:border-0"
+            className="relative bg-slate-950 overflow-hidden min-h-[420px] md:min-h-[480px] border-b border-slate-800/40 last:border-0"
           >
-            {/* Radial blue glow on icon side */}
+            {/* Radial color glow on icon side */}
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
                 background: iconSide === 'right'
-                  ? 'radial-gradient(ellipse at 78% 50%, rgba(59,130,246,0.14) 0%, rgba(59,130,246,0.05) 50%, transparent 75%)'
-                  : 'radial-gradient(ellipse at 22% 50%, rgba(59,130,246,0.14) 0%, rgba(59,130,246,0.05) 50%, transparent 75%)',
+                  ? `radial-gradient(ellipse at 78% 50%, ${color}28 0%, ${color}0d 50%, transparent 75%)`
+                  : `radial-gradient(ellipse at 22% 50%, ${color}28 0%, ${color}0d 50%, transparent 75%)`,
               }}
             />
-
-            {/* Large decorative icon — opposite side from text */}
-            <motion.div
-              className="absolute top-1/2 -translate-y-1/2 text-blue-500/10 pointer-events-none"
-              style={{ [iconSide]: '4%' }}
-              animate={{ scale: [1, 1.06, 1], opacity: [0.1, 0.18, 0.1] }}
-              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: i * 0.3 }}
-            >
-              <Icon size={220} strokeWidth={0.6} />
-            </motion.div>
 
             {/* Text-side gradient darkening */}
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
                 background: isEven
-                  ? 'linear-gradient(to right, rgba(15,23,42,0.98) 0%, rgba(15,23,42,0.88) 38%, rgba(15,23,42,0.4) 65%, transparent 85%)'
-                  : 'linear-gradient(to left,  rgba(15,23,42,0.98) 0%, rgba(15,23,42,0.88) 38%, rgba(15,23,42,0.4) 65%, transparent 85%)',
+                  ? 'linear-gradient(to right, rgba(2,6,23,0.98) 0%, rgba(2,6,23,0.88) 38%, rgba(2,6,23,0.4) 65%, transparent 85%)'
+                  : 'linear-gradient(to left,  rgba(2,6,23,0.98) 0%, rgba(2,6,23,0.88) 38%, rgba(2,6,23,0.4) 65%, transparent 85%)',
               }}
             />
-            <div className="absolute inset-0 bg-slate-900/80 md:hidden pointer-events-none" />
+            <div className="absolute inset-0 bg-slate-950/80 md:hidden pointer-events-none" />
 
-            {/* Content */}
-            <div className={`relative z-10 w-full min-h-[420px] md:min-h-[480px] flex items-center ${isEven ? 'justify-start' : 'justify-end'}`}>
+            {/* Constrained content + icon */}
+            <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-10 min-h-[420px] md:min-h-[480px]">
+
+              {/* Glow blob behind icon */}
               <motion.div
-                className="w-full max-w-[500px] px-8 md:px-14 py-14"
-                variants={sectionVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: '-80px' }}
+                className="absolute top-1/2 -translate-y-1/2 rounded-full pointer-events-none hidden md:block"
+                style={{ [iconSide]: '0%', width: 340, height: 340, backgroundColor: color, filter: 'blur(100px)' }}
+                animate={{ opacity: [0.08, 0.20, 0.08], scale: [0.9, 1.08, 0.9] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: i * 0.4 }}
+              />
+
+              {/* Large decorative icon */}
+              <motion.div
+                className="absolute top-1/2 -translate-y-1/2 pointer-events-none hidden md:block"
+                style={{ [iconSide]: '3%', color }}
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: i * 0.3 }}
               >
-                <motion.h2
-                  variants={slideVariant}
-                  className="text-3xl sm:text-4xl font-bold text-white mb-4"
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.6 }}
+                  whileInView={{ opacity: 0.38, scale: 1 }}
+                  transition={{ duration: 0.7, delay: 0.1, type: 'spring' as const, bounce: 0.3 }}
+                  viewport={{ once: true }}
                 >
-                  {t(`home.sections.${key}.title`)}
-                </motion.h2>
-
-                <motion.p variants={slideVariant} className="text-lg text-slate-400 mb-8 max-w-md">
-                  {t(`home.sections.${key}.description`)}
-                </motion.p>
-
-                <motion.div variants={slideVariant}>
-                  <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="inline-block">
-                    <Link
-                      to={route}
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-500 transition-colors"
-                    >
-                      {t(`home.sections.${key}.cta`)}
-                      <span aria-hidden>→</span>
-                    </Link>
-                  </motion.div>
+                  <Icon size={220} strokeWidth={0.7} />
                 </motion.div>
               </motion.div>
+
+              {/* Content */}
+              <div className={`w-full min-h-[420px] md:min-h-[480px] flex items-center ${isEven ? 'justify-start' : 'justify-end'}`}>
+                <motion.div
+                  className="w-full max-w-[500px] py-14"
+                  variants={sectionVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: '-80px' }}
+                >
+                  {/* Accent line */}
+                  <motion.div
+                    variants={slideVariant}
+                    className="w-10 h-1 rounded-full mb-5"
+                    style={{ backgroundColor: color }}
+                  />
+
+                  <motion.h2
+                    variants={slideVariant}
+                    className="text-3xl sm:text-4xl font-bold text-white mb-4"
+                  >
+                    {t(`home.sections.${key}.title`)}
+                  </motion.h2>
+
+                  <motion.p variants={slideVariant} className="text-lg text-slate-400 mb-8 max-w-md">
+                    {t(`home.sections.${key}.description`)}
+                  </motion.p>
+
+                  <motion.div variants={slideVariant}>
+                    <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="inline-block">
+                      <Link
+                        to={route}
+                        className="inline-flex items-center gap-2 px-6 py-3 font-semibold rounded-full text-white transition-all"
+                        style={{ backgroundColor: color }}
+                      >
+                        {t(`home.sections.${key}.cta`)}
+                        <span aria-hidden>→</span>
+                      </Link>
+                    </motion.div>
+                  </motion.div>
+                </motion.div>
+              </div>
             </div>
           </section>
         )

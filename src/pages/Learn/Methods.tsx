@@ -240,41 +240,6 @@ function MethodSection({ method, removedContaminants, index }: SectionProps) {
         />
       ))}
 
-      {/* ── Glow blob on icon side ── */}
-      <motion.div
-        className="absolute top-1/2 -translate-y-1/2 rounded-full pointer-events-none"
-        style={{
-          [iconSide]: '6%',
-          width: 400,
-          height: 400,
-          backgroundColor: color,
-          filter: 'blur(110px)',
-        }}
-        animate={{ opacity: [0.1, 0.24, 0.1], scale: [0.88, 1.1, 0.88] }}
-        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-      />
-
-      {/* ── Large decorative icon — opposite side from text ── */}
-      <motion.div
-        className="absolute top-1/2 -translate-y-1/2 pointer-events-none"
-        style={{ [iconSide]: '4%' }}
-        animate={{ scale: [1, 1.06, 1] }}
-        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-      >
-        <motion.span
-          className="block select-none text-[120px] md:text-[180px] leading-none"
-          style={{ opacity: 0 }}
-          initial={{ scale: 0.5, opacity: 0 }}
-          whileInView={{ scale: 1, opacity: 0.55 }}
-          transition={{ duration: 0.7, delay: 0.1, type: 'spring' as const, bounce: 0.3 }}
-          viewport={{ once: true }}
-          role="img"
-          aria-label={id}
-        >
-          {icon}
-        </motion.span>
-      </motion.div>
-
       {/* ── Text-side gradient darkening ── */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -287,10 +252,42 @@ function MethodSection({ method, removedContaminants, index }: SectionProps) {
       {/* Mobile: full darkening overlay */}
       <div className="absolute inset-0 bg-slate-950/72 md:hidden pointer-events-none" />
 
-      {/* ── Content — floats on darkened side ── */}
-      <div className={`relative z-10 w-full min-h-[620px] md:min-h-[700px] flex items-center ${isEven ? 'justify-start' : 'justify-end'}`}>
+      {/* ── Constrained content + icon (max-width prevents wide-screen spread) ── */}
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-10 min-h-[620px] md:min-h-[700px]">
+
+        {/* Glow blob — absolute within constrained container */}
         <motion.div
-          className="w-full max-w-[520px] px-8 md:px-14 py-16"
+          className="absolute top-1/2 -translate-y-1/2 rounded-full pointer-events-none"
+          style={{ [iconSide]: '0%', width: 400, height: 400, backgroundColor: color, filter: 'blur(110px)' }}
+          animate={{ opacity: [0.1, 0.24, 0.1], scale: [0.88, 1.1, 0.88] }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+        />
+
+        {/* Icon — absolute within constrained container */}
+        <motion.div
+          className="absolute top-1/2 -translate-y-1/2 pointer-events-none hidden md:block"
+          style={{ [iconSide]: '3%' }}
+          animate={{ scale: [1, 1.06, 1] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <motion.span
+            className="block select-none text-[130px] md:text-[180px] leading-none"
+            style={{ opacity: 0 }}
+            initial={{ scale: 0.5, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 0.55 }}
+            transition={{ duration: 0.7, delay: 0.1, type: 'spring' as const, bounce: 0.3 }}
+            viewport={{ once: true }}
+            role="img"
+            aria-label={id}
+          >
+            {icon}
+          </motion.span>
+        </motion.div>
+
+        {/* Text content */}
+        <div className={`w-full min-h-[620px] md:min-h-[700px] flex items-center ${isEven ? 'justify-start' : 'justify-end'}`}>
+        <motion.div
+          className="w-full max-w-[520px] py-16"
           variants={contentVariants}
           initial="hidden"
           whileInView="visible"
@@ -339,6 +336,7 @@ function MethodSection({ method, removedContaminants, index }: SectionProps) {
             </motion.div>
           )}
         </motion.div>
+        </div>
       </div>
     </section>
   )

@@ -136,6 +136,38 @@ for (const id of Object.keys(PATTERNS)) {
   }
 }
 
+// ─── Hero particles ──────────────────────────────────────────────────────────
+
+type HeroParticle = {
+  x: number; y: number; size: number
+  dur: number; delay: number
+  dx: number; dy: number
+  accent: boolean
+}
+
+const HERO_PARTICLES: HeroParticle[] = [
+  { x:  5, y: 75, size:  7, dur: 6.0, delay: 0.0, dx:  5, dy: -22, accent: true  },
+  { x: 18, y: 58, size: 12, dur: 7.5, delay: 1.0, dx: -4, dy: -16, accent: false },
+  { x: 28, y: 84, size:  5, dur: 5.0, delay: 0.3, dx:  8, dy: -28, accent: true  },
+  { x: 40, y: 68, size: 22, dur: 9.0, delay: 1.4, dx: -2, dy: -12, accent: true  },
+  { x: 52, y: 82, size:  8, dur: 6.5, delay: 0.1, dx:  4, dy: -20, accent: false },
+  { x: 64, y: 52, size: 10, dur: 7.0, delay: 0.8, dx: -6, dy: -15, accent: true  },
+  { x: 76, y: 72, size:  9, dur: 5.5, delay: 1.8, dx:  3, dy: -22, accent: false },
+  { x: 87, y: 62, size: 15, dur: 7.2, delay: 0.5, dx: -5, dy: -18, accent: true  },
+  { x: 95, y: 38, size:  5, dur: 5.2, delay: 1.1, dx: -4, dy: -24, accent: false },
+  { x:  9, y: 28, size: 11, dur: 6.8, delay: 0.7, dx:  7, dy: -14, accent: true  },
+  { x: 32, y: 44, size:  7, dur: 5.8, delay: 2.0, dx: -5, dy: -18, accent: false },
+  { x: 49, y: 18, size: 26, dur: 9.5, delay: 0.2, dx:  2, dy:  -8, accent: true  },
+  { x: 69, y: 34, size:  8, dur: 6.2, delay: 1.6, dx: -6, dy: -16, accent: false },
+  { x: 90, y: 82, size: 13, dur: 7.8, delay: 1.1, dx:  4, dy: -22, accent: true  },
+  { x: 22, y: 14, size:  5, dur: 4.8, delay: 0.6, dx:  5, dy: -28, accent: false },
+  { x: 56, y: 50, size: 18, dur: 8.2, delay: 2.0, dx: -3, dy: -14, accent: true  },
+  { x: 79, y: 22, size:  6, dur: 5.4, delay: 0.4, dx:  3, dy: -21, accent: false },
+  { x: 44, y:  9, size: 30, dur:10.0, delay: 0.0, dx: -1, dy:  -6, accent: true  },
+]
+
+const METHODS_ACCENT = '#10b981'
+
 // ─── Styling constants ───────────────────────────────────────────────────────
 
 const COMPLEXITY_CLASS: Record<string, string> = {
@@ -369,20 +401,60 @@ export default function Methods() {
   return (
     <div>
       {/* Hero */}
-      <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-gray-900 text-white px-4 py-20 text-center">
+      <section className="relative bg-slate-950 text-white overflow-hidden min-h-[380px] md:min-h-[440px] flex items-center">
+
+        {/* Pulsing radial glow */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+          className="absolute inset-0 pointer-events-none"
+          animate={{ opacity: [0.6, 1, 0.6] }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+          style={{ background: `radial-gradient(ellipse at 50% 50%, ${METHODS_ACCENT}2e 0%, ${METHODS_ACCENT}0a 45%, transparent 70%)` }}
+        />
+
+        {/* Floating particles */}
+        {HERO_PARTICLES.map((p, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full pointer-events-none"
+            style={{
+              left: `${p.x}%`,
+              top: `${p.y}%`,
+              width: p.size,
+              height: p.size,
+              backgroundColor: p.accent ? METHODS_ACCENT : '#ffffff',
+            }}
+            animate={{
+              x: [0, p.dx, p.dx * 0.4, 0],
+              y: [0, p.dy * 0.5, p.dy, p.dy * 0.5, 0],
+              opacity: [0, 0.32, 0.12, 0.32, 0],
+            }}
+            transition={{ duration: p.dur, delay: p.delay, repeat: Infinity, ease: 'easeInOut' }}
+          />
+        ))}
+
+        {/* Mobile overlay */}
+        <div className="absolute inset-0 bg-slate-950/55 md:hidden pointer-events-none" />
+
+        {/* Content */}
+        <div className="relative z-10 w-full max-w-5xl mx-auto px-4 py-20 text-center">
+          <motion.h1
+            className="text-4xl md:text-5xl font-bold mb-4 leading-tight tracking-tight"
+            initial={{ opacity: 0, y: 32 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.75 }}
+          >
             {t('learn.methods.title')}
-          </h1>
-          <p className="text-slate-300 text-lg max-w-xl mx-auto leading-relaxed">
+          </motion.h1>
+          <motion.p
+            className="text-slate-300 text-lg max-w-2xl mx-auto leading-relaxed"
+            initial={{ opacity: 0, y: 32 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.75, delay: 0.18 }}
+          >
             {t('learn.methods.subtitle')}
-          </p>
-        </motion.div>
-      </div>
+          </motion.p>
+        </div>
+      </section>
 
       {/* Sections */}
       {methods.map((m, i) => (

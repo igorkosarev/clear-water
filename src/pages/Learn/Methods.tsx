@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { Zap, AlertTriangle, Target, MapPin, Search } from 'lucide-react'
+import { Zap, AlertTriangle, Target, MapPin, Search, Flame, Layers, Filter, Hexagon, Sun, Waves, Pipette } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 import type { TreatmentMethod, Contaminant } from '@/types'
 import methodsData from '@/data/treatment-methods.json'
 import contaminantsData from '@/data/contaminants.json'
@@ -182,6 +183,16 @@ const COST_CLASS: Record<string, string> = {
   high:   'text-red-400    border border-red-400/30    bg-red-400/10',
 }
 
+const METHOD_ICONS: Record<string, LucideIcon> = {
+  boiling:             Flame,
+  biosand:             Layers,
+  ceramic_filtration:  Filter,
+  activated_carbon:    Hexagon,
+  uv_disinfection:     Sun,
+  reverse_osmosis:     Waves,
+  chlorination:        Pipette,
+}
+
 const BADGE_CLASS: Record<string, string> = {
   biological:   'text-red-400    border border-red-400/30    bg-red-400/10',
   chemical:     'text-blue-400   border border-blue-400/30   bg-blue-400/10',
@@ -235,9 +246,10 @@ interface SectionProps {
 function MethodSection({ method, removedContaminants, index }: SectionProps) {
   const { t } = useTranslation()
   const isEven = index % 2 === 0
-  const { color, icon, id } = method
+  const { color, id } = method
   const particles = PARTICLE_CONFIGS[id] ?? []
   const [selectedContaminant, setSelectedContaminant] = useState<Contaminant | null>(null)
+  const SectionIcon = METHOD_ICONS[id]
 
   const iconSide = isEven ? 'right' : 'left'
 
@@ -304,25 +316,23 @@ function MethodSection({ method, removedContaminants, index }: SectionProps) {
         />
 
         {/* Icon — absolute within constrained container */}
-        <motion.div
-          className="absolute top-1/2 -translate-y-1/2 pointer-events-none hidden md:block"
-          style={{ [iconSide]: '3%' }}
-          animate={{ scale: [1, 1.06, 1] }}
-          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <motion.span
-            className="block select-none text-[130px] md:text-[180px] leading-none"
-            style={{ opacity: 0 }}
-            initial={{ scale: 0.5, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 0.55 }}
-            transition={{ duration: 0.7, delay: 0.1, type: 'spring' as const, bounce: 0.3 }}
-            viewport={{ once: true }}
-            role="img"
-            aria-label={id}
+        {SectionIcon && (
+          <motion.div
+            className="absolute top-1/2 -translate-y-1/2 pointer-events-none hidden md:block"
+            style={{ [iconSide]: '3%', color }}
+            animate={{ scale: [1, 1.05, 1] }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
           >
-            {icon}
-          </motion.span>
-        </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.6 }}
+              whileInView={{ opacity: 0.38, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.1, type: 'spring' as const, bounce: 0.3 }}
+              viewport={{ once: true }}
+            >
+              <SectionIcon size={220} strokeWidth={0.7} />
+            </motion.div>
+          </motion.div>
+        )}
 
         {/* Text content */}
         <div className={`w-full min-h-[620px] md:min-h-[700px] flex items-center ${isEven ? 'justify-start' : 'justify-end'}`}>
@@ -387,21 +397,13 @@ function MethodSection({ method, removedContaminants, index }: SectionProps) {
             <div className="h-1 w-full rounded-t-2xl" style={{ backgroundColor: selectedContaminant.color }} />
             <div className="p-6">
               {/* Header */}
-              <div className="flex items-center gap-3 mb-4 pr-8">
-                <span
-                  className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-xl text-xl"
-                  style={{ backgroundColor: `${selectedContaminant.color}22` }}
-                >
-                  {selectedContaminant.icon}
+              <div className="mb-4 pr-8">
+                <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-semibold mb-2 ${BADGE_CLASS[selectedContaminant.category] ?? ''}`}>
+                  {t(`contaminant.category.${selectedContaminant.category}`)}
                 </span>
-                <div>
-                  <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-semibold mb-1 ${BADGE_CLASS[selectedContaminant.category] ?? ''}`}>
-                    {t(`contaminant.category.${selectedContaminant.category}`)}
-                  </span>
-                  <h3 className="text-lg font-bold text-white leading-tight">
-                    {t(selectedContaminant.nameKey)}
-                  </h3>
-                </div>
+                <h3 className="text-lg font-bold text-white leading-tight">
+                  {t(selectedContaminant.nameKey)}
+                </h3>
               </div>
 
               <p className="text-slate-300 text-sm leading-relaxed mb-5">

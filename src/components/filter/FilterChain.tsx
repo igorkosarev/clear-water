@@ -1,7 +1,6 @@
 import { useMemo } from 'react'
-import { motion } from 'framer-motion'
 import { FilterUnit } from './FilterUnit'
-import { FILTER_VISUAL_CONFIG } from './FilterTypes'
+import { FILTER_TYPE_CONFIG } from './FilterTypes'
 import type { FilterType } from './FilterTypes'
 import type { ContaminantId } from '@/types'
 
@@ -12,50 +11,27 @@ interface FilterChainProps {
   onFilterClick?: (index: number, type: FilterType) => void
 }
 
-// Three-dot animated connector between filter units
-function FlowConnector({ delay = 0 }: { delay?: number }) {
-  return (
-    <div className="flex items-center gap-0.5 flex-shrink-0">
-      {[0, 1, 2].map(i => (
-        <motion.div
-          key={i}
-          className="w-1.5 h-1.5 rounded-full bg-blue-400"
-          animate={{ opacity: [0.15, 0.9, 0.15] }}
-          transition={{
-            duration: 1.2,
-            repeat: Infinity,
-            delay: delay + i * 0.22,
-            ease: 'easeInOut',
-          }}
-        />
-      ))}
-    </div>
-  )
-}
-
 export function FilterChain({
   filters,
   inputContaminants,
   animated = false,
   onFilterClick,
 }: FilterChainProps) {
-  // Propagate contaminant state: stageContaminants[i] = contaminants entering filter i
-  // stageContaminants[filters.length] = contaminants exiting the last filter
   const stageContaminants = useMemo<ContaminantId[][]>(() => {
     const stages: ContaminantId[][] = [inputContaminants]
     let current = [...inputContaminants]
     for (const f of filters) {
-      current = current.filter(id => !FILTER_VISUAL_CONFIG[f].removes.includes(id))
+      current = current.filter(id => !FILTER_TYPE_CONFIG[f].removes.includes(id))
       stages.push(current)
     }
     return stages
   }, [filters, inputContaminants])
 
   return (
-    <div className="flex items-center gap-2 flex-wrap">
+    <div className="flex flex-col items-center w-full gap-0">
       {filters.map((type, i) => (
-        <div key={i} className="flex items-center gap-2">
-          {i > 0 && <FlowConnector delay={i * 0.4} />}
+        <div key={i} className="w-full flex flex-col items-center">
+          {i > 0 && <div className="w-0.5 h-4 bg-slate-700" />}
           <FilterUnit
             type={type}
             inputContaminants={stageContaminants[i]}

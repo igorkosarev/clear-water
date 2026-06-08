@@ -1,117 +1,77 @@
+import {
+  Layers, Zap, Droplets, CircleDot, Sun, Waves, AlignJustify, Flame, FlaskConical, Gauge,
+} from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 import type { FilterType } from '@/types'
 
 export type { FilterType }
 
-export interface FilterVisualConfig {
+export interface FilterTypeConfig {
+  color: string      // hex accent colour
   label: string
-  textColor: string
-  bgColor: string
-  borderColor: string
-  accentBg: string    // colored top-bar accent
-  glowRgb: string     // raw RGB for animated box-shadow, e.g. '217,119,6'
-  iconName: string    // Lucide icon component name
-  removes: string[]   // canonical contaminant IDs this filter type removes
+  Icon: LucideIcon
+  removes: string[]  // canonical contaminant IDs this type removes
 }
 
-export const FILTER_VISUAL_CONFIG: Record<FilterType, FilterVisualConfig> = {
+export const FILTER_TYPE_CONFIG: Record<FilterType, FilterTypeConfig> = {
   sediment: {
-    label: 'Sediment',
-    textColor: 'text-amber-700',
-    bgColor: 'bg-amber-50',
-    borderColor: 'border-amber-300',
-    accentBg: 'bg-amber-400',
-    glowRgb: '217,119,6',
-    iconName: 'Layers',
+    color: '#a8a29e',
+    label: 'Sediment Filter',
+    Icon: Layers,
     removes: ['turbidity'],
   },
   activated_carbon: {
+    color: '#475569',
     label: 'Activated Carbon',
-    textColor: 'text-slate-700',
-    bgColor: 'bg-slate-50',
-    borderColor: 'border-slate-300',
-    accentBg: 'bg-slate-400',
-    glowRgb: '100,116,139',
-    iconName: 'Zap',
+    Icon: Zap,
     removes: ['chlorine', 'heavy_metals'],
   },
   biosand: {
-    label: 'Biosand',
-    textColor: 'text-yellow-800',
-    bgColor: 'bg-yellow-50',
-    borderColor: 'border-yellow-300',
-    accentBg: 'bg-yellow-500',
-    glowRgb: '161,98,7',
-    iconName: 'Droplets',
+    color: '#92400e',
+    label: 'Biosand Filter',
+    Icon: Droplets,
     removes: ['bacteria', 'protozoa', 'turbidity'],
   },
   ceramic: {
-    label: 'Ceramic',
-    textColor: 'text-orange-700',
-    bgColor: 'bg-orange-50',
-    borderColor: 'border-orange-300',
-    accentBg: 'bg-orange-400',
-    glowRgb: '194,65,12',
-    iconName: 'CircleDot',
+    color: '#d97706',
+    label: 'Ceramic Filter',
+    Icon: CircleDot,
     removes: ['bacteria', 'protozoa', 'turbidity'],
   },
   uv: {
+    color: '#a855f7',
     label: 'UV Disinfection',
-    textColor: 'text-purple-700',
-    bgColor: 'bg-purple-50',
-    borderColor: 'border-purple-300',
-    accentBg: 'bg-purple-400',
-    glowRgb: '126,34,206',
-    iconName: 'Sun',
+    Icon: Sun,
     removes: ['bacteria', 'viruses', 'protozoa'],
   },
   ro: {
+    color: '#0284c7',
     label: 'Reverse Osmosis',
-    textColor: 'text-blue-700',
-    bgColor: 'bg-blue-50',
-    borderColor: 'border-blue-300',
-    accentBg: 'bg-blue-400',
-    glowRgb: '29,78,216',
-    iconName: 'Waves',
+    Icon: Waves,
     removes: ['bacteria', 'viruses', 'protozoa', 'heavy_metals', 'nitrates', 'fluoride'],
   },
   slow_sand: {
-    label: 'Slow Sand',
-    textColor: 'text-lime-700',
-    bgColor: 'bg-lime-50',
-    borderColor: 'border-lime-300',
-    accentBg: 'bg-lime-500',
-    glowRgb: '77,124,15',
-    iconName: 'AlignJustify',
+    color: '#78716c',
+    label: 'Slow Sand Filter',
+    Icon: AlignJustify,
     removes: ['bacteria', 'protozoa', 'turbidity'],
   },
   boiling: {
+    color: '#ef4444',
     label: 'Boiling',
-    textColor: 'text-red-700',
-    bgColor: 'bg-red-50',
-    borderColor: 'border-red-300',
-    accentBg: 'bg-red-400',
-    glowRgb: '185,28,28',
-    iconName: 'Flame',
+    Icon: Flame,
     removes: ['bacteria', 'viruses', 'protozoa'],
   },
   chlorination: {
+    color: '#4ade80',
     label: 'Chlorination',
-    textColor: 'text-teal-700',
-    bgColor: 'bg-teal-50',
-    borderColor: 'border-teal-300',
-    accentBg: 'bg-teal-400',
-    glowRgb: '15,118,110',
-    iconName: 'FlaskConical',
+    Icon: FlaskConical,
     removes: ['bacteria', 'viruses'],
   },
   booster_pump: {
+    color: '#8b5cf6',
     label: 'Booster Pump',
-    textColor: 'text-green-700',
-    bgColor: 'bg-green-50',
-    borderColor: 'border-green-300',
-    accentBg: 'bg-green-500',
-    glowRgb: '21,128,61',
-    iconName: 'Gauge',
+    Icon: Gauge,
     removes: [],
   },
 }

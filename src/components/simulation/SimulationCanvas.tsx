@@ -1,261 +1,220 @@
-import { useRef, useState, useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import { motion } from 'framer-motion'
-import { FILTER_VISUAL_CONFIG } from '@/components/filter/FilterTypes'
+import { Droplets, CheckCircle, AlertTriangle } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { FilterUnit } from '@/components/filter/FilterUnit'
+import { FILTER_TYPE_CONFIG } from '@/components/filter/FilterTypes'
 import type { FilterType } from '@/components/filter/FilterTypes'
 import type { ContaminantId, Contaminant } from '@/types'
 import contaminantsData from '@/data/contaminants.json'
 
-const PARTICLE_R = 7          // particle radius in px
-const PARTICLE_D = PARTICLE_R * 2
-const ANIM_DURATION = 3.8     // seconds to traverse the full track
-const FADE_DURATION = 0.35    // seconds for the "pop" fade at removal
-const REPEAT_DELAY = 0.7      // seconds between loops
+// ── Layout constants ──────────────────────────────────────────────────────────
+
+const PIPE_W = 40        // pipe visual width in px
+const PIPE_H = 52        // pipe segment height in px
+const PARTICLE_PX = 5   // particle diameter in px
+const HALF_PX = PARTICLE_PX >> 1
+
+// ── Deterministic particle slot definitions ───────────────────────────────────
+// Each slot: [xOffset from pipe centre (px), delay (s), duration (s)]
+// 8 slots — for up to 8 contaminants, 2 particles each (slot i and slot i+4)
+
+type Slot = readonly [number, number, number]
+
+const SLOTS: Slot[] = [
+  [-9, 0.0, 2.2],
+  [ 7, 1.5, 2.7],
+  [ 8, 0.7, 2.9],
+  [-4, 2.1, 2.1],
+  [-3, 1.3, 2.5],
+  [ 6, 0.2, 3.0],
+  [ 4, 1.9, 2.3],
+  [-8, 0.9, 2.8],
+]
+
+const SLOTS_LEN = SLOTS.length   // 8
+const HALF_SLOTS = SLOTS_LEN >> 1  // 4
+
+// ── Local components ──────────────────────────────────────────────────────────
+
+interface Particle {
+  id: string
+  x: number
+  delay: number
+  dur: number
+  color: string
+}
+
+function buildParticles(contaminants: Contaminant[]): Particle[] {
+  return contaminants.flatMap((c, j) => {
+    const [x0, delay0, dur0] = SLOTS[j % SLOTS_LEN]
+    const [x1, delay1, dur1] = SLOTS[(j + HALF_SLOTS) % SLOTS_LEN]
+    return [
+      { id: `${c.id}-a`, x: x0, delay: delay0, dur: dur0, color: c.color },
+      { id: `${c.id}-b`, x: x1, delay: delay1, dur: dur1, color: c.color },
+    ]
+  })
+}
+
+function PipeSegment({ contaminants }: { contaminants: Contaminant[] }) {
+  const particles = useMemo(() => buildParticles(contaminants), [contaminants])
+
+  return (
+    <div
+      className="relative mx-auto flex-shrink-0"
+      style={{ width: PIPE_W, height: PIPE_H, overflow: 'visible' }}
+      aria-hidden
+    >
+      {/* Tube visual */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: 'linear-gradient(to right, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
+          border: '1px solid #334155',
+          borderRadius: 4,
+        }}
+      />
+      {/* Flowing particles */}
+      {particles.map(p => (
+        <motion.div
+          key={p.id}
+          className="absolute rounded-full pointer-events-none"
+          style={{
+            width: PARTICLE_PX,
+            height: PARTICLE_PX,
+            left: `calc(50% + ${p.x}px - ${HALF_PX}px)`,
+            top: 0,
+            backgroundColor: p.color,
+            boxShadow: `0 0 5px ${p.color}`,
+          }}
+          animate={{ y: [-PARTICLE_PX, PIPE_H + PARTICLE_PX] }}
+          transition={{ duration: p.dur, delay: p.delay, repeat: Infinity, ease: 'linear' as const }}
+        />
+      ))}
+    </div>
+  )
+}
+
+function ContaminantChip({ contaminant }: { contaminant: Contaminant }) {
+  const { t } = useTranslation()
+  return (
+    <span
+      className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium"
+      style={{
+        backgroundColor: `${contaminant.color}22`,
+        color: contaminant.color,
+        border: `1px solid ${contaminant.color}44`,
+      }}
+    >
+      <span
+        className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+        style={{ backgroundColor: contaminant.color }}
+      />
+      {t(contaminant.nameKey, { defaultValue: contaminant.id.replace(/_/g, ' ') })}
+    </span>
+  )
+}
+
+// ── Main component ────────────────────────────────────────────────────────────
 
 interface SimulationCanvasProps {
   filters: FilterType[]
   inputContaminants: ContaminantId[]
 }
 
-interface ParticleData {
-  id: ContaminantId
-  contaminant: Contaminant
-  removalIndex: number   // -1 = passes through
-  staggerDelay: number
-}
-
 export function SimulationCanvas({ filters, inputContaminants }: SimulationCanvasProps) {
-  const trackRef = useRef<HTMLDivElement>(null)
-  const [trackWidth, setTrackWidth] = useState(0)
-
-  // Measure track width; update on resize
-  useEffect(() => {
-    const el = trackRef.current
-    if (!el) return
-    const ro = new ResizeObserver(entries => {
-      setTrackWidth(entries[0].contentRect.width)
-    })
-    ro.observe(el)
-    return () => ro.disconnect()
-  }, [])
-
   const contaminantMap = useMemo(() => {
-    const m = new Map<string, Contaminant>()
+    const m = new Map<ContaminantId, Contaminant>()
     ;(contaminantsData as Contaminant[]).forEach(c => m.set(c.id, c))
     return m
   }, [])
 
-  // Propagate contaminant state through filter chain
+  // stageContaminants[i] = contaminant IDs entering filter i
   const stageContaminants = useMemo<ContaminantId[][]>(() => {
     const stages: ContaminantId[][] = [inputContaminants]
     let current = [...inputContaminants]
     for (const f of filters) {
-      current = current.filter(id => !FILTER_VISUAL_CONFIG[f].removes.includes(id))
+      current = current.filter(id => !FILTER_TYPE_CONFIG[f].removes.includes(id))
       stages.push(current)
     }
     return stages
   }, [filters, inputContaminants])
 
-  const remainingContaminants = stageContaminants[stageContaminants.length - 1]
-  const allClear = remainingContaminants.length === 0
-
-  // Build particle data (only for known contaminants)
-  const particles = useMemo<ParticleData[]>(() => {
-    return inputContaminants
-      .map((id, idx) => {
-        const contaminant = contaminantMap.get(id)
-        if (!contaminant) return null
-        const removalIndex = filters.findIndex(f =>
-          FILTER_VISUAL_CONFIG[f].removes.includes(id)
-        )
-        return {
-          id,
-          contaminant,
-          removalIndex,
-          staggerDelay: idx * 0.55,
-        } satisfies ParticleData
-      })
-      .filter((p): p is ParticleData => p !== null)
-  }, [inputContaminants, filters, contaminantMap])
-
-  // X position of filter i on the track (center of filter zone)
-  const filterXPositions = useMemo(
-    () => filters.map((_, i) => Math.round(((i + 1) / (filters.length + 1)) * trackWidth)),
-    [filters, trackWidth]
+  // Resolve contaminant objects for each stage (stable reference when stageContaminants is stable)
+  const stageObjects = useMemo<Contaminant[][]>(
+    () =>
+      stageContaminants.map(ids =>
+        ids.map(id => contaminantMap.get(id)).filter((c): c is Contaminant => c !== undefined)
+      ),
+    [stageContaminants, contaminantMap]
   )
 
-  // Animate key: force particle remount when layout changes
-  const animKey = `${filters.join('.')}-${trackWidth}`
+  const inputObjects = stageObjects[0]
+  const remainingObjects = stageObjects[stageObjects.length - 1]
+  const allClear = remainingObjects.length === 0
 
   return (
-    <div className="w-full rounded-xl bg-gradient-to-b from-white to-blue-50 border border-blue-100 overflow-x-auto">
-      <div className="min-w-[360px] p-4 sm:p-6 space-y-5">
-
-        {/* ── Filter chain ── */}
-        <div className="flex items-end justify-around gap-3">
-          {/* Input label */}
-          <div className="flex flex-col items-center gap-1 text-xs text-slate-400 flex-shrink-0">
-            <span className="text-xl">🚰</span>
-            <span className="font-medium">Input</span>
-          </div>
-
-          {/* Filters with connectors */}
-          <div className="flex items-center gap-2 flex-wrap justify-center flex-1">
-            {filters.map((type, i) => (
-              <div key={i} className="flex items-center gap-2">
-                {i > 0 && (
-                  <div className="flex items-center gap-0.5 flex-shrink-0">
-                    {[0, 1, 2].map(j => (
-                      <motion.div
-                        key={j}
-                        className="w-1.5 h-1.5 rounded-full bg-blue-300"
-                        animate={{ opacity: [0.15, 1, 0.15] }}
-                        transition={{
-                          duration: 1.2,
-                          repeat: Infinity,
-                          delay: i * 0.35 + j * 0.2,
-                          ease: 'easeInOut',
-                        }}
-                      />
-                    ))}
-                  </div>
-                )}
-                <FilterUnit
-                  type={type}
-                  inputContaminants={stageContaminants[i]}
-                  outputContaminants={stageContaminants[i + 1]}
-                  animated
-                />
-              </div>
-            ))}
-          </div>
-
-          {/* Output label */}
-          <div className="flex flex-col items-center gap-1 text-xs flex-shrink-0">
-            <span className="text-xl">{allClear ? '✅' : '⚠️'}</span>
-            <span className={`font-medium ${allClear ? 'text-green-600' : 'text-amber-600'}`}>
-              {allClear ? 'Clean' : 'Partial'}
-            </span>
-          </div>
+    <div className="flex flex-col items-center w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto">
+      {/* ── Inlet ── */}
+      <div className="w-full rounded-2xl bg-slate-900/80 border border-slate-800 p-4">
+        <div className="flex items-center gap-2 mb-3">
+          <Droplets size={14} className="text-blue-400 flex-shrink-0" />
+          <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+            Water In
+          </span>
         </div>
-
-        {/* ── Animated water track ── */}
-        <div
-          ref={trackRef}
-          className="relative h-10 rounded-full bg-blue-100 border border-blue-200 overflow-hidden"
-          aria-hidden
-        >
-          {/* Shimmer — flowing water illusion */}
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none"
-            animate={{ x: ['-100%', '200%'] }}
-            transition={{ duration: 3, repeat: Infinity, ease: 'linear', repeatDelay: 0.3 }}
-          />
-
-          {/* Filter zone dividers */}
-          {filterXPositions.map((xPx, i) => (
-            <div
-              key={i}
-              className="absolute top-1 bottom-1 w-px bg-blue-300/70"
-              style={{ left: xPx }}
-            />
+        <div className="flex flex-wrap gap-1.5">
+          {inputObjects.map(c => (
+            <ContaminantChip key={c.id} contaminant={c} />
           ))}
-
-          {/* Particles */}
-          {trackWidth > 0 &&
-            particles.map(p => {
-              const removed = p.removalIndex !== -1
-              const removalXPx = removed
-                ? filterXPositions[p.removalIndex] ?? trackWidth
-                : trackWidth + PARTICLE_D
-
-              // Fraction of the track the particle travels (0–1) before removal / exit
-              const travelFraction = Math.min(removalXPx / trackWidth, 1)
-
-              // Proportional travel duration so velocity stays constant
-              const travelDuration = ANIM_DURATION * travelFraction
-
-              const xStart = -PARTICLE_R
-              const xEnd = removalXPx - PARTICLE_R
-
-              return (
-                <motion.div
-                  key={`${animKey}-${p.id}`}
-                  className="absolute rounded-full"
-                  style={{
-                    width: PARTICLE_D,
-                    height: PARTICLE_D,
-                    top: `calc(50% - ${PARTICLE_R}px)`,
-                    // Dynamic data-driven color — no Tailwind equivalent for arbitrary hex
-                    backgroundColor: p.contaminant.color,
-                    boxShadow: `0 0 7px 2px ${p.contaminant.color}66`,
-                  }}
-                  initial={{ x: xStart, opacity: 1, scale: 1 }}
-                  animate={
-                    removed
-                      ? {
-                          x: [xStart, xEnd, xEnd],
-                          opacity: [1, 0.95, 0],
-                          scale: [1, 1.45, 0],
-                        }
-                      : {
-                          x: [xStart, xEnd],
-                          opacity: [1, 0.85],
-                          scale: [1, 1],
-                        }
-                  }
-                  transition={
-                    removed
-                      ? {
-                          duration: travelDuration + FADE_DURATION,
-                          times: [
-                            0,
-                            travelDuration / (travelDuration + FADE_DURATION) - 0.005,
-                            1,
-                          ],
-                          ease: 'linear',
-                          repeat: Infinity,
-                          repeatDelay: REPEAT_DELAY,
-                          delay: p.staggerDelay,
-                        }
-                      : {
-                          duration: travelDuration,
-                          ease: 'linear',
-                          repeat: Infinity,
-                          repeatDelay: REPEAT_DELAY,
-                          delay: p.staggerDelay,
-                        }
-                  }
-                />
-              )
-            })}
         </div>
+      </div>
 
-        {/* ── Legend ── */}
-        {particles.length > 0 && (
-          <div className="flex flex-wrap gap-2">
-            {particles.map(p => {
-              const isRemoved = !remainingContaminants.includes(p.id)
-              return (
-                <span
-                  key={p.id}
-                  className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium transition-opacity duration-500 ${isRemoved ? 'opacity-40' : 'opacity-100'}`}
-                  // Dynamic data-driven colors
-                  style={{
-                    backgroundColor: p.contaminant.color + '1a',
-                    color: p.contaminant.color,
-                    border: `1px solid ${p.contaminant.color}44`,
-                  }}
-                >
-                  <span
-                    className="w-2 h-2 rounded-full flex-shrink-0"
-                    style={{ backgroundColor: p.contaminant.color }}
-                  />
-                  {p.id.replace('_', ' ')}
-                  {isRemoved ? ' ✓' : ' ⚠'}
-                </span>
-              )
-            })}
+      {/* ── Filter stages with animated pipes ── */}
+      {filters.map((f, i) => (
+        <div key={i} className="w-full flex flex-col items-center">
+          <PipeSegment contaminants={stageObjects[i]} />
+          <FilterUnit
+            type={f}
+            inputContaminants={stageContaminants[i]}
+            outputContaminants={stageContaminants[i + 1]}
+            animated
+          />
+        </div>
+      ))}
+
+      {/* ── Final pipe after last filter ── */}
+      <PipeSegment contaminants={remainingObjects} />
+
+      {/* ── Outlet ── */}
+      <div
+        className="w-full rounded-2xl border p-4"
+        style={{
+          backgroundColor: allClear ? 'rgba(5,46,22,0.35)' : 'rgba(69,26,3,0.35)',
+          borderColor: allClear ? 'rgba(34,197,94,0.35)' : 'rgba(245,158,11,0.35)',
+        }}
+      >
+        <div className="flex items-center gap-2 mb-3">
+          {allClear ? (
+            <CheckCircle size={14} className="text-emerald-400 flex-shrink-0" />
+          ) : (
+            <AlertTriangle size={14} className="text-amber-400 flex-shrink-0" />
+          )}
+          <span
+            className={`text-xs font-semibold uppercase tracking-wider ${
+              allClear ? 'text-emerald-400' : 'text-amber-400'
+            }`}
+          >
+            {allClear ? 'Clean Water' : 'Partially Filtered'}
+          </span>
+        </div>
+        {allClear ? (
+          <p className="text-xs text-emerald-500/60">All detected contaminants removed</p>
+        ) : (
+          <div className="flex flex-wrap gap-1.5">
+            {remainingObjects.map(c => (
+              <ContaminantChip key={c.id} contaminant={c} />
+            ))}
           </div>
         )}
       </div>

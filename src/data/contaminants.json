@@ -361,5 +361,137 @@
     "category": "radiological",
     "icon": "⚛️",
     "color": "#86efac"
+  },
+  {
+    "id": "ph_low",
+    "nameKey": "contaminants.ph_low.name",
+    "descriptionKey": "contaminants.ph_low.description",
+    "sourcesKey": "contaminants.ph_low.sources",
+    "healthRisksKey": "contaminants.ph_low.healthRisks",
+    "detectionKey": "contaminants.ph_low.detection",
+    "category": "physical",
+    "icon": "📉",
+    "color": "#fb923c"
+  },
+  {
+    "id": "ph_high",
+    "nameKey": "contaminants.ph_high.name",
+    "descriptionKey": "contaminants.ph_high.description",
+    "sourcesKey": "contaminants.ph_high.sources",
+    "healthRisksKey": "contaminants.ph_high.healthRisks",
+    "detectionKey": "contaminants.ph_high.detection",
+    "category": "physical",
+    "icon": "📈",
+    "color": "#2dd4bf"
+  },
+  {
+    "id": "chloramines",
+    "nameKey": "contaminants.chloramines.name",
+    "descriptionKey": "contaminants.chloramines.description",
+    "sourcesKey": "contaminants.chloramines.sources",
+    "healthRisksKey": "contaminants.chloramines.healthRisks",
+    "detectionKey": "contaminants.chloramines.detection",
+    "category": "chemical",
+    "icon": "🧪",
+    "color": "#bef264"
+  },
+  {
+    "id": "disinfection_byproducts",
+    "nameKey": "contaminants.disinfection_byproducts.name",
+    "descriptionKey": "contaminants.disinfection_byproducts.description",
+    "sourcesKey": "contaminants.disinfection_byproducts.sources",
+    "healthRisksKey": "contaminants.disinfection_byproducts.healthRisks",
+    "detectionKey": "contaminants.disinfection_byproducts.detection",
+    "category": "chemical",
+    "icon": "⚠️",
+    "color": "#d97706"
+  },
+  {
+    "id": "sulfate",
+    "nameKey": "contaminants.sulfate.name",
+    "descriptionKey": "contaminants.sulfate.description",
+    "sourcesKey": "contaminants.sulfate.sources",
+    "healthRisksKey": "contaminants.sulfate.healthRisks",
+    "detectionKey": "contaminants.sulfate.detection",
+    "category": "chemical",
+    "icon": "🔬",
+    "color": "#94a3b8"
+  },
+  {
+    "id": "chloride",
+    "nameKey": "contaminants.chloride.name",
+    "descriptionKey": "contaminants.chloride.description",
+    "sourcesKey": "contaminants.chloride.sources",
+    "healthRisksKey": "contaminants.chloride.healthRisks",
+    "detectionKey": "contaminants.chloride.detection",
+    "category": "chemical",
+    "icon": "💧",
+    "color": "#38bdf8"
+  },
+  {
+    "id": "sodium",
+    "nameKey": "contaminants.sodium.name",
+    "descriptionKey": "contaminants.sodium.description",
+    "sourcesKey": "contaminants.sodium.sources",
+    "healthRisksKey": "contaminants.sodium.healthRisks",
+    "detectionKey": "contaminants.sodium.detection",
+    "category": "chemical",
+    "icon": "⚖️",
+    "color": "#fbbf24"
+  },
+  {
+    "id": "aluminum",
+    "nameKey": "contaminants.aluminum.name",
+    "descriptionKey": "contaminants.aluminum.description",
+    "sourcesKey": "contaminants.aluminum.sources",
+    "healthRisksKey": "contaminants.aluminum.healthRisks",
+    "detectionKey": "contaminants.aluminum.detection",
+    "category": "chemical",
+    "icon": "🔵",
+    "color": "#93c5fd"
+  },
+  {
+    "id": "nickel",
+    "nameKey": "contaminants.nickel.name",
+    "descriptionKey": "contaminants.nickel.description",
+    "sourcesKey": "contaminants.nickel.sources",
+    "healthRisksKey": "contaminants.nickel.healthRisks",
+    "detectionKey": "contaminants.nickel.detection",
+    "category": "chemical",
+    "icon": "🔘",
+    "color": "#86efac"
+  },
+  {
+    "id": "selenium",
+    "nameKey": "contaminants.selenium.name",
+    "descriptionKey": "contaminants.selenium.description",
+    "sourcesKey": "contaminants.selenium.sources",
+    "healthRisksKey": "contaminants.selenium.healthRisks",
+    "detectionKey": "contaminants.selenium.detection",
+    "category": "chemical",
+    "icon": "🔍",
+    "color": "#f97316"
+  },
+  {
+    "id": "barium",
+    "nameKey": "contaminants.barium.name",
+    "descriptionKey": "contaminants.barium.description",
+    "sourcesKey": "contaminants.barium.sources",
+    "healthRisksKey": "contaminants.barium.healthRisks",
+    "detectionKey": "contaminants.barium.detection",
+    "category": "chemical",
+    "icon": "📊",
+    "color": "#c084fc"
+  },
+  {
+    "id": "asbestos",
+    "nameKey": "contaminants.asbestos.name",
+    "descriptionKey": "contaminants.asbestos.description",
+    "sourcesKey": "contaminants.asbestos.sources",
+    "healthRisksKey": "contaminants.asbestos.healthRisks",
+    "detectionKey": "contaminants.asbestos.detection",
+    "category": "physical",
+    "icon": "🧵",
+    "color": "#9ca3af"
   }
 ]

@@ -5,6 +5,8 @@ import {
   Sprout, Bug, Scissors, Infinity, Wind, Flame,
   Diamond, Magnet, Atom, GlassWater, Cloud,
   Pill, Activity, RadioTower, AlertOctagon, Zap,
+  TrendingDown, TrendingUp, Pipette, ShieldAlert, Sigma,
+  Droplet, Scale, Beaker, CircleDot, Scan, BarChart2, LayoutGrid,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
@@ -59,6 +61,26 @@ export const CONTAMINANT_ICONS: Record<string, LucideIcon> = {
   uranium:           RadioTower,
   radon:             AlertOctagon,
   radionuclides:     Zap,
+
+  // Physical — water properties
+  ph_low:            TrendingDown,
+  ph_high:           TrendingUp,
+  asbestos:          LayoutGrid,
+
+  // Chemical — disinfection-related
+  chloramines:              Pipette,
+  disinfection_byproducts:  ShieldAlert,
+
+  // Chemical — common ions
+  sulfate:           Sigma,
+  chloride:          Droplet,
+  sodium:            Scale,
+
+  // Chemical — secondary metals
+  aluminum:          Beaker,
+  nickel:            CircleDot,
+  selenium:          Scan,
+  barium:            BarChart2,
 }
 
 export const CATEGORY_ORDER = ['biological', 'physical', 'chemical', 'radiological'] as const

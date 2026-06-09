@@ -464,6 +464,90 @@
       "sources": "Natural radionuclides: radium-226 and radium-228 (from uranium and thorium decay chains), polonium-210, and gross alpha and beta radiation from geological sources. Anthropogenic sources: nuclear power plant discharges (tritium, cesium-137), fallout from historical nuclear weapons testing (strontium-90, plutonium), and mining waste tailings containing concentrated natural radionuclides.",
       "healthRisks": "Health risk depends on the isotope, concentration, and duration of exposure. Ionising radiation damages DNA and increases cancer risk proportionally with dose (no threshold). Radium-226 and Ra-228 are bone-seeking isotopes with long biological half-lives. WHO sets guidelines for total indicative dose from radionuclides at 0.1 mSv per year, with screening values for individual isotopes. Most naturally occurring radioactivity in drinking water is at low levels that represent minimal risk.",
       "detection": "Gross alpha and gross beta screening tests provide a first-pass indication; positive results trigger isotope-specific analysis by alpha or beta spectrometry. ICP-MS can detect uranium and other radionuclides. Monitoring is required by regulation for all public water supplies in most countries. Private wells in high-risk geological areas should be tested."
+    },
+    "ph_low": {
+      "name": "Low pH (Acidic Water)",
+      "description": "Water with pH below 6.5 is corrosive and dissolves heavy metals from pipes and plumbing fixtures into the water supply.",
+      "sources": "Natural organic acids from peat or decaying vegetation, acid rain in industrial regions, CO₂ dissolution forming carbonic acid, acid mine drainage from mining sites, and naturally soft water with low buffering capacity. Distilled and reverse osmosis water is typically acidic without remineralisation.",
+      "healthRisks": "Acidic water itself is not directly toxic at drinking water pH ranges, but it aggressively leaches lead, copper, cadmium, and zinc from household plumbing. The resulting metal contamination carries significant health risks. WHO recommends pH 6.5–8.5 for drinking water. Corrosive water also deteriorates pipes and water heaters.",
+      "detection": "pH meters provide accurate real-time readings; calibrate regularly. pH test strips (4.0–8.0 range) give quick field estimates. Most water quality lab reports include pH. Check in the morning after water has sat in pipes overnight — first-flush sampling reveals worst-case corrosion effects."
+    },
+    "ph_high": {
+      "name": "High pH (Alkaline Water)",
+      "description": "Water with pH above 8.5 is alkaline, affects the efficiency of disinfection, and may cause scale buildup.",
+      "sources": "Limestone and dolomite geology naturally raises groundwater pH. Concrete water mains leach lime into water. Water softening processes raise pH. Industrial discharge from cement, lime, or pulp and paper industries. Algae blooms can temporarily drive pH above 9.0 through photosynthesis.",
+      "healthRisks": "High pH water is not acutely toxic, but significantly reduces chlorine disinfection efficiency — at pH 9.0, chlorine is 10× less effective than at pH 6.0. Hard alkaline water causes scale deposits in pipes and appliances. Very high pH (above 11) causes skin and eye irritation. WHO recommends pH 6.5–8.5.",
+      "detection": "pH meter or test strips. Standard water quality reports include pH measurement. Municipal systems monitor and adjust pH as part of routine treatment. For private wells, test annually or after changes in water taste or scale formation."
+    },
+    "chloramines": {
+      "name": "Chloramines",
+      "description": "Chloramines are secondary disinfectants used in municipal water systems that persist longer than chlorine but are harder to remove.",
+      "sources": "Deliberately added by many municipal water utilities as a longer-lasting alternative to free chlorine. Formed when chlorine reacts with ammonia — either added intentionally or present in source water. Chloramination reduces the formation of some trihalomethanes but creates other disinfection byproducts.",
+      "healthRisks": "Chloramines can cause skin irritation and rashes in sensitive individuals. Highly dangerous for kidney dialysis patients — must be completely removed before dialysis water. Aquarium fish are highly sensitive to chloramines; standard dechlorinating products do not remove them. Some studies link long-term exposure to iodoacetic acid formation, a genotoxic chloramine byproduct.",
+      "detection": "Standard free-chlorine test strips do not detect chloramines. DPD-based total chlorine tests detect combined chlorine. Chloramine-specific test kits are available. Check your municipal water quality report — suppliers are required to disclose when chloramines are used."
+    },
+    "disinfection_byproducts": {
+      "name": "Disinfection Byproducts (DBPs)",
+      "description": "THMs and HAAs formed when chlorine or chloramines react with natural organic matter in water — a regulated but persistent public health concern.",
+      "sources": "Formed during chlorination or chloramination when disinfectants react with naturally occurring organic matter such as humic and fulvic acids. Surface water with higher organic content produces more DBPs than groundwater. Seasonal variation is significant — warm water and higher organic loads in summer increase DBP formation. Heating chlorinated tap water (boiling, showering) may increase DBP exposure via volatilisation.",
+      "healthRisks": "Long-term exposure to trihalomethanes (chloroform, bromodichloromethane, bromoform) is associated with increased risk of bladder cancer. Haloacetic acids (HAAs) are genotoxic in animal studies. WHO and EPA regulate total THMs at 80 µg/L and HAAs at 60 µg/L. Inhalation during showering and bathing is a significant exposure route beyond drinking.",
+      "detection": "DBPs cannot be detected by taste or smell at regulatory levels. Laboratory analysis (GC-MS) required. Municipal water quality reports publish annual average THM and HAA levels — review your local Consumer Confidence Report. Activated carbon at the point of use reduces DBP exposure from drinking water."
+    },
+    "sulfate": {
+      "name": "Sulfate",
+      "description": "Naturally occurring mineral ion that causes laxative effects at high concentrations and contributes to pipe corrosion.",
+      "sources": "Dissolution of gypsum, pyrite, and other sulfur-containing minerals in geological formations. Acid rain oxidises sulfur compounds increasing sulfate in surface water. Industrial discharge from mining, smelting, and manufacturing. Decomposition of organic matter in anaerobic conditions produces sulfate. Seawater intrusion into coastal aquifers.",
+      "healthRisks": "Concentrations above 250–500 mg/L cause a laxative effect, particularly in infants and travellers not accustomed to high-sulfate water. WHO has no health-based guideline but flags aesthetic concerns above 250 mg/L. High sulfate promotes sulfate-reducing bacteria that produce hydrogen sulfide (rotten egg odour) and accelerates iron and concrete pipe corrosion.",
+      "detection": "Laboratory analysis or specific ion test kits. Sulfate concentration is commonly included in comprehensive water quality panels. A sulphurous smell in water may suggest high sulfate or bacterial sulfate reduction. Annual laboratory testing recommended for private wells in areas with sulfate-bearing geology."
+    },
+    "chloride": {
+      "name": "Chloride",
+      "description": "Chloride ions affect water taste and indicate potential contamination from road salt, sewage, or seawater intrusion.",
+      "sources": "Natural geological sources from salt deposits and marine sediments. Road deicing salt is the dominant anthropogenic source in cold climates, increasingly contaminating groundwater. Sewage and septic system effluent. Agricultural fertilisers. Seawater and brackish groundwater intrusion in coastal areas.",
+      "healthRisks": "Chloride itself has no health-based guideline from WHO. Concentrations above 250 mg/L cause a salty taste and accelerate pipe corrosion. High chloride is an important indicator of sewage, road salt, or seawater contamination — all of which carry more significant health risks. Elevated chloride with elevated nitrates strongly suggests sewage or agricultural impact.",
+      "detection": "Laboratory analysis or chloride-specific test kits and strips. Salty taste is detectable above approximately 250 mg/L. Chloride is routinely measured in comprehensive water quality tests. If chloride is rising over time in a well, investigate potential road salt migration or sewage contamination."
+    },
+    "sodium": {
+      "name": "Sodium",
+      "description": "Elevated sodium in drinking water is a concern for people on low-sodium diets and is often a sign of water softening or contamination.",
+      "sources": "Ion exchange water softeners exchange calcium and magnesium for sodium, often significantly raising sodium concentration. Road salt runoff into groundwater. Seawater intrusion. Sewage and industrial wastewater. Natural dissolution from salt-bearing geological formations.",
+      "healthRisks": "People on sodium-restricted diets for hypertension or heart and kidney disease may need to monitor drinking water sodium. WHO guideline is 200 mg/L. Water softened by ion exchange can reach 100–400 mg/L sodium depending on original hardness. Infants should not consume formula made with high-sodium water. RO and distillation are the only reliable methods to reduce sodium.",
+      "detection": "Laboratory flame photometry or ICP-OES analysis. Sodium is not detectable by taste at typical drinking water concentrations. Ask your water softener installer about expected sodium output based on your water hardness. Include sodium in any comprehensive water quality test if you or household members are on sodium-restricted diets."
+    },
+    "aluminum": {
+      "name": "Aluminum",
+      "description": "Residual aluminum from water treatment coagulation or natural geology can accumulate in water supply systems.",
+      "sources": "Aluminium sulphate (alum) is the most widely used coagulant in municipal water treatment; residual aluminium remains if treatment is not optimised. Natural dissolution from acidic soils and rocks, particularly in low-pH soft water. Industrial discharge from aluminium smelting and manufacturing. Acid rain accelerates aluminium leaching from soils into surface water.",
+      "healthRisks": "WHO guideline is 0.2 mg/L for treated water. Aluminium accumulates in bone, brain, and kidney tissue with long-term high exposure. The link between aluminium and Alzheimer's disease remains contested in the scientific literature. Dialysis dementia (dialysis encephalopathy) is a confirmed risk from aluminium-contaminated dialysis water. Infants may be more sensitive due to higher absorption rates.",
+      "detection": "ICP-OES or ICP-MS laboratory analysis. Standard water quality reports from municipal systems include aluminium monitoring. Optimised coagulation-filtration at the treatment plant is the main control measure. For private wells in areas with acidic soils, include aluminium in periodic water quality testing."
+    },
+    "nickel": {
+      "name": "Nickel",
+      "description": "Nickel leaches from plumbing fixtures and fittings and is a common trace contaminant in groundwater near industrial sites.",
+      "sources": "Chrome-plated taps, fittings, and stainless steel components leach nickel, particularly in new installations and with corrosive water. Natural occurrence in ultramafic and mafic geological formations. Industrial discharge from electroplating, battery manufacturing, and mining. Nickel-containing alloys used in some water system components.",
+      "healthRisks": "WHO guideline is 0.07 mg/L. Nickel is the most common cause of allergic contact dermatitis and can trigger dermatitis through drinking water in sensitised individuals. Animal studies show carcinogenicity via inhalation; evidence for drinking water carcinogenicity is less conclusive. Elevated nickel in groundwater is a common problem in areas of mafic geology.",
+      "detection": "ICP-OES or ICP-MS laboratory analysis. First-flush sampling (first litre after overnight standing) shows worst-case leaching from plumbing. NSF 58 and NSF 42 certified filters have been tested against nickel. Flush cold water tap for 30 seconds before using for drinking to reduce first-flush nickel from fittings."
+    },
+    "selenium": {
+      "name": "Selenium",
+      "description": "Selenium is an essential trace element at low doses but toxic at elevated concentrations found in certain geological regions.",
+      "sources": "Natural leaching from selenium-rich sedimentary rocks and shales — a significant problem in parts of South and North America, China, and India. Agricultural irrigation drainage concentrates selenium from seleniferous soils. Coal combustion and fly ash disposal. Phosphate mining operations.",
+      "healthRisks": "WHO guideline is 0.04 mg/L. Selenium is an essential micronutrient at trace levels (dietary requirement ~55 µg/day) but toxic at elevated concentrations. Selenosis from chronic high intake causes hair loss, nail brittleness, neurological damage, and in severe cases paralysis. Cardiovascular effects observed at 0.1–0.3 mg/L. The margin between deficiency and toxicity is narrow.",
+      "detection": "ICP-MS or hydride generation atomic absorption spectrometry. Standard laboratory water quality panels often omit selenium — request it specifically if in a high-selenium geological area. US EPA and WHO include selenium in regulatory monitoring of public water supplies. Private wells in selenium-affected agricultural areas should be tested annually."
+    },
+    "barium": {
+      "name": "Barium",
+      "description": "Barium is a naturally occurring metal in some groundwater with cardiovascular effects at elevated concentrations.",
+      "sources": "Natural dissolution from barite (BaSO₄) and witherite (BaCO₃) mineral deposits in sedimentary rock formations. Drilling fluids from oil and gas operations. Industrial discharge from chemical manufacturing and coal combustion. Areas of evaporite geology in arid regions.",
+      "healthRisks": "WHO guideline is 0.7 mg/L. Barium causes cardiovascular effects: elevated blood pressure, cardiac arrhythmia, and muscle weakness at concentrations above the guideline. Barium sulphate is insoluble and inert (used medically as an X-ray contrast agent), but soluble barium salts are toxic. Long-term low-level exposure studies show hypertensive effects.",
+      "detection": "ICP-OES or ICP-MS laboratory analysis. Barium is not detectable by taste or odour. Include in comprehensive water quality testing for private wells in areas with barite geology or near oil and gas operations. Ion exchange softeners effectively remove barium — EPA confirms this as a best available technology."
+    },
+    "asbestos": {
+      "name": "Asbestos Fibres",
+      "description": "Microscopic asbestos fibres from deteriorating asbestos cement water mains contaminate drinking water in older infrastructure.",
+      "sources": "Asbestos cement (AC) water mains were widely installed from the 1930s through 1980s and remain in service in many cities. As pipes age, corrode, or are disturbed during construction, chrysotile and amphibole asbestos fibres are released into the water. Countries with extensive legacy AC infrastructure include the UK, Canada, Australia, and much of Eastern Europe.",
+      "healthRisks": "The carcinogenicity of ingested asbestos fibres is less certain than for inhaled fibres, but WHO classifies asbestos as a known human carcinogen and advises precautionary reduction. Some studies link high gastrointestinal asbestos fibre levels to colon and stomach cancers. Children may absorb ingested fibres more readily than adults. The risk scales with fibre concentration and duration of exposure.",
+      "detection": "Transmission electron microscopy (TEM) or phase contrast microscopy is required — asbestos fibres are invisible to the naked eye and below detection of standard turbidity measurements. Contact your water utility to determine if your area has AC mains; utilities in many countries are required to map and report their pipe material inventory. Point-of-use hollow fibre or reverse osmosis filters effectively remove fibres."
     }
   },
   "methods": {

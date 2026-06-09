@@ -3,6 +3,7 @@ import App from './App'
 import Home from './pages/Home'
 import Configurator from './pages/Configurator'
 import Contaminants from './pages/Learn/Contaminants'
+import ContaminantDetail from './pages/Learn/ContaminantDetail'
 import Methods from './pages/Learn/Methods'
 import Systems from './pages/Systems'
 import SystemDetail from './pages/Systems/SystemDetail'
@@ -19,6 +20,7 @@ export const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: 'configurator', element: <Configurator /> },
       { path: 'learn/contaminants', element: <Contaminants /> },
+      { path: 'learn/contaminants/:id', element: <ContaminantDetail /> },
       { path: 'learn/methods', element: <Methods /> },
       { path: 'systems', element: <Systems /> },
       { path: 'systems/:id', element: <SystemDetail /> },

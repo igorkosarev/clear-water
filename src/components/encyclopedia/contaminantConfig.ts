@@ -63,26 +63,30 @@ export const CONTAMINANT_ICONS: Record<string, LucideIcon> = {
 
 export const CATEGORY_ORDER = ['biological', 'physical', 'chemical', 'radiological'] as const
 
-export const CATEGORY_META: Record<string, { label: string; description: string; color: string }> = {
+export const CATEGORY_META: Record<string, { label: string; description: string; color: string; Icon: LucideIcon }> = {
   biological: {
     label: 'Biological',
     description: 'Living organisms and toxins that cause infection or illness',
     color: '#f43f5e',
+    Icon: Biohazard,
   },
   physical: {
     label: 'Physical',
     description: 'Particles, turbidity, and dissolved solids affecting water clarity',
     color: '#f59e0b',
+    Icon: Layers,
   },
   chemical: {
     label: 'Chemical',
     description: 'Dissolved inorganic compounds, metals, and synthetic chemicals',
     color: '#60a5fa',
+    Icon: FlaskConical,
   },
   radiological: {
     label: 'Radiological',
     description: 'Naturally occurring and anthropogenic radioactive contaminants',
     color: '#a78bfa',
+    Icon: Atom,
   },
 }
 

@@ -42,6 +42,27 @@ const HERO_PARTICLES: HeroParticle[] = [
 
 const ACCENT = '#ef4444'
 
+// ─── Section banner particles ─────────────────────────────────────────────────
+
+type SectionParticle = {
+  x: number; y: number; s: number
+  dur: number; dl: number
+  dx: number; dy: number
+}
+
+const SECTION_PARTICLES: SectionParticle[] = [
+  { x:  5, y: 22, s:  7, dur: 6.5, dl: 0.0, dx:  9, dy: -14 },
+  { x: 16, y: 70, s: 12, dur: 8.0, dl: 1.2, dx: -6, dy: -20 },
+  { x: 27, y: 44, s:  5, dur: 5.5, dl: 0.5, dx: 11, dy: -10 },
+  { x: 40, y: 82, s: 18, dur: 9.5, dl: 1.8, dx: -4, dy: -15 },
+  { x: 54, y: 16, s:  9, dur: 7.0, dl: 0.3, dx:  6, dy: -22 },
+  { x: 68, y: 56, s:  6, dur: 6.0, dl: 2.0, dx: -8, dy: -12 },
+  { x: 80, y: 30, s: 21, dur:10.0, dl: 0.8, dx:  4, dy: -10 },
+  { x: 91, y: 76, s: 10, dur: 7.5, dl: 1.5, dx: -5, dy: -18 },
+  { x: 47, y: 58, s:  8, dur: 5.8, dl: 1.0, dx:  7, dy: -16 },
+  { x: 11, y: 48, s: 14, dur: 8.5, dl: 0.4, dx: -3, dy: -12 },
+]
+
 // ─── Animation variants ───────────────────────────────────────────────────────
 
 const gridVariants = {
@@ -54,11 +75,6 @@ const cardVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: 'easeOut' as const } },
 }
 
-const headerVariants = {
-  hidden: { opacity: 0, x: -16 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: 'easeOut' as const } },
-}
-
 // ─── Static data ──────────────────────────────────────────────────────────────
 
 const contaminants = contaminantsData as Contaminant[]
@@ -67,6 +83,108 @@ const grouped = CATEGORY_ORDER.reduce<Record<string, Contaminant[]>>((acc, cat) 
   acc[cat] = contaminants.filter(c => c.category === cat)
   return acc
 }, {})
+
+// ─── Category banner ──────────────────────────────────────────────────────────
+
+type CategoryMeta = (typeof CATEGORY_META)[string]
+
+function CategoryBanner({ meta, count }: { meta: CategoryMeta; count: number }) {
+  const { Icon } = meta
+
+  return (
+    <motion.div
+      className="relative rounded-2xl overflow-hidden mb-8"
+      style={{ borderTop: `2px solid ${meta.color}` }}
+      initial={{ opacity: 0, y: 36 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.6, ease: 'easeOut' as const }}
+    >
+      {/* Base background */}
+      <div className="absolute inset-0 bg-slate-900" />
+
+      {/* Radial color wash */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: `radial-gradient(ellipse at 60% 50%, ${meta.color}28 0%, ${meta.color}0c 55%, transparent 80%)`,
+        }}
+      />
+
+      {/* Pulsing glow behind icon */}
+      <motion.div
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        animate={{ opacity: [0.5, 1, 0.5] }}
+        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' as const }}
+      >
+        <div
+          style={{
+            width: 380,
+            height: 380,
+            borderRadius: '50%',
+            background: `radial-gradient(circle, ${meta.color}18 0%, transparent 70%)`,
+          }}
+        />
+      </motion.div>
+
+      {/* Large background icon (centered, watermark) */}
+      <motion.div
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        style={{ color: meta.color, opacity: 0.07 }}
+        animate={{ scale: [1, 1.07, 1] }}
+        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' as const }}
+      >
+        <Icon size={300} strokeWidth={0.7} />
+      </motion.div>
+
+      {/* Floating particles */}
+      {SECTION_PARTICLES.map((p, i) => (
+        <motion.div
+          key={i}
+          className="absolute rounded-full pointer-events-none"
+          style={{
+            left: `${p.x}%`,
+            top: `${p.y}%`,
+            width: p.s,
+            height: p.s,
+            backgroundColor: meta.color,
+          }}
+          animate={{
+            x: [0, p.dx, p.dx * 0.5, 0],
+            y: [0, p.dy * 0.5, p.dy, p.dy * 0.5, 0],
+            opacity: [0, 0.38, 0.14, 0.38, 0],
+          }}
+          transition={{ duration: p.dur, delay: p.dl, repeat: Infinity, ease: 'easeInOut' as const }}
+        />
+      ))}
+
+      {/* Content */}
+      <div className="relative z-10 flex items-center justify-between gap-6 px-8 py-10 md:py-12">
+        <div>
+          <h2
+            className="text-3xl md:text-4xl font-bold text-white mb-2 tracking-tight leading-tight"
+            style={{ textShadow: `0 0 60px ${meta.color}55` }}
+          >
+            {meta.label}
+          </h2>
+          <p className="text-slate-400 text-sm leading-relaxed max-w-sm">
+            {meta.description}
+          </p>
+        </div>
+        <span
+          className="flex-shrink-0 px-5 py-2.5 rounded-full text-sm font-bold tabular-nums"
+          style={{
+            backgroundColor: `${meta.color}18`,
+            color: meta.color,
+            border: `1px solid ${meta.color}45`,
+          }}
+        >
+          {count}
+        </span>
+      </div>
+    </motion.div>
+  )
+}
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
@@ -80,7 +198,7 @@ export default function Contaminants() {
         <motion.div
           className="absolute inset-0 pointer-events-none"
           animate={{ opacity: [0.6, 1, 0.6] }}
-          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' as const }}
           style={{ background: `radial-gradient(ellipse at 50% 50%, ${ACCENT}2e 0%, ${ACCENT}0a 45%, transparent 70%)` }}
         />
 
@@ -100,7 +218,7 @@ export default function Contaminants() {
               y: [0, p.dy * 0.5, p.dy, p.dy * 0.5, 0],
               opacity: [0, 0.32, 0.12, 0.32, 0],
             }}
-            transition={{ duration: p.dur, delay: p.delay, repeat: Infinity, ease: 'easeInOut' }}
+            transition={{ duration: p.dur, delay: p.delay, repeat: Infinity, ease: 'easeInOut' as const }}
           />
         ))}
 
@@ -127,8 +245,8 @@ export default function Contaminants() {
       </section>
 
       {/* ── Category sections ── */}
-      <div className="bg-slate-950 px-4 py-12 space-y-14">
-        <div className="max-w-5xl mx-auto space-y-14">
+      <div className="bg-slate-950 px-4 py-12 space-y-16">
+        <div className="max-w-5xl mx-auto space-y-16">
           {CATEGORY_ORDER.map(cat => {
             const meta = CATEGORY_META[cat]
             const items = grouped[cat] ?? []
@@ -136,32 +254,7 @@ export default function Contaminants() {
 
             return (
               <section key={cat}>
-                {/* Section header */}
-                <motion.div
-                  className="flex items-start gap-4 mb-6 pl-4 py-3 rounded-xl bg-slate-900/60"
-                  style={{ borderLeft: `4px solid ${meta.color}` }}
-                  variants={headerVariants}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, margin: '-40px' }}
-                >
-                  <div className="flex-1 min-w-0">
-                    <h2 className="text-xl font-bold text-white leading-tight">
-                      {meta.label}
-                    </h2>
-                    <p className="text-sm text-slate-400 mt-0.5">{meta.description}</p>
-                  </div>
-                  <span
-                    className="flex-shrink-0 mt-0.5 px-2.5 py-1 rounded-full text-xs font-semibold tabular-nums"
-                    style={{
-                      backgroundColor: `${meta.color}18`,
-                      color: meta.color,
-                      border: `1px solid ${meta.color}30`,
-                    }}
-                  >
-                    {items.length}
-                  </span>
-                </motion.div>
+                <CategoryBanner meta={meta} count={items.length} />
 
                 {/* Card grid */}
                 <motion.div

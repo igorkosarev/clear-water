@@ -9,10 +9,12 @@ import methodsData from '@/data/treatment-methods.json'
 import Modal from '@/components/ui/Modal'
 import {
   CONTAMINANT_ICONS,
+  CHEMICAL_SYMBOLS,
   BADGE_CLASS,
   COMPLEXITY_CLASS,
   COST_CLASS,
 } from '@/components/encyclopedia/contaminantConfig'
+import { ChemBadge } from '@/components/encyclopedia/ChemBadge'
 
 // ─── Particle system ─────────────────────────────────────────────────────────
 
@@ -215,7 +217,8 @@ export default function ContaminantDetail() {
 
   const { color } = contaminant
   const particles = PARTICLE_CONFIGS[contaminant.id] ?? []
-  const SectionIcon = CONTAMINANT_ICONS[contaminant.id]
+  const sym = CHEMICAL_SYMBOLS[contaminant.id]
+  const SectionIcon = sym ? undefined : CONTAMINANT_ICONS[contaminant.id]
 
   return (
     <div className="bg-slate-950 min-h-screen">
@@ -284,20 +287,24 @@ export default function ContaminantDetail() {
             transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
           />
 
-          {/* Large icon */}
-          {SectionIcon && (
+          {/* Large icon or periodic-table tile */}
+          {(sym ?? SectionIcon) && (
             <motion.div
               className="absolute top-1/2 -translate-y-1/2 pointer-events-none hidden md:block"
-              style={{ right: '3%', color }}
+              style={{ right: '3%' }}
               animate={{ scale: [1, 1.05, 1] }}
               transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
             >
               <motion.div
                 initial={{ opacity: 0, scale: 0.6 }}
-                animate={{ opacity: 0.38, scale: 1 }}
+                animate={{ opacity: sym ? 0.72 : 0.38, scale: 1 }}
                 transition={{ duration: 0.7, delay: 0.1, type: 'spring' as const, bounce: 0.3 }}
               >
-                <SectionIcon size={220} strokeWidth={0.7} />
+                {sym ? (
+                  <ChemBadge symbol={sym} color={color} size="lg" />
+                ) : SectionIcon ? (
+                  <SectionIcon size={220} strokeWidth={0.7} style={{ color }} />
+                ) : null}
               </motion.div>
             </motion.div>
           )}

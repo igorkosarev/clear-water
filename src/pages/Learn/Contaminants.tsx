@@ -10,29 +10,7 @@ import {
   CATEGORY_META,
   CATEGORY_ORDER,
 } from '@/components/encyclopedia/contaminantConfig'
-
-// ─── Periodic-table tile for elemental / ionic contaminants ──────────────────
-
-function ChemBadge({ symbol, color }: { symbol: string; color: string }) {
-  const len = symbol.length
-  const fontSize = len <= 2 ? 14 : len === 3 ? 11 : 9
-  return (
-    <div
-      className="flex-shrink-0 flex items-center justify-center rounded font-mono font-bold leading-none"
-      style={{
-        minWidth: 34,
-        height: 36,
-        paddingInline: 5,
-        border: `1px solid ${color}55`,
-        backgroundColor: `${color}12`,
-        color,
-        fontSize,
-      }}
-    >
-      {symbol}
-    </div>
-  )
-}
+import { ChemBadge } from '@/components/encyclopedia/ChemBadge'
 
 // ─── Hero particles ───────────────────────────────────────────────────────────
 

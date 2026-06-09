@@ -286,17 +286,15 @@ export default function Contaminants() {
                         <div className="h-0.5 w-full flex-shrink-0" style={{ backgroundColor: c.color }} />
 
                         <div className="p-5 flex flex-col gap-3 flex-1">
-                          {/* Icon row */}
-                          {CIcon && (
-                            <div className="flex justify-end">
-                              <CIcon size={20} strokeWidth={1.5} style={{ color: c.color }} />
-                            </div>
-                          )}
-
-                          {/* Name */}
-                          <h3 className="text-white font-bold text-base leading-snug">
-                            {t(c.nameKey)}
-                          </h3>
+                          {/* Name + icon */}
+                          <div className="flex items-start justify-between gap-2">
+                            <h3 className="text-white font-bold text-base leading-snug">
+                              {t(c.nameKey)}
+                            </h3>
+                            {CIcon && (
+                              <CIcon size={20} strokeWidth={1.5} style={{ color: c.color }} className="flex-shrink-0 mt-0.5" />
+                            )}
+                          </div>
 
                           {/* Description */}
                           <p className="text-slate-400 text-sm leading-relaxed line-clamp-3 flex-1">

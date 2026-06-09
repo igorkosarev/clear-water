@@ -1,143 +1,13 @@
-import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { Zap, AlertTriangle, Target, MapPin, Search, Flame, Layers, Filter, Hexagon, Sun, Waves, Pipette } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { ArrowRight, Flame, Layers, Filter, Hexagon, Sun, Waves, TestTube, Wind, Thermometer, FlaskConical, Droplets, Package } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
-import type { TreatmentMethod, Contaminant } from '@/types'
+import type { TreatmentMethod } from '@/types'
 import methodsData from '@/data/treatment-methods.json'
-import contaminantsData from '@/data/contaminants.json'
-import Modal from '@/components/ui/Modal'
+import { COMPLEXITY_CLASS, COST_CLASS } from '@/components/encyclopedia/contaminantConfig'
 
-// ─── Particle system ────────────────────────────────────────────────────────
-
-type Particle = {
-  x: number; y: number
-  w: number; h: number; r: string
-  dur: number; dl: number
-  kx: number[]; ky: number[]; ko: number[]; ks: number[]
-  kr?: number[]
-}
-
-type PatternFn = (s: number, i: number) => Omit<Particle, 'x' | 'y' | 'dur' | 'dl'>
-
-const BASE_POS = [
-  { x:  8, y: 15, s: 10, dur: 6.0, dl: 0.0 },
-  { x: 25, y:  8, s:  7, dur: 8.5, dl: 1.2 },
-  { x: 50, y: 18, s: 14, dur: 5.5, dl: 0.5 },
-  { x: 72, y: 12, s:  9, dur: 7.0, dl: 2.0 },
-  { x: 88, y: 28, s: 12, dur: 9.0, dl: 0.8 },
-  { x: 15, y: 42, s:  6, dur: 5.0, dl: 1.5 },
-  { x: 35, y: 58, s: 18, dur: 7.5, dl: 0.3 },
-  { x: 60, y: 45, s:  8, dur: 6.5, dl: 2.2 },
-  { x: 82, y: 52, s: 15, dur: 8.0, dl: 1.0 },
-  { x: 10, y: 72, s: 11, dur: 4.5, dl: 1.8 },
-  { x: 42, y: 80, s:  8, dur: 10,  dl: 0.2 },
-  { x: 65, y: 75, s: 20, dur: 5.8, dl: 2.5 },
-  { x: 85, y: 82, s:  9, dur: 7.2, dl: 0.7 },
-  { x: 28, y: 88, s: 13, dur: 6.8, dl: 1.6 },
-  { x: 55, y: 92, s:  6, dur: 9.5, dl: 0.4 },
-  { x: 78, y: 88, s: 16, dur: 5.2, dl: 2.8 },
-]
-
-const PATTERNS: Record<string, PatternFn> = {
-  // 🔥 Rising heat bubbles — fast vertical escape
-  boiling: (s, i) => {
-    const f = i % 2 ? 1 : -1
-    const sz = Math.min(s, 12)
-    return {
-      w: sz, h: sz, r: '50%',
-      kx: [0, f * 8, -f * 5, f * 3, 0],
-      ky: [0, -24, -40, -24, 0],
-      ko: [0.1, 0.6, 0.12, 0.6, 0.1],
-      ks: [1, 1.15, 1.35, 1.15, 1],
-    }
-  },
-  // 🪨 Angular pebble fragments slowly falling
-  biosand: (s, i) => {
-    const f = i % 2 ? 1 : -1
-    return {
-      w: s, h: Math.round(s * 0.7), r: '4px 2px 5px 3px',
-      kx: [0, f * 5, -f * 8, f * 4, 0],
-      ky: [0, 12, 24, 12, 0],
-      ko: [0.2, 0.7, 0.45, 0.7, 0.2],
-      ks: [1, 0.92, 0.85, 0.92, 1],
-    }
-  },
-  // 🫙 Gentle floating dots — slow circular drift
-  ceramic_filtration: (s, i) => {
-    const f = i % 2 ? 1 : -1
-    const m = 8 + (i % 4) * 3
-    const sz = Math.min(s, 11)
-    return {
-      w: sz, h: sz, r: '50%',
-      kx: [0, f * m, 0, -f * m, 0],
-      ky: [0, f * 6, f * 14, f * 6, 0],
-      ko: [0.15, 0.55, 0.3, 0.55, 0.15],
-      ks: [1, 1.05, 1, 1.05, 1],
-    }
-  },
-  // ⬛ Dense squares slowly sinking — adsorption pull
-  activated_carbon: (s, i) => {
-    const f = i % 2 ? 1 : -1
-    const sz = Math.min(s, 11)
-    return {
-      w: sz, h: sz, r: '3px',
-      kx: [0, f * 4, -f * 3, f * 2, 0],
-      ky: [0, 20, 35, 20, 0],
-      ko: [0.25, 0.8, 0.55, 0.8, 0.25],
-      ks: [1, 1, 1, 1, 1],
-    }
-  },
-  // ☀️ Tiny dots that dart then burst — UV kill flash
-  uv_disinfection: (s, i) => {
-    const f = i % 2 ? 1 : -1
-    const sz = Math.min(s, 8)
-    const m = 18 + (i % 4) * 7
-    return {
-      w: sz, h: sz, r: '50%',
-      kx: [0, f * m, f * m * 0.3, -f * m * 0.2, 0],
-      ky: [0, f * m * 0.4, f * m, f * m * 0.5, 0],
-      ko: [0.1, 0.8, 0.8, 0.3, 0.1],
-      ks: [1, 1, 2.5 + (i % 3) * 0.3, 1, 1],
-    }
-  },
-  // 🌊 Horizontal capsules flowing sideways — membrane flow
-  reverse_osmosis: (s, i) => {
-    const f = i % 2 ? 1 : -1
-    const baseH = Math.min(s, 11)
-    return {
-      w: Math.round(baseH * 2.8), h: baseH, r: '50%',
-      kx: [0, f * 18, f * 28, f * 18, 0],
-      ky: [0, f * 6, 0, -f * 6, 0],
-      ko: [0.15, 0.5, 0.3, 0.5, 0.15],
-      ks: [1, 1.04, 1, 1.04, 1],
-    }
-  },
-  // 🧪 Bubbles rising and dissolving — gas disinfection
-  chlorination: (s, i) => {
-    const f = i % 2 ? 1 : -1
-    return {
-      w: s, h: s, r: '50%',
-      kx: [0, f * 6, -f * 8, f * 4, 0],
-      ky: [0, -18, -30, -18, 0],
-      ko: [0.1, 0.55, 0.1, 0.55, 0.1],
-      ks: [1, 1.12, 1.28, 1.12, 1],
-    }
-  },
-}
-
-const PARTICLE_CONFIGS: Record<string, Particle[]> = {}
-for (const id of Object.keys(PATTERNS)) {
-  const pattern = PATTERNS[id]
-  if (pattern) {
-    PARTICLE_CONFIGS[id] = BASE_POS.map((pos, i) => ({
-      x: pos.x, y: pos.y, dur: pos.dur, dl: pos.dl,
-      ...pattern(pos.s, i),
-    }))
-  }
-}
-
-// ─── Hero particles ──────────────────────────────────────────────────────────
+// ─── Hero particles ───────────────────────────────────────────────────────────
 
 type HeroParticle = {
   x: number; y: number; size: number
@@ -167,300 +37,57 @@ const HERO_PARTICLES: HeroParticle[] = [
   { x: 44, y:  9, size: 30, dur:10.0, delay: 0.0, dx: -1, dy:  -6, accent: true  },
 ]
 
-const METHODS_ACCENT = '#10b981'
+const ACCENT = '#10b981'
 
-// ─── Styling constants ───────────────────────────────────────────────────────
+// ─── Icons ────────────────────────────────────────────────────────────────────
 
-const COMPLEXITY_CLASS: Record<string, string> = {
-  beginner:     'text-emerald-400 border border-emerald-400/30 bg-emerald-400/10',
-  intermediate: 'text-amber-400  border border-amber-400/30  bg-amber-400/10',
-  advanced:     'text-red-400    border border-red-400/30    bg-red-400/10',
-}
-
-const COST_CLASS: Record<string, string> = {
-  low:    'text-emerald-400 border border-emerald-400/30 bg-emerald-400/10',
-  medium: 'text-amber-400  border border-amber-400/30  bg-amber-400/10',
-  high:   'text-red-400    border border-red-400/30    bg-red-400/10',
-}
-
-const METHOD_ICONS: Record<string, LucideIcon> = {
+export const METHOD_ICONS: Record<string, LucideIcon> = {
   boiling:             Flame,
   biosand:             Layers,
   ceramic_filtration:  Filter,
   activated_carbon:    Hexagon,
   uv_disinfection:     Sun,
   reverse_osmosis:     Waves,
-  chlorination:        Pipette,
+  chlorination:        TestTube,
+  hollow_fiber:        Wind,
+  distillation:        Thermometer,
+  ion_exchange:        FlaskConical,
+  water_softening:     Droplets,
+  sediment_filtration: Package,
 }
 
-const BADGE_CLASS: Record<string, string> = {
-  biological:   'text-red-400    border border-red-400/30    bg-red-400/10',
-  chemical:     'text-blue-400   border border-blue-400/30   bg-blue-400/10',
-  physical:     'text-amber-400  border border-amber-400/30  bg-amber-400/10',
-  radiological: 'text-purple-400 border border-purple-400/30 bg-purple-400/10',
-}
+// ─── Animation variants ───────────────────────────────────────────────────────
 
-// ─── Animation variants ──────────────────────────────────────────────────────
-
-const contentVariants = {
+const gridVariants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
+  visible: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } },
 }
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 18 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' as const } },
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: 'easeOut' as const } },
 }
 
-// ─── Static data ─────────────────────────────────────────────────────────────
+// ─── Static data ──────────────────────────────────────────────────────────────
 
 const methods = methodsData as TreatmentMethod[]
-const contaminants = contaminantsData as Contaminant[]
 
-// ─── Sub-components ──────────────────────────────────────────────────────────
-
-interface InfoRowProps {
-  icon: React.ReactNode
-  label: string
-  text: string
-}
-
-function InfoRow({ icon, label, text }: InfoRowProps) {
-  return (
-    <div>
-      <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
-        {icon}
-        <span>{label}</span>
-      </div>
-      <p className="text-sm text-slate-300 leading-relaxed">{text}</p>
-    </div>
-  )
-}
-
-interface SectionProps {
-  method: TreatmentMethod
-  removedContaminants: Contaminant[]
-  index: number
-}
-
-function MethodSection({ method, removedContaminants, index }: SectionProps) {
-  const { t } = useTranslation()
-  const isEven = index % 2 === 0
-  const { color, id } = method
-  const particles = PARTICLE_CONFIGS[id] ?? []
-  const [selectedContaminant, setSelectedContaminant] = useState<Contaminant | null>(null)
-  const SectionIcon = METHOD_ICONS[id]
-
-  const iconSide = isEven ? 'right' : 'left'
-
-  return (
-    <section
-      id={id}
-      className="relative bg-slate-950 overflow-hidden min-h-[620px] md:min-h-[700px]"
-    >
-      {/* ── Full-bleed radial gradient centred on icon side ── */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: iconSide === 'right'
-            ? `radial-gradient(ellipse at 75% 50%, ${color}38 0%, ${color}14 48%, transparent 72%)`
-            : `radial-gradient(ellipse at 25% 50%, ${color}38 0%, ${color}14 48%, transparent 72%)`,
-        }}
-      />
-
-      {/* ── Particles — span full section ── */}
-      {particles.map((p, i) => (
-        <motion.div
-          key={i}
-          className="absolute pointer-events-none"
-          style={{
-            left: `${p.x}%`,
-            top: `${p.y}%`,
-            width: p.w,
-            height: p.h,
-            borderRadius: p.r,
-            backgroundColor: color,
-          }}
-          animate={{
-            x: p.kx,
-            y: p.ky,
-            opacity: p.ko,
-            scale: p.ks,
-            ...(p.kr ? { rotate: p.kr } : {}),
-          }}
-          transition={{ duration: p.dur, delay: p.dl, repeat: Infinity, ease: 'easeInOut' }}
-        />
-      ))}
-
-      {/* ── Text-side gradient darkening ── */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: isEven
-            ? 'linear-gradient(to right, rgba(2,6,23,0.96) 0%, rgba(2,6,23,0.85) 35%, rgba(2,6,23,0.45) 62%, transparent 82%)'
-            : 'linear-gradient(to left,  rgba(2,6,23,0.96) 0%, rgba(2,6,23,0.85) 35%, rgba(2,6,23,0.45) 62%, transparent 82%)',
-        }}
-      />
-      {/* Mobile: full darkening overlay */}
-      <div className="absolute inset-0 bg-slate-950/72 md:hidden pointer-events-none" />
-
-      {/* ── Constrained content + icon (max-width prevents wide-screen spread) ── */}
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-10 min-h-[620px] md:min-h-[700px]">
-
-        {/* Glow blob — absolute within constrained container */}
-        <motion.div
-          className="absolute top-1/2 -translate-y-1/2 rounded-full pointer-events-none"
-          style={{ [iconSide]: '0%', width: 400, height: 400, backgroundColor: color, filter: 'blur(110px)' }}
-          animate={{ opacity: [0.1, 0.24, 0.1], scale: [0.88, 1.1, 0.88] }}
-          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-        />
-
-        {/* Icon — absolute within constrained container */}
-        {SectionIcon && (
-          <motion.div
-            className="absolute top-1/2 -translate-y-1/2 pointer-events-none hidden md:block"
-            style={{ [iconSide]: '3%', color }}
-            animate={{ scale: [1, 1.05, 1] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.6 }}
-              whileInView={{ opacity: 0.38, scale: 1 }}
-              transition={{ duration: 0.7, delay: 0.1, type: 'spring' as const, bounce: 0.3 }}
-              viewport={{ once: true }}
-            >
-              <SectionIcon size={220} strokeWidth={0.7} />
-            </motion.div>
-          </motion.div>
-        )}
-
-        {/* Text content */}
-        <div className={`w-full min-h-[620px] md:min-h-[700px] flex items-center ${isEven ? 'justify-start' : 'justify-end'}`}>
-        <motion.div
-          className="w-full max-w-[520px] py-16"
-          variants={contentVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-60px' }}
-        >
-          <motion.div variants={itemVariants} className="flex flex-wrap gap-2 mb-3">
-            <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold ${COMPLEXITY_CLASS[method.complexity] ?? 'text-slate-400 border border-slate-400/30 bg-slate-400/10'}`}>
-              {t(`method.complexity.${method.complexity}`)}
-            </span>
-            <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold ${COST_CLASS[method.costTier] ?? 'text-slate-400 border border-slate-400/30 bg-slate-400/10'}`}>
-              {t(`method.costTier.${method.costTier}`)}
-            </span>
-          </motion.div>
-
-          <motion.h2 variants={itemVariants} className="text-3xl font-bold text-white mb-3">
-            {t(method.nameKey)}
-          </motion.h2>
-
-          <motion.p variants={itemVariants} className="text-slate-300 leading-relaxed mb-7">
-            {t(method.descriptionKey)}
-          </motion.p>
-
-          <motion.div variants={itemVariants} className="space-y-5 border-t border-slate-700/50 pt-6 mb-7">
-            <InfoRow icon={<Zap size={13} />} label={t('learn.methods.howItWorks')} text={t(method.howItWorksKey)} />
-            <InfoRow icon={<AlertTriangle size={13} />} label={t('learn.methods.limitations')} text={t(method.limitationsKey)} />
-            <InfoRow icon={<Target size={13} />} label={t('learn.methods.typicalUse')} text={t(method.typicalUseKey)} />
-          </motion.div>
-
-          {removedContaminants.length > 0 && (
-            <motion.div variants={itemVariants}>
-              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
-                {t('learn.methods.removes')}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {removedContaminants.map(c => (
-                  <button
-                    key={c.id}
-                    onClick={() => setSelectedContaminant(c)}
-                    className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium transition-all hover:brightness-125 cursor-pointer"
-                    style={{ backgroundColor: `${c.color}22`, color: c.color, border: `1px solid ${c.color}44` }}
-                  >
-                    {t(c.nameKey)}
-                  </button>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </motion.div>
-        </div>
-      </div>
-
-      {/* Contaminant preview modal */}
-      <Modal open={selectedContaminant !== null} onClose={() => setSelectedContaminant(null)}>
-        {selectedContaminant && (
-          <>
-            {/* Accent strip */}
-            <div className="h-1 w-full rounded-t-2xl" style={{ backgroundColor: selectedContaminant.color }} />
-            <div className="p-6">
-              {/* Header */}
-              <div className="mb-4 pr-8">
-                <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-semibold mb-2 ${BADGE_CLASS[selectedContaminant.category] ?? ''}`}>
-                  {t(`contaminant.category.${selectedContaminant.category}`)}
-                </span>
-                <h3 className="text-lg font-bold text-white leading-tight">
-                  {t(selectedContaminant.nameKey)}
-                </h3>
-              </div>
-
-              <p className="text-slate-300 text-sm leading-relaxed mb-5">
-                {t(selectedContaminant.descriptionKey)}
-              </p>
-
-              <div className="space-y-4 border-t border-slate-700/50 pt-5">
-                <InfoRow icon={<MapPin size={13} />} label={t('learn.contaminants.sources')} text={t(selectedContaminant.sourcesKey)} />
-                <InfoRow icon={<AlertTriangle size={13} />} label={t('learn.contaminants.healthRisks')} text={t(selectedContaminant.healthRisksKey)} />
-                <InfoRow icon={<Search size={13} />} label={t('learn.contaminants.detection')} text={t(selectedContaminant.detectionKey)} />
-              </div>
-            </div>
-          </>
-        )}
-      </Modal>
-    </section>
-  )
-}
-
-// ─── Page ────────────────────────────────────────────────────────────────────
+// ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function Methods() {
   const { t } = useTranslation()
 
-  const contaminantById = useMemo(() => {
-    const map: Record<string, Contaminant> = {}
-    for (const c of contaminants) {
-      map[c.id] = c
-    }
-    return map
-  }, [])
-
-  const removedByMethod = useMemo(() => {
-    const map: Record<string, Contaminant[]> = {}
-    for (const m of methods) {
-      map[m.id] = m.removes.flatMap(id => {
-        const c = contaminantById[id]
-        return c ? [c] : []
-      })
-    }
-    return map
-  }, [contaminantById])
-
   return (
     <div>
-      {/* Hero */}
+      {/* ── Hero ── */}
       <section className="relative bg-slate-950 text-white overflow-hidden min-h-[380px] md:min-h-[440px] flex items-center">
-
-        {/* Pulsing radial glow */}
         <motion.div
           className="absolute inset-0 pointer-events-none"
           animate={{ opacity: [0.6, 1, 0.6] }}
           transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-          style={{ background: `radial-gradient(ellipse at 50% 50%, ${METHODS_ACCENT}2e 0%, ${METHODS_ACCENT}0a 45%, transparent 70%)` }}
+          style={{ background: `radial-gradient(ellipse at 50% 50%, ${ACCENT}2e 0%, ${ACCENT}0a 45%, transparent 70%)` }}
         />
 
-        {/* Floating particles */}
         {HERO_PARTICLES.map((p, i) => (
           <motion.div
             key={i}
@@ -470,7 +97,7 @@ export default function Methods() {
               top: `${p.y}%`,
               width: p.size,
               height: p.size,
-              backgroundColor: p.accent ? METHODS_ACCENT : '#ffffff',
+              backgroundColor: p.accent ? ACCENT : '#ffffff',
             }}
             animate={{
               x: [0, p.dx, p.dx * 0.4, 0],
@@ -481,10 +108,8 @@ export default function Methods() {
           />
         ))}
 
-        {/* Mobile overlay */}
         <div className="absolute inset-0 bg-slate-950/55 md:hidden pointer-events-none" />
 
-        {/* Content */}
         <div className="relative z-10 w-full max-w-5xl mx-auto px-4 py-20 text-center">
           <motion.h1
             className="text-4xl md:text-5xl font-bold mb-4 leading-tight tracking-tight"
@@ -505,15 +130,66 @@ export default function Methods() {
         </div>
       </section>
 
-      {/* Sections */}
-      {methods.map((m, i) => (
-        <MethodSection
-          key={m.id}
-          method={m}
-          removedContaminants={removedByMethod[m.id] ?? []}
-          index={i}
-        />
-      ))}
+      {/* ── Card grid ── */}
+      <div className="bg-slate-950 px-4 py-12">
+        <div className="max-w-5xl mx-auto">
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+            variants={gridVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            {methods.map(m => {
+              const Icon = METHOD_ICONS[m.id]
+
+              return (
+                <motion.div
+                  key={m.id}
+                  variants={cardVariants}
+                  className="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-hidden flex flex-col"
+                >
+                  {/* Accent strip */}
+                  <div className="h-1 w-full flex-shrink-0" style={{ backgroundColor: m.color }} />
+
+                  <div className="p-5 flex flex-col gap-3 flex-1">
+                    {/* Badges + icon */}
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex flex-wrap gap-1.5">
+                        <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-semibold ${COMPLEXITY_CLASS[m.complexity] ?? 'text-slate-400 border border-slate-400/30 bg-slate-400/10'}`}>
+                          {t(`method.complexity.${m.complexity}`)}
+                        </span>
+                        <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-semibold ${COST_CLASS[m.costTier] ?? 'text-slate-400 border border-slate-400/30 bg-slate-400/10'}`}>
+                          {t(`method.costTier.${m.costTier}`)}
+                        </span>
+                      </div>
+                      {Icon && <Icon size={20} strokeWidth={1.5} style={{ color: m.color }} className="flex-shrink-0" />}
+                    </div>
+
+                    {/* Name */}
+                    <h3 className="text-white font-bold text-base leading-snug">
+                      {t(m.nameKey)}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="text-slate-400 text-sm leading-relaxed line-clamp-3 flex-1">
+                      {t(m.descriptionKey)}
+                    </p>
+
+                    {/* Learn more */}
+                    <Link
+                      to={`/learn/methods/${m.id}`}
+                      className="inline-flex items-center gap-1.5 self-start mt-1 px-3 py-1.5 rounded-full text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors"
+                    >
+                      {t('learn.methods.learnMore', { defaultValue: 'Learn more' })}
+                      <ArrowRight size={12} />
+                    </Link>
+                  </div>
+                </motion.div>
+              )
+            })}
+          </motion.div>
+        </div>
+      </div>
     </div>
   )
 }

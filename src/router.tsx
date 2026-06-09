@@ -5,6 +5,7 @@ import Configurator from './pages/Configurator'
 import Contaminants from './pages/Learn/Contaminants'
 import ContaminantDetail from './pages/Learn/ContaminantDetail'
 import Methods from './pages/Learn/Methods'
+import MethodDetail from './pages/Learn/MethodDetail'
 import Systems from './pages/Systems'
 import SystemDetail from './pages/Systems/SystemDetail'
 import Build from './pages/Build'
@@ -22,6 +23,7 @@ export const router = createBrowserRouter([
       { path: 'learn/contaminants', element: <Contaminants /> },
       { path: 'learn/contaminants/:id', element: <ContaminantDetail /> },
       { path: 'learn/methods', element: <Methods /> },
+      { path: 'learn/methods/:id', element: <MethodDetail /> },
       { path: 'systems', element: <Systems /> },
       { path: 'systems/:id', element: <SystemDetail /> },
       { path: 'build', element: <Build /> },

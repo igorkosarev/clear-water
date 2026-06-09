@@ -5,7 +5,7 @@ import { SimulationCanvas } from '@/components/simulation/SimulationCanvas'
 import type { FilterType, ContaminantId } from '@/types'
 
 // full_ro_system: sediment → activated_carbon → ro_membrane → uv
-const DEMO_FILTERS: FilterType[] = ['sediment', 'activated_carbon', 'ro', 'uv']
+const DEMO_FILTERS: FilterType[] = ['booster_pump','sediment', 'activated_carbon', 'ro', 'uv']
 
 const ALL_CONTAMINANT_IDS: ContaminantId[] = [
   'bacteria', 'viruses', 'protozoa', 'turbidity',

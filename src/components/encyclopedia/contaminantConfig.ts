@@ -1,15 +1,64 @@
-import { Biohazard, Dna, Worm, Droplets, Beaker, TestTube, Leaf, Gem } from 'lucide-react'
+import {
+  Biohazard, Dna, Worm, Droplets, TestTube, Leaf, Gem,
+  Waves, AlertTriangle, Layers, Package,
+  Wrench, FlaskConical, Thermometer, Battery, Hexagon, CircuitBoard,
+  Sprout, Bug, Scissors, Infinity, Wind, Flame,
+  Diamond, Magnet, Atom, GlassWater, Cloud,
+  Pill, Activity, RadioTower, AlertOctagon, Zap,
+} from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
 export const CONTAMINANT_ICONS: Record<string, LucideIcon> = {
-  bacteria:     Biohazard,
-  viruses:      Dna,
-  protozoa:     Worm,
-  turbidity:    Droplets,
-  heavy_metals: Beaker,
-  chlorine:     TestTube,
-  nitrates:     Leaf,
-  fluoride:     Gem,
+  // Biological
+  bacteria:          Biohazard,
+  viruses:           Dna,
+  protozoa:          Worm,
+  cyanobacteria:     Waves,
+  cyanotoxins:       AlertTriangle,
+
+  // Physical
+  turbidity:         Droplets,
+  sediment:          Layers,
+  microplastics:     Package,
+  hardness:          Diamond,
+  salinity:          GlassWater,
+
+  // Heavy metals
+  lead:              Wrench,
+  arsenic:           FlaskConical,
+  mercury:           Thermometer,
+  cadmium:           Battery,
+  chromium_6:        Hexagon,
+  copper:            CircuitBoard,
+
+  // Chemical — standard
+  chlorine:          TestTube,
+  nitrates:          Leaf,
+  nitrites:          Sprout,
+  fluoride:          Gem,
+
+  // Agricultural
+  pesticides:        Bug,
+  herbicides:        Scissors,
+
+  // Industrial
+  pfas:              Infinity,
+  vocs:              Wind,
+  petroleum:         Flame,
+
+  // Mineral
+  iron:              Magnet,
+  manganese:         Atom,
+  hydrogen_sulfide:  Cloud,
+
+  // Emerging
+  pharmaceuticals:   Pill,
+  hormones:          Activity,
+
+  // Radiological
+  uranium:           RadioTower,
+  radon:             AlertOctagon,
+  radionuclides:     Zap,
 }
 
 export const BADGE_CLASS: Record<string, string> = {

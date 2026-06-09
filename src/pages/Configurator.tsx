@@ -9,7 +9,7 @@ const DEMO_FILTERS: FilterType[] = ['booster_pump','sediment', 'activated_carbon
 
 const ALL_CONTAMINANT_IDS: ContaminantId[] = [
   'bacteria', 'viruses', 'protozoa', 'turbidity',
-  'heavy_metals', 'chlorine', 'nitrates', 'fluoride',
+  'lead', 'arsenic', 'chlorine', 'nitrates', 'fluoride', 'pfas',
 ]
 
 export default function Configurator() {

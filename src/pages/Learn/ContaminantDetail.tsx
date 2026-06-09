@@ -98,17 +98,6 @@ const PATTERNS: Record<string, PatternFn> = {
       ks: [1, 0.95, 0.9, 0.95, 1],
     }
   },
-  heavy_metals: (s, i) => {
-    const f = i % 2 ? 1 : -1
-    const sz = Math.min(s, 10)
-    return {
-      w: sz, h: sz, r: '50%',
-      kx: [0, f * 3, -f * 2, f * 3, 0],
-      ky: [0, 18, 30, 18, 0],
-      ko: [0.3, 0.75, 0.55, 0.75, 0.3],
-      ks: [1, 1, 1, 1, 1],
-    }
-  },
   chlorine: (s, i) => {
     const f = i % 2 ? 1 : -1
     return {

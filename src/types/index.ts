@@ -109,6 +109,11 @@ export type FilterType =
   | 'boiling'
   | 'chlorination'
   | 'booster_pump'
+  | 'hollow_fiber'
+  | 'distillation'
+  | 'ion_exchange'
+  | 'water_softening'
+  | 'sediment_filtration'
 
 export interface BOMLine {
   module: Module

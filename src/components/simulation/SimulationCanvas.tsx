@@ -244,6 +244,8 @@ const SYMBOLS: Record<FilterType, string> = {
   sediment: '≡', activated_carbon: '⚡', biosand: '⊟',
   ceramic: '◎', uv: '☀', ro: '≋', slow_sand: '∿',
   boiling: '△', chlorination: '⊕', booster_pump: '⟳',
+  hollow_fiber: '⊘', distillation: '⌇', ion_exchange: '⇌',
+  water_softening: '◈', sediment_filtration: '⊞',
 }
 
 function drawPump(ctx: CanvasRenderingContext2D, row: Row) {

@@ -33,6 +33,28 @@
     "color": "#14b8a6"
   },
   {
+    "id": "cyanobacteria",
+    "nameKey": "contaminants.cyanobacteria.name",
+    "descriptionKey": "contaminants.cyanobacteria.description",
+    "sourcesKey": "contaminants.cyanobacteria.sources",
+    "healthRisksKey": "contaminants.cyanobacteria.healthRisks",
+    "detectionKey": "contaminants.cyanobacteria.detection",
+    "category": "biological",
+    "icon": "🌿",
+    "color": "#16a34a"
+  },
+  {
+    "id": "cyanotoxins",
+    "nameKey": "contaminants.cyanotoxins.name",
+    "descriptionKey": "contaminants.cyanotoxins.description",
+    "sourcesKey": "contaminants.cyanotoxins.sources",
+    "healthRisksKey": "contaminants.cyanotoxins.healthRisks",
+    "detectionKey": "contaminants.cyanotoxins.detection",
+    "category": "biological",
+    "icon": "⚗️",
+    "color": "#15803d"
+  },
+  {
     "id": "turbidity",
     "nameKey": "contaminants.turbidity.name",
     "descriptionKey": "contaminants.turbidity.description",
@@ -44,15 +66,92 @@
     "color": "#a16207"
   },
   {
-    "id": "heavy_metals",
-    "nameKey": "contaminants.heavy_metals.name",
-    "descriptionKey": "contaminants.heavy_metals.description",
-    "sourcesKey": "contaminants.heavy_metals.sources",
-    "healthRisksKey": "contaminants.heavy_metals.healthRisks",
-    "detectionKey": "contaminants.heavy_metals.detection",
+    "id": "sediment",
+    "nameKey": "contaminants.sediment.name",
+    "descriptionKey": "contaminants.sediment.description",
+    "sourcesKey": "contaminants.sediment.sources",
+    "healthRisksKey": "contaminants.sediment.healthRisks",
+    "detectionKey": "contaminants.sediment.detection",
+    "category": "physical",
+    "icon": "🪨",
+    "color": "#92400e"
+  },
+  {
+    "id": "microplastics",
+    "nameKey": "contaminants.microplastics.name",
+    "descriptionKey": "contaminants.microplastics.description",
+    "sourcesKey": "contaminants.microplastics.sources",
+    "healthRisksKey": "contaminants.microplastics.healthRisks",
+    "detectionKey": "contaminants.microplastics.detection",
+    "category": "physical",
+    "icon": "🔩",
+    "color": "#7c3aed"
+  },
+  {
+    "id": "lead",
+    "nameKey": "contaminants.lead.name",
+    "descriptionKey": "contaminants.lead.description",
+    "sourcesKey": "contaminants.lead.sources",
+    "healthRisksKey": "contaminants.lead.healthRisks",
+    "detectionKey": "contaminants.lead.detection",
+    "category": "chemical",
+    "icon": "⚙️",
+    "color": "#9ca3af"
+  },
+  {
+    "id": "arsenic",
+    "nameKey": "contaminants.arsenic.name",
+    "descriptionKey": "contaminants.arsenic.description",
+    "sourcesKey": "contaminants.arsenic.sources",
+    "healthRisksKey": "contaminants.arsenic.healthRisks",
+    "detectionKey": "contaminants.arsenic.detection",
     "category": "chemical",
     "icon": "⚗️",
-    "color": "#6b7280"
+    "color": "#78716c"
+  },
+  {
+    "id": "mercury",
+    "nameKey": "contaminants.mercury.name",
+    "descriptionKey": "contaminants.mercury.description",
+    "sourcesKey": "contaminants.mercury.sources",
+    "healthRisksKey": "contaminants.mercury.healthRisks",
+    "detectionKey": "contaminants.mercury.detection",
+    "category": "chemical",
+    "icon": "🌡️",
+    "color": "#cbd5e1"
+  },
+  {
+    "id": "cadmium",
+    "nameKey": "contaminants.cadmium.name",
+    "descriptionKey": "contaminants.cadmium.description",
+    "sourcesKey": "contaminants.cadmium.sources",
+    "healthRisksKey": "contaminants.cadmium.healthRisks",
+    "detectionKey": "contaminants.cadmium.detection",
+    "category": "chemical",
+    "icon": "🔋",
+    "color": "#64748b"
+  },
+  {
+    "id": "chromium_6",
+    "nameKey": "contaminants.chromium_6.name",
+    "descriptionKey": "contaminants.chromium_6.description",
+    "sourcesKey": "contaminants.chromium_6.sources",
+    "healthRisksKey": "contaminants.chromium_6.healthRisks",
+    "detectionKey": "contaminants.chromium_6.detection",
+    "category": "chemical",
+    "icon": "⬡",
+    "color": "#dc2626"
+  },
+  {
+    "id": "copper",
+    "nameKey": "contaminants.copper.name",
+    "descriptionKey": "contaminants.copper.description",
+    "sourcesKey": "contaminants.copper.sources",
+    "healthRisksKey": "contaminants.copper.healthRisks",
+    "detectionKey": "contaminants.copper.detection",
+    "category": "chemical",
+    "icon": "🔌",
+    "color": "#c2410c"
   },
   {
     "id": "chlorine",
@@ -77,6 +176,17 @@
     "color": "#22c55e"
   },
   {
+    "id": "nitrites",
+    "nameKey": "contaminants.nitrites.name",
+    "descriptionKey": "contaminants.nitrites.description",
+    "sourcesKey": "contaminants.nitrites.sources",
+    "healthRisksKey": "contaminants.nitrites.healthRisks",
+    "detectionKey": "contaminants.nitrites.detection",
+    "category": "chemical",
+    "icon": "🌱",
+    "color": "#4ade80"
+  },
+  {
     "id": "fluoride",
     "nameKey": "contaminants.fluoride.name",
     "descriptionKey": "contaminants.fluoride.description",
@@ -86,5 +196,170 @@
     "category": "chemical",
     "icon": "🦷",
     "color": "#8b5cf6"
+  },
+  {
+    "id": "pesticides",
+    "nameKey": "contaminants.pesticides.name",
+    "descriptionKey": "contaminants.pesticides.description",
+    "sourcesKey": "contaminants.pesticides.sources",
+    "healthRisksKey": "contaminants.pesticides.healthRisks",
+    "detectionKey": "contaminants.pesticides.detection",
+    "category": "chemical",
+    "icon": "🐛",
+    "color": "#84cc16"
+  },
+  {
+    "id": "herbicides",
+    "nameKey": "contaminants.herbicides.name",
+    "descriptionKey": "contaminants.herbicides.description",
+    "sourcesKey": "contaminants.herbicides.sources",
+    "healthRisksKey": "contaminants.herbicides.healthRisks",
+    "detectionKey": "contaminants.herbicides.detection",
+    "category": "chemical",
+    "icon": "✂️",
+    "color": "#65a30d"
+  },
+  {
+    "id": "pfas",
+    "nameKey": "contaminants.pfas.name",
+    "descriptionKey": "contaminants.pfas.description",
+    "sourcesKey": "contaminants.pfas.sources",
+    "healthRisksKey": "contaminants.pfas.healthRisks",
+    "detectionKey": "contaminants.pfas.detection",
+    "category": "chemical",
+    "icon": "♾️",
+    "color": "#ec4899"
+  },
+  {
+    "id": "vocs",
+    "nameKey": "contaminants.vocs.name",
+    "descriptionKey": "contaminants.vocs.description",
+    "sourcesKey": "contaminants.vocs.sources",
+    "healthRisksKey": "contaminants.vocs.healthRisks",
+    "detectionKey": "contaminants.vocs.detection",
+    "category": "chemical",
+    "icon": "💨",
+    "color": "#fb923c"
+  },
+  {
+    "id": "petroleum",
+    "nameKey": "contaminants.petroleum.name",
+    "descriptionKey": "contaminants.petroleum.description",
+    "sourcesKey": "contaminants.petroleum.sources",
+    "healthRisksKey": "contaminants.petroleum.healthRisks",
+    "detectionKey": "contaminants.petroleum.detection",
+    "category": "chemical",
+    "icon": "🛢️",
+    "color": "#d97706"
+  },
+  {
+    "id": "hardness",
+    "nameKey": "contaminants.hardness.name",
+    "descriptionKey": "contaminants.hardness.description",
+    "sourcesKey": "contaminants.hardness.sources",
+    "healthRisksKey": "contaminants.hardness.healthRisks",
+    "detectionKey": "contaminants.hardness.detection",
+    "category": "physical",
+    "icon": "💎",
+    "color": "#94a3b8"
+  },
+  {
+    "id": "iron",
+    "nameKey": "contaminants.iron.name",
+    "descriptionKey": "contaminants.iron.description",
+    "sourcesKey": "contaminants.iron.sources",
+    "healthRisksKey": "contaminants.iron.healthRisks",
+    "detectionKey": "contaminants.iron.detection",
+    "category": "chemical",
+    "icon": "🔩",
+    "color": "#b45309"
+  },
+  {
+    "id": "manganese",
+    "nameKey": "contaminants.manganese.name",
+    "descriptionKey": "contaminants.manganese.description",
+    "sourcesKey": "contaminants.manganese.sources",
+    "healthRisksKey": "contaminants.manganese.healthRisks",
+    "detectionKey": "contaminants.manganese.detection",
+    "category": "chemical",
+    "icon": "⚫",
+    "color": "#6d28d9"
+  },
+  {
+    "id": "salinity",
+    "nameKey": "contaminants.salinity.name",
+    "descriptionKey": "contaminants.salinity.description",
+    "sourcesKey": "contaminants.salinity.sources",
+    "healthRisksKey": "contaminants.salinity.healthRisks",
+    "detectionKey": "contaminants.salinity.detection",
+    "category": "physical",
+    "icon": "🌊",
+    "color": "#38bdf8"
+  },
+  {
+    "id": "hydrogen_sulfide",
+    "nameKey": "contaminants.hydrogen_sulfide.name",
+    "descriptionKey": "contaminants.hydrogen_sulfide.description",
+    "sourcesKey": "contaminants.hydrogen_sulfide.sources",
+    "healthRisksKey": "contaminants.hydrogen_sulfide.healthRisks",
+    "detectionKey": "contaminants.hydrogen_sulfide.detection",
+    "category": "chemical",
+    "icon": "💨",
+    "color": "#fde047"
+  },
+  {
+    "id": "pharmaceuticals",
+    "nameKey": "contaminants.pharmaceuticals.name",
+    "descriptionKey": "contaminants.pharmaceuticals.description",
+    "sourcesKey": "contaminants.pharmaceuticals.sources",
+    "healthRisksKey": "contaminants.pharmaceuticals.healthRisks",
+    "detectionKey": "contaminants.pharmaceuticals.detection",
+    "category": "chemical",
+    "icon": "💊",
+    "color": "#e879f9"
+  },
+  {
+    "id": "hormones",
+    "nameKey": "contaminants.hormones.name",
+    "descriptionKey": "contaminants.hormones.description",
+    "sourcesKey": "contaminants.hormones.sources",
+    "healthRisksKey": "contaminants.hormones.healthRisks",
+    "detectionKey": "contaminants.hormones.detection",
+    "category": "chemical",
+    "icon": "🔬",
+    "color": "#c084fc"
+  },
+  {
+    "id": "uranium",
+    "nameKey": "contaminants.uranium.name",
+    "descriptionKey": "contaminants.uranium.description",
+    "sourcesKey": "contaminants.uranium.sources",
+    "healthRisksKey": "contaminants.uranium.healthRisks",
+    "detectionKey": "contaminants.uranium.detection",
+    "category": "radiological",
+    "icon": "☢️",
+    "color": "#a3e635"
+  },
+  {
+    "id": "radon",
+    "nameKey": "contaminants.radon.name",
+    "descriptionKey": "contaminants.radon.description",
+    "sourcesKey": "contaminants.radon.sources",
+    "healthRisksKey": "contaminants.radon.healthRisks",
+    "detectionKey": "contaminants.radon.detection",
+    "category": "radiological",
+    "icon": "☢️",
+    "color": "#bef264"
+  },
+  {
+    "id": "radionuclides",
+    "nameKey": "contaminants.radionuclides.name",
+    "descriptionKey": "contaminants.radionuclides.description",
+    "sourcesKey": "contaminants.radionuclides.sources",
+    "healthRisksKey": "contaminants.radionuclides.healthRisks",
+    "detectionKey": "contaminants.radionuclides.detection",
+    "category": "radiological",
+    "icon": "⚛️",
+    "color": "#86efac"
   }
 ]

@@ -131,7 +131,8 @@
       "removedBy": "Removed by",
       "sources": "Sources",
       "healthRisks": "Health Risks",
-      "detection": "How to Detect"
+      "detection": "How to Detect",
+      "learnMore": "Learn more"
     },
     "methods": {
       "title": "Treatment Methods",
@@ -173,7 +174,7 @@
     },
     "biosand_system": {
       "name": "Biosand + Chlorination",
-      "description": "DIY biosand filter followed by chlorination for comprehensive protection in rural settings."
+      "description": "DIY biosand filter followed by chlorination for biological protection in rural settings."
     },
     "tap_upgrade": {
       "name": "Tap Water Upgrade",
@@ -181,11 +182,11 @@
     },
     "mid_tier_uv": {
       "name": "UV + Carbon System",
-      "description": "Sediment, carbon, and UV combination for comprehensive multi-threat protection."
+      "description": "Sediment, carbon, and UV combination for biological and chemical protection."
     },
     "full_ro_system": {
       "name": "Full RO System",
-      "description": "Complete reverse osmosis system with UV polish — removes virtually everything."
+      "description": "Complete reverse osmosis system with UV polish — removes biological, chemical, and dissolved inorganic contaminants."
     }
   },
   "build": {
@@ -218,113 +219,337 @@
     "back": "Back",
     "notFound": "Not found."
   },
+  "safety": {
+    "testingRequired": {
+      "title": "Water Testing Recommended",
+      "body": "Water appearance does not indicate safety. Many contaminants are colourless, odourless, and tasteless — including lead, arsenic, nitrates, and most pathogens at typical concentrations. Water testing by a certified laboratory is recommended before selecting a treatment system."
+    },
+    "surfaceWaterRisks": {
+      "title": "Surface Water Requires Multiple Treatment Stages",
+      "body": "Surface water (rivers, lakes, ponds) may contain biological, agricultural, and industrial contamination simultaneously. A single treatment method is unlikely to be adequate. Multiple treatment stages are typically required for safe drinking water."
+    },
+    "maintenanceRequired": {
+      "title": "Treatment Systems Require Regular Maintenance",
+      "body": "All treatment systems require maintenance. Expired filter cartridges, fouled membranes, and depleted UV lamps do not provide protection and may give false assurance. Improperly maintained systems can increase health risk by providing a false sense of safety."
+    }
+  },
   "contaminants": {
     "bacteria": {
       "name": "Bacteria",
-      "description": "Harmful bacteria like E. coli and Salmonella cause severe gastrointestinal illness.",
-      "sources": "Open defecation, sewage overflow, animal waste near water sources, and untreated groundwater are the main entry points. Flooding dramatically increases bacterial contamination in surface water.",
-      "healthRisks": "Causes severe gastrointestinal illness — diarrhea, vomiting, cramps, and fever. Can be fatal for young children, elderly people, and those with weakened immune systems. E. coli O157:H7 can cause kidney failure.",
-      "detection": "Field test strips can detect coliform bacteria within minutes. Laboratory culture analysis confirms specific species. Assume contamination in any untreated surface water or after flooding."
+      "description": "Harmful bacteria including E. coli and Salmonella are a leading cause of waterborne illness worldwide.",
+      "sources": "Open defecation and sewage overflow near water sources are the primary causes. Animal waste from livestock near wells and streams, flooding that spreads faecal material, and untreated groundwater in areas without sanitation infrastructure are significant contributors.",
+      "healthRisks": "Causes severe gastrointestinal illness — diarrhoea, vomiting, abdominal cramps, and fever. Can be fatal in young children, elderly people, and immunocompromised individuals. E. coli O157:H7 can cause haemolytic uraemic syndrome (HUS) with kidney failure. Typhoid fever (Salmonella typhi) and cholera (Vibrio cholerae) remain major causes of death in regions with poor sanitation.",
+      "detection": "Field test strips can detect total coliform and E. coli within hours. Laboratory culture analysis confirms specific pathogen species. Assume bacterial contamination in any untreated surface water or groundwater where sanitation infrastructure is inadequate, especially after flooding."
     },
     "viruses": {
       "name": "Viruses",
-      "description": "Waterborne viruses including Hepatitis A and Norovirus spread through contaminated water.",
-      "sources": "Human sewage contamination is the primary source. Flooding, inadequate sanitation near wells, and infected individuals using shared water sources spread viral contamination rapidly.",
-      "healthRisks": "Hepatitis A causes liver inflammation and jaundice lasting weeks. Norovirus and Rotavirus cause acute vomiting and diarrhea leading to dangerous dehydration, especially in children under five.",
-      "detection": "Standard field test strips do not detect viruses. Specialized laboratory PCR or immunoassay testing is required. Treat all untreated surface water as potentially contaminated — viruses survive longer than bacteria."
+      "description": "Waterborne viruses including Hepatitis A, Norovirus, and Rotavirus spread through faecally contaminated water.",
+      "sources": "Human sewage contamination is the primary source. Flooding, inadequate sanitation near wells, and asymptomatic infected individuals contaminating shared water sources spread viral contamination rapidly. Viruses are far smaller than bacteria and pass through many filters that stop bacteria.",
+      "healthRisks": "Hepatitis A causes liver inflammation and jaundice lasting weeks to months. Norovirus and Rotavirus cause acute vomiting and diarrhoea leading to dangerous dehydration, particularly in children under five. Polio virus, though largely eradicated, spreads via contaminated water in under-vaccinated populations.",
+      "detection": "Standard field test strips do not detect viruses. Specialised laboratory PCR or immunoassay testing is required. Treat all untreated surface water as potentially contaminated with viruses — they survive longer than bacteria and require higher disinfection doses."
     },
     "protozoa": {
-      "name": "Protozoa",
-      "description": "Parasites like Giardia and Cryptosporidium are resistant to chlorine and cause diarrhoea.",
-      "sources": "Animal and human feces contaminating surface water, livestock grazing near water sources, and irrigation runoff. Cysts survive for months in cold water and resist standard chlorine disinfection doses.",
-      "healthRisks": "Giardia and Cryptosporidium cause prolonged diarrhea, cramps, and dehydration lasting weeks. Cryptosporidiosis can be life-threatening for immunocompromised individuals and young children.",
-      "detection": "Microscopic examination or immunofluorescence testing by a laboratory. Field tests are unreliable. Assume protozoan contamination in any untreated river, lake, or pond water."
+      "name": "Protozoa (Giardia, Cryptosporidium)",
+      "description": "Parasitic protozoa form hardy cysts resistant to chlorine, making physical filtration essential for their removal.",
+      "sources": "Animal and human faeces contaminating surface water are the primary source. Livestock grazing near water bodies, irrigation runoff, and wildlife are reservoir hosts. Cysts survive for months in cold water and resist standard chlorine doses — they are among the most chlorine-resistant waterborne pathogens.",
+      "healthRisks": "Giardia causes prolonged diarrhoea, cramps, bloating, and weight loss lasting weeks to months. Cryptosporidiosis causes watery diarrhoea with severe dehydration and can be life-threatening or chronic in immunocompromised individuals (including HIV/AIDS patients). Cryptosporidium outbreaks have occurred in chlorinated municipal water supplies that lacked adequate filtration.",
+      "detection": "Microscopic examination or immunofluorescence (IFA) testing by a laboratory. Field tests are unreliable. Assume protozoan contamination in any untreated river, lake, pond, or surface water — and in chlorinated water that has not been filtered, as cysts are not reliably killed by standard chlorine doses."
+    },
+    "cyanobacteria": {
+      "name": "Cyanobacteria (Blue-Green Algae)",
+      "description": "Photosynthetic bacteria that form toxic blooms in warm, nutrient-rich water bodies, producing cyanotoxins hazardous to humans and animals.",
+      "sources": "Nutrient pollution from agricultural runoff (nitrogen and phosphorus from fertilisers) drives bloom formation in lakes, reservoirs, and slow-moving rivers. Warm temperatures and stagnant conditions accelerate growth. Blooms are becoming more frequent due to climate change and intensified agriculture worldwide.",
+      "healthRisks": "Cyanobacteria cells contain cyanotoxins (see Cyanotoxins entry). Cell contact causes skin irritation and eye inflammation. Ingestion of bloom water causes gastroenteritis. Dogs and livestock are particularly vulnerable and deaths have been reported after swimming in or drinking from bloom-affected water. Not all blooms are toxigenic, but distinguishing them requires laboratory testing.",
+      "detection": "Visible green, blue-green, white, or brown discolouration and surface scum. A musty, earthy, or grassy odour may be present. Laboratory PCR testing or microscopy identifies species; ELISA or HPLC tests confirm toxin levels. Never drink or use water with a visible algal bloom without treatment."
+    },
+    "cyanotoxins": {
+      "name": "Cyanotoxins (Microcystin, Cylindrospermopsin)",
+      "description": "Toxins released by cyanobacteria that persist as dissolved compounds in water even after bacterial cells are destroyed.",
+      "sources": "Released when cyanobacterial cells lyse — which occurs naturally during cell death, or can be triggered by copper sulphate treatment, UV exposure, or oxidative disinfection. Dissolved cyanotoxins may be present in water even when no visible bloom is apparent or after bloom water has been treated.",
+      "healthRisks": "Microcystin-LR is an IARC Group 2B possible human carcinogen and causes acute liver damage at high doses. Cylindrospermopsin damages liver and kidneys. Anatoxin-a is a fast-acting neurotoxin. The WHO provisional guideline for microcystin-LR in drinking water is 1 µg/L. Standard water treatment by boiling does not destroy cyanotoxins.",
+      "detection": "Standard water quality tests do not detect cyanotoxins. ELISA immunoassay kits and HPLC laboratory analysis are required. Testing is recommended after any visible bloom event and for water abstracted from lakes and reservoirs during summer months in temperate regions."
     },
     "turbidity": {
-      "name": "Turbidity / Sediment",
-      "description": "Suspended particles that make water cloudy and can harbour pathogens.",
-      "sources": "Soil erosion and runoff during rain, disturbed sediment from flooding, algae blooms, and construction near water bodies. Seasonally elevated in rivers after heavy rainfall.",
-      "healthRisks": "Suspended particles shelter and shield pathogens from disinfection, making turbid water harder to treat safely. High turbidity is a strong indicator of other contamination and makes water unsafe to drink untreated.",
-      "detection": "Visually apparent when severe — cloudy or brown water. Turbidity meters measure in NTU units. The WHO guideline is under 1 NTU for treated water. Turbid water should never be considered safe without treatment."
+      "name": "Turbidity",
+      "description": "A measure of water cloudiness caused by suspended particles — an important indicator of treatment need and filtration effectiveness.",
+      "sources": "Soil erosion and agricultural runoff during rainfall, disturbed sediment from flooding, algae blooms, fine clay particles, and organic decomposition. Seasonally elevated in rivers after heavy rainfall and snowmelt. Turbidity is a measure of particle load rather than a contaminant itself — sediment, silt, and biological material are the underlying causes.",
+      "healthRisks": "Suspended particles shield and protect pathogens from disinfection by UV light and chlorine, making turbid water significantly harder to treat safely. High turbidity is a strong indicator of faecal contamination risk. The WHO guideline for treated drinking water is below 1 NTU to ensure effective disinfection.",
+      "detection": "Visually apparent at high levels — cloudy, brown, or grey water. Turbidity meters measure in NTU (Nephelometric Turbidity Units). A simple visual test: fill a clear 30 cm glass column — if newspaper print cannot be read through it, turbidity is too high for safe direct disinfection."
     },
-    "heavy_metals": {
-      "name": "Heavy Metals",
-      "description": "Lead, arsenic, and mercury cause serious long-term health effects.",
-      "sources": "Corroding lead pipes in older plumbing, industrial discharge and mining runoff, agricultural pesticides, and natural geological deposits rich in arsenic, cadmium, or chromium.",
-      "healthRisks": "Lead causes irreversible neurological damage and developmental delays in children — there is no safe exposure level. Arsenic is a Group 1 carcinogen linked to bladder and lung cancer. Mercury damages kidneys and the nervous system over time.",
-      "detection": "Laboratory analysis or certified home test kits are required for accurate results. ICP-MS laboratory testing is the gold standard. Test strips for lead exist but have limited sensitivity. Water from buildings with old pipes should always be tested."
+    "sediment": {
+      "name": "Sediment, Sand & Silt",
+      "description": "Suspended inorganic particles that reduce water clarity, damage equipment, and carry adsorbed chemical contaminants.",
+      "sources": "Soil erosion during rainfall, riverbank erosion, disturbed riverbeds, road construction near water sources, flooding, and agricultural cultivation near water bodies. Seasonal peaks occur after storms and snowmelt. Sand and grit damage pump impellers and membrane systems if not pre-filtered.",
+      "healthRisks": "Sediment itself has low direct toxicity but provides attachment surfaces for bacteria, viruses, and heavy metals, protecting them from disinfection. Fine clay particles carry adsorbed agricultural chemicals including pesticides and herbicides. High sediment loads reduce the effectiveness of UV disinfection and chlorination and can clog and damage downstream filter components.",
+      "detection": "Visual inspection — cloudy, murky, or gritty water. Settle a water sample in a clear container for 30 minutes and observe deposits. Turbidity meter measurement in NTU provides a quantitative assessment. Pre-filtration is required whenever visible sediment is present."
+    },
+    "microplastics": {
+      "name": "Microplastics",
+      "description": "Plastic fragments and fibres smaller than 5 mm, increasingly detected in drinking water sources and treated municipal water worldwide.",
+      "sources": "Degradation of larger plastic waste in rivers and oceans, synthetic textile washing releasing fibres, road surface wear from tyre particles, industrial plastic processing, and cosmetic microbeads (now banned in many countries). Found in surface water, groundwater, and treated tap water — their ubiquity reflects global plastic pollution.",
+      "healthRisks": "Health effects are under active scientific investigation. WHO (2019) concluded current evidence does not indicate a risk at concentrations detected in drinking water, but called for further research. Microplastics can carry adsorbed chemical pollutants (PCBs, pesticides) and may facilitate their transfer to tissue. Long-term effects of chronic low-level ingestion are unknown and cannot be excluded.",
+      "detection": "Requires laboratory analysis — microscopy (stereomicroscopy, SEM) or spectroscopy (FTIR or Raman spectroscopy). No reliable field test kits are available. Standard water quality tests do not detect microplastics. Concentrations in tap water are typically below 100 particles per litre."
+    },
+    "lead": {
+      "name": "Lead (Pb)",
+      "description": "A toxic heavy metal that leaches into drinking water primarily from lead service pipes, lead solder, and lead-containing brass fittings in older plumbing systems.",
+      "sources": "Lead service lines (installed before 1986–1990 in most developed countries), lead-tin solder in copper plumbing, and lead-containing brass fittings are the primary sources. Lead is rarely present in source water itself — contamination predominantly occurs within the distribution system and household plumbing. Soft, acidic, and stagnant water conditions increase lead leaching significantly.",
+      "healthRisks": "There is no safe level of lead exposure in children. Lead causes irreversible neurological damage, reduced IQ, behavioural problems, and developmental delays — with the greatest harm during fetal development and early childhood. In adults, chronic exposure elevates blood pressure, is linked to kidney disease and cardiovascular events. WHO guideline: 10 µg/L; US EPA action level: 15 µg/L, with a health goal of zero.",
+      "detection": "Cannot be detected by taste, smell, or appearance. Requires laboratory analysis (ICP-MS gold standard) or certified home test kits. Flush the tap for 30 seconds before sampling to avoid first-draw lead concentrations from standing water in pipes. All homes with pre-1986 plumbing or lead service lines should be tested."
+    },
+    "arsenic": {
+      "name": "Arsenic (As)",
+      "description": "A naturally occurring metalloid that contaminates groundwater through geological dissolution and industrial activity, affecting over 140 million people worldwide.",
+      "sources": "Natural weathering of arsenic-rich rock formations is the primary source — particularly severe in South and Southeast Asia (Bangladesh, India, Myanmar, Vietnam), parts of Latin America (Chile, Argentina), and sub-Saharan Africa. Mining operations, coal combustion, and historical use of arsenical pesticides are anthropogenic sources.",
+      "healthRisks": "Arsenic is an IARC Group 1 human carcinogen. Chronic exposure via drinking water causes cancers of the bladder, lung, kidney, and skin. Non-cancerous effects include peripheral neuropathy, skin lesions (arsenical keratosis), and cardiovascular disease. WHO guideline: 10 µg/L. In severely affected regions, natural concentrations can exceed 1000 µg/L.",
+      "detection": "Arsenic is odourless and tasteless at all relevant concentrations. Colourimetric field test kits are available with sensitivity to approximately 10–50 µg/L; laboratory ICP-MS testing is required for regulatory compliance. Communities in endemic geological regions should test all drinking water sources."
+    },
+    "mercury": {
+      "name": "Mercury (Hg)",
+      "description": "A toxic heavy metal occurring in elemental, inorganic, and organic (methylmercury) forms, with methylmercury being the most hazardous for human health.",
+      "sources": "Industrial discharges from chlor-alkali plants, artisanal and small-scale gold mining (mercury amalgamation), coal combustion, and waste incineration. Natural degassing from volcanic activity and mercury-bearing rock contributes background levels. Methylmercury accumulates in aquatic food chains — fish consumption is the primary human exposure pathway, but industrial point sources contaminate water directly.",
+      "healthRisks": "Methylmercury is a potent neurotoxin that readily crosses the blood-brain barrier and placenta. Prenatal exposure causes developmental delays and neurological damage in children. Inorganic mercury affects kidneys and the central nervous system. WHO guideline for inorganic mercury in drinking water: 6 µg/L.",
+      "detection": "Cannot be detected by taste, smell, or appearance at guideline levels. Requires laboratory analysis — cold vapour atomic absorption spectroscopy or ICP-MS. Standard field tests are unreliable. Testing is recommended near industrial facilities, mining sites, and in artisanal gold mining communities."
+    },
+    "cadmium": {
+      "name": "Cadmium (Cd)",
+      "description": "A heavy metal that accumulates in the kidneys over decades, primarily entering water through phosphate fertiliser use and industrial contamination.",
+      "sources": "Phosphate fertilisers contain cadmium as a geological impurity — agricultural runoff is a significant diffuse source. Zinc smelting, battery manufacturing, and electroplating operations discharge cadmium into water bodies. Some galvanised pipes and plumbing materials may also leach cadmium.",
+      "healthRisks": "Cadmium is an IARC Group 1 carcinogen. Chronic low-level exposure accumulates in the kidneys over decades, eventually causing irreversible kidney damage (cadmium nephropathy). Associated with increased risk of lung and prostate cancer. Bone damage (Itai-itai disease) occurred at very high industrial exposures in Japan. WHO guideline: 3 µg/L.",
+      "detection": "Cadmium is colourless, odourless, and tasteless at all relevant concentrations. Laboratory ICP-MS analysis is required for detection below WHO guideline levels. Field test kits have limited sensitivity. Testing is recommended in agricultural areas with intensive fertiliser use and near industrial facilities."
+    },
+    "chromium_6": {
+      "name": "Chromium-6 (Hexavalent Chromium, Cr-VI)",
+      "description": "The toxic hexavalent form of chromium used in industrial processes — more mobile and carcinogenic than trivalent chromium (Cr-III).",
+      "sources": "Industrial discharge from chrome plating, leather tanning, and dye manufacturing. Improper disposal of chromate-containing waste. Natural geological sources in ultramafic rock regions. Chromium-6 contamination affects water systems in industrial regions of China, India, and parts of the United States (notably Hinkley, California).",
+      "healthRisks": "Chromium-6 is an IARC Group 1 carcinogen. Ingestion is linked to stomach cancer in epidemiological studies. Occupational inhalation causes lung cancer. The WHO and US EPA MCL of 100 µg/L as total chromium is considered inadequate by many researchers given the evidence for ingestion risks. California's Public Health Goal for Cr-VI is 0.02 µg/L.",
+      "detection": "Requires laboratory testing — colorimetric diphenylcarbazide method distinguishes Cr-VI from total chromium. ICP-MS with speciation measures both forms. Standard total chromium tests do not identify the toxic Cr-VI form. Testing is recommended near industrial facilities and in geological regions with ultramafic rock."
+    },
+    "copper": {
+      "name": "Copper (Cu)",
+      "description": "A metal that leaches from copper plumbing into drinking water, especially in soft or acidic water — detectable by a metallic taste at elevated concentrations.",
+      "sources": "Corrosion of copper pipes and fittings is the primary source in treated water distribution systems. Copper is rarely a concern in natural source water. Soft, acidic, or low-pH water accelerates copper leaching — standing water in copper pipes overnight concentrates copper significantly. Agricultural fungicides (copper sulphate) can contaminate surface water.",
+      "healthRisks": "Acute exposure at high concentrations (above 1–2 mg/L) causes nausea, vomiting, and gastrointestinal irritation. Chronic exposure at lower levels can cause liver and kidney damage over time. Children with Wilson's disease (inherited copper metabolism disorder) are particularly susceptible. WHO guideline: 2 mg/L. Copper is detectable as a metallic taste above approximately 1 mg/L.",
+      "detection": "Colorimetric test kits and test strips for copper are widely available and reliable. Laboratory analysis provides more accurate quantification. First-draw samples after overnight stagnation are most likely to show elevated levels. Running the tap for 30 seconds in the morning reduces first-draw copper concentrations."
     },
     "chlorine": {
-      "name": "Chlorine / Taste & Odour",
-      "description": "Residual chlorine from municipal treatment causes unpleasant taste and odour.",
-      "sources": "Intentionally added by municipal water treatment as a disinfectant. Levels are regulated but may be elevated after treatment plant interventions. Rarely present in groundwater unless industrial contamination has occurred.",
-      "healthRisks": "Residual chlorine causes unpleasant taste and odour. Chlorine reacts with organic matter to form trihalomethanes (THMs) — disinfection by-products linked to increased bladder cancer risk with decades of exposure.",
-      "detection": "Inexpensive DPD test strips and drop kits are widely available at pool and aquarium supply stores. Detectable by smell at concentrations above 0.3 mg/L. Municipal water quality reports disclose chlorine levels."
+      "name": "Chlorine & Disinfection By-products",
+      "description": "Residual chlorine from municipal treatment and the trihalomethanes (THMs) it forms when reacting with organic matter.",
+      "sources": "Chlorine is intentionally added by municipal water treatment as a disinfectant and is regulated. Levels may be elevated after treatment plant interventions. Disinfection by-products (DBPs) — trihalomethanes and haloacetic acids — form when chlorine reacts with natural organic matter in the source water.",
+      "healthRisks": "Residual chlorine causes unpleasant taste and odour above approximately 0.3 mg/L. More significantly, trihalomethanes (THMs) including chloroform are classified as probable human carcinogens (IARC Group 2A). Haloacetic acids (HAAs) are also regulated and linked to increased bladder cancer risk with decades of exposure. The relative risk remains low at regulated levels, but reducing DBP exposure is prudent.",
+      "detection": "Inexpensive DPD colorimetric test strips and drop test kits are widely available and reliable for free chlorine. Detectable by smell at concentrations above 0.3 mg/L. Municipal water quality reports disclose chlorine and THM levels. THMs require laboratory analysis (GC-MS) for accurate measurement."
     },
     "nitrates": {
-      "name": "Nitrates",
-      "description": "High nitrate levels from agriculture are dangerous especially for infants.",
-      "sources": "Agricultural fertilizer runoff is the dominant source. Septic system leakage, animal feedlots, and natural soil microbial decomposition also contribute. Highest risk in areas with intensive farming near water sources.",
-      "healthRisks": "Causes methemoglobinemia in infants under 6 months — nitrates prevent blood from carrying oxygen, causing bluish skin. This 'blue baby syndrome' can be rapidly fatal. Long-term adult exposure may increase colorectal cancer risk.",
-      "detection": "Nitrate test strips are widely available at aquarium and pool supply stores. Laboratory analysis is required for accurate regulatory compliance. The WHO limit is 50 mg/L for adults, but 10 mg/L for infant safety."
+      "name": "Nitrates (NO₃⁻)",
+      "description": "High nitrate levels from agricultural fertilisers are particularly dangerous for infants under six months.",
+      "sources": "Agricultural fertiliser runoff is the dominant source, especially in regions with intensive arable farming. Septic system leakage, animal feedlots, and microbial decomposition of organic matter also contribute. Nitrate is highly soluble and mobile in groundwater — it persists for decades after the original contamination event.",
+      "healthRisks": "Nitrates are converted to nitrite in the body, which oxidises haemoglobin to methaemoglobin, reducing oxygen-carrying capacity. In infants under six months, this causes methaemoglobinaemia (blue baby syndrome), which can be rapidly fatal. Long-term adult exposure at elevated levels has been linked to increased colorectal cancer risk in some epidemiological studies. WHO guideline: 50 mg/L (as NO₃⁻); US EPA MCL: 10 mg/L as nitrogen.",
+      "detection": "Nitrate test strips are widely available at aquarium and pool supply stores and are reliably accurate. Laboratory ion chromatography provides precise regulatory-compliance measurements. The WHO guideline of 50 mg/L applies to adults; infant safety requires levels below 10 mg/L (as NO₃-N)."
+    },
+    "nitrites": {
+      "name": "Nitrites (NO₂⁻)",
+      "description": "A reactive nitrogen compound more acutely toxic than nitrates at equivalent concentrations — its presence in drinking water often indicates microbiological activity.",
+      "sources": "Microbial conversion of nitrates by bacteria in distribution pipes or stored water. Incompletely treated sewage and organic matter decomposition. Nitrites are an intermediate in the nitrogen cycle and rarely persist in well-oxygenated groundwater — their presence in finished water often signals bacterial activity or sewage contamination.",
+      "healthRisks": "Nitrites directly convert haemoglobin to methaemoglobin, reducing blood oxygen-carrying capacity — more acutely toxic than nitrates because the conversion step already occurred. Most dangerous for infants under six months (blue baby syndrome). WHO guideline: 3 mg/L. Elevated nitrites in finished water may also indicate bacterial contamination that warrants investigation.",
+      "detection": "Nitrite test strips are widely available and sensitive at relevant concentrations. Laboratory ion chromatography provides accurate measurement. Any detectable nitrite in finished drinking water warrants investigation of source contamination or distribution system bacterial growth."
     },
     "fluoride": {
       "name": "Fluoride",
-      "description": "Excess fluoride causes dental and skeletal fluorosis.",
-      "sources": "Natural volcanic rock formations and sedimentary deposits leach fluoride into groundwater — a major issue in East Africa, South Asia, and parts of China. Industrial waste from fertiliser and aluminium production also contaminates water.",
-      "healthRisks": "At levels above 1.5 mg/L (WHO guideline), fluoride causes dental fluorosis — mottled and weakened teeth. At levels above 4 mg/L, skeletal fluorosis develops, causing joint pain, bone damage, and in severe cases crippling deformity.",
-      "detection": "Requires laboratory analysis or specialized SPADNS photometric test kits. Standard field test strips have limited accuracy for fluoride. Geological maps of endemic fluoride areas provide useful preliminary information."
+      "description": "Excess fluoride from geological sources causes dental and skeletal fluorosis — a problem in specific regions worldwide.",
+      "sources": "Natural volcanic rock formations and sedimentary deposits leach fluoride into groundwater — a major problem in the East African Rift Valley, the Indian subcontinent, and parts of China. Industrial emissions from fertiliser manufacturing and aluminium smelting also contribute. In contrast, some municipal water systems deliberately add fluoride at low concentrations (0.7 mg/L) to prevent tooth decay.",
+      "healthRisks": "At levels above 1.5 mg/L (WHO guideline), fluoride causes dental fluorosis — mottling and weakening of tooth enamel. At levels above 4 mg/L, skeletal fluorosis develops, causing joint pain, ligament calcification, and progressive bone damage that can cause crippling deformity in severe endemic cases. The range between beneficial and harmful concentrations is narrow.",
+      "detection": "Requires laboratory analysis or specialised SPADNS photometric test kits for accurate results. Standard field test strips have limited accuracy for fluoride. Geological maps and regional surveys of endemic fluoride areas provide useful preliminary information about risk."
+    },
+    "pesticides": {
+      "name": "Pesticides",
+      "description": "A broad class of synthetic chemicals used in agriculture to control insects, fungi, and other pests — many are persistent and toxic at low concentrations in water.",
+      "sources": "Agricultural runoff following rainfall on treated fields is the primary pathway to surface water. Direct surface water contamination from spray drift. Leaching through soil into groundwater — particularly from older, more persistent organochlorine compounds. Urban pesticide use in parks and gardens contributes to stormwater contamination.",
+      "healthRisks": "Health effects vary widely by compound. Organochlorines (DDT, endrin, dieldrin) are persistent bioaccumulative toxicants linked to endocrine disruption and cancer. Organophosphates (chlorpyrifos, malathion) inhibit acetylcholinesterase, affecting the nervous system acutely. Many pesticides are classified as possible or probable human carcinogens by IARC. WHO individual compound guidelines range from 0.1 µg/L to 100 µg/L.",
+      "detection": "No single field test detects all pesticide classes. GC-MS or LC-MS laboratory analysis is required for comprehensive multi-residue screening. Targeted immunoassay field kits exist for specific compounds (atrazine, glyphosate, chlorpyrifos). Regular testing is recommended for water sources in agricultural catchments, particularly after rainfall events."
+    },
+    "herbicides": {
+      "name": "Herbicides",
+      "description": "Plant-killing chemicals used to control weeds in agriculture and urban areas, which contaminate surface and groundwater particularly after rainfall.",
+      "sources": "Application to cropland, roadsides, railway corridors, and urban green spaces. Runoff during rainfall events is the primary pathway to surface water. Atrazine, glyphosate, and 2,4-D are among the most frequently detected herbicides in water worldwide. Some compounds are highly persistent in groundwater.",
+      "healthRisks": "Glyphosate is classified by IARC as Group 2A (probable human carcinogen) based on animal and mechanistic evidence, though some regulatory bodies dispute this assessment. Atrazine is an endocrine disruptor with documented effects on amphibian reproductive systems. 2,4-D is associated with Non-Hodgkin lymphoma in some epidemiological studies. WHO guidelines for individual herbicides range widely.",
+      "detection": "ELISA immunoassay field kits are available for atrazine and glyphosate with reasonable sensitivity. Laboratory GC-MS or LC-MS provides comprehensive multi-residue screening. Regular monitoring is recommended for water sources in intensive agricultural areas, particularly at times of peak herbicide application."
+    },
+    "pfas": {
+      "name": "PFAS (Per- and Polyfluoroalkyl Substances)",
+      "description": "A group of thousands of synthetic fluorinated chemicals used since the 1940s — now considered persistent global contaminants in water supplies worldwide.",
+      "sources": "Aqueous film-forming foam (AFFF) used at military bases and airports is a major point source. Industrial manufacturing of fluoropolymers (including polytetrafluoroethylene, PTFE) and fluorosurfactants. Contaminated consumer products including non-stick cookware, food packaging, stain-resistant textiles, and firefighting foams. PFAS are detected in water systems across most industrialised nations.",
+      "healthRisks": "PFOA and PFOS are classified as IARC Group 2A (probable) and 2B (possible) carcinogens respectively. Health effects include thyroid disruption, immune suppression, elevated cholesterol, and reproductive harm. PFOA is associated with kidney and testicular cancer. The US EPA set health advisory levels for PFOA and PFOS at 4 ng/L each (2024) — among the lowest water quality standards ever set. PFAS are called 'forever chemicals' because fluorine-carbon bonds do not naturally biodegrade.",
+      "detection": "Requires laboratory analysis — LC-MS/MS (EPA Method 533 or 537.1) can detect a wide range of PFAS compounds at ng/L concentrations. No reliable field test kits are currently available. Testing is recommended near military airports, industrial facilities with known PFAS use, and in areas with documented PFAS groundwater contamination."
+    },
+    "vocs": {
+      "name": "Volatile Organic Compounds (VOCs)",
+      "description": "Carbon-based chemicals that evaporate readily at room temperature, including industrial solvents, fuel components, and chlorination by-products.",
+      "sources": "Leaking underground fuel storage tanks (benzene, toluene, MTBE) at petrol stations and industrial facilities. Industrial solvent disposal and dry-cleaning chemical releases (tetrachloroethylene PCE, trichloroethylene TCE). Chlorination by-products (trihalomethanes including chloroform) form during water disinfection. VOCs enter groundwater through soil percolation.",
+      "healthRisks": "Benzene is an IARC Group 1 carcinogen and a known cause of leukaemia. Tetrachloroethylene (PCE) and trichloroethylene (TCE) are IARC Group 1 carcinogens associated with kidney cancer and Non-Hodgkin lymphoma. Trihalomethanes including chloroform are associated with increased bladder cancer risk with long-term exposure. WHO provides individual guidelines for each compound.",
+      "detection": "Many VOCs produce a petroleum or solvent odour detectable at higher concentrations, but numerous VOCs are odourless at guideline concentrations. Purge-and-trap GC-MS laboratory analysis is the standard method (US EPA Method 524.2). Passive sampler sticks and some immunoassay kits provide on-site screening for specific compounds."
+    },
+    "petroleum": {
+      "name": "Petroleum & Fuel Residues",
+      "description": "Hydrocarbons from crude oil, refined fuels, and lubricants that contaminate water through spills, storage tank leaks, and industrial discharge.",
+      "sources": "Leaking underground storage tanks at petrol stations and industrial facilities. Pipeline spills and tanker accidents. Stormwater runoff from roads and car parks. Oilfield produced water disposal. Agricultural use of heavy machinery near water sources. Urban runoff from roads carries tyre and road surface hydrocarbon residues.",
+      "healthRisks": "Petroleum mixtures contain benzene (IARC Group 1 carcinogen causing leukaemia), toluene, ethylbenzene, and xylene (BTEX compounds), as well as polycyclic aromatic hydrocarbons (PAHs). Benzo[a]pyrene and other PAHs are IARC Group 1 carcinogens. Petroleum in water is detectable by visible sheen, odour, and taste at very low concentrations — often below health-relevant thresholds.",
+      "detection": "Visible oily sheen on water surface and petroleum odour are detectable at low concentrations. Total petroleum hydrocarbon (TPH) laboratory analysis provides quantification. BTEX compounds are measured separately by GC-MS (EPA Method 602/524). Rapid field immunoassay kits are available for some compounds."
+    },
+    "hardness": {
+      "name": "Hardness (Calcium & Magnesium)",
+      "description": "The dissolved calcium and magnesium content of water, responsible for scale formation and reduced soap lathering — not a health hazard at typical levels.",
+      "sources": "Natural dissolution of limestone (calcium carbonate) and dolomite (magnesium carbonate) as groundwater passes through rock formations. Hard water is most common in regions with chalk and limestone geology (southern England, central Europe, parts of the Middle East). Not a health hazard — calcium and magnesium are essential dietary minerals.",
+      "healthRisks": "Hard water is not a health concern and may provide beneficial dietary calcium and magnesium. Scale (calcium carbonate) deposits in pipes, boilers, water heaters, and appliances reduce energy efficiency and lifespan. Very soft water (low mineral content) is more corrosive and may leach lead and copper from plumbing more readily. WHO does not set a health-based guideline for hardness.",
+      "detection": "Standard hardness test strips are widely available and accurate. Results expressed in mg/L CaCO₃ or degrees of hardness (°dH). Soft: below 60 mg/L; moderate: 60–120 mg/L; hard: 120–180 mg/L; very hard: above 180 mg/L. Practical indicators include soap scum formation, kettle scale, and reduced washing machine efficiency."
+    },
+    "iron": {
+      "name": "Iron (Fe)",
+      "description": "A naturally occurring metal that causes orange-brown staining, metallic taste, and supports bacterial growth in water at elevated concentrations.",
+      "sources": "Natural dissolution from iron-rich geological formations is the primary source — common in groundwater from wells in areas with iron-bearing rock. Corrosion of unlined steel and cast iron pipes in distribution systems adds iron in older infrastructure. Anaerobic (oxygen-depleted) groundwater typically contains more dissolved ferrous iron than surface water.",
+      "healthRisks": "Iron is an essential nutrient. WHO does not set a health-based guideline but sets an aesthetic guideline of 0.3 mg/L. Elevated iron causes rust-orange staining of laundry, porcelain, and plumbing fixtures, metallic taste, and promotes growth of iron-oxidising bacteria in pipes (which form slime deposits). Very high levels above 1 mg/L may indicate other groundwater quality issues.",
+      "detection": "Orange-brown discolouration and metallic taste are practical indicators. Colourimetric iron test strips and kits are reliable and widely available. Note the distinction between ferrous iron (dissolved, water appears clear when drawn) and ferric iron (oxidised, rust-coloured particles visible)."
+    },
+    "manganese": {
+      "name": "Manganese (Mn)",
+      "description": "A naturally occurring metal that causes black staining and may impair neurological development at elevated concentrations.",
+      "sources": "Geological dissolution from manganese-containing sedimentary and metamorphic rock, particularly in deep anaerobic groundwater. Industrial discharges from steel manufacturing, battery production, and mining. Often co-occurs with iron in reducing groundwater conditions.",
+      "healthRisks": "Manganese is an essential trace nutrient but neurotoxic at elevated chronic exposures. WHO updated its provisional guideline to 0.08 mg/L (2022) following evidence linking chronic exposure to reduced cognitive function in children. Studies from Bangladesh and Canada have shown IQ deficits and neurological effects in children exposed to drinking water above 100–300 µg/L. Black or dark-brown staining of fixtures occurs above 0.1 mg/L.",
+      "detection": "Colourimetric test kits and strips are available for manganese, though sensitivity varies between products. Laboratory ICP-MS provides accurate quantification. Black or dark-brown staining in toilet cisterns, sinks, and laundry is a practical indicator at elevated levels."
+    },
+    "salinity": {
+      "name": "High Salinity / Total Dissolved Solids (TDS)",
+      "description": "Elevated dissolved salt content that makes water unpalatable for drinking and unsuitable for irrigation — a growing problem in coastal and arid regions.",
+      "sources": "Natural geological sources including evaporite deposits (halite, gypsum) and marine sedimentary formations. Seawater intrusion into coastal aquifers due to over-extraction. Agricultural drainage with irrigation-concentrated salts and fertiliser residues. Industrial brine discharge. Climate-driven drought concentrating dissolved solids in surface water and shallow aquifers.",
+      "healthRisks": "WHO aesthetic guideline for TDS is 600 mg/L, with an upper acceptability limit of 1000 mg/L. Drinking water above 2000 mg/L TDS causes osmotic diarrhoea. At sodium concentrations above 200 mg/L, there is increased risk of hypertension in sodium-sensitive individuals. Highly saline water is corrosive to metal plumbing and unsuitable for irrigation of most crops.",
+      "detection": "TDS meters are inexpensive and widely available — dip and read results in mg/L or ppm. Electrical conductivity meters measure a closely related parameter. A distinctly salty or brackish taste is detectable above approximately 600 mg/L. Laboratory ionic analysis identifies specific dissolved minerals."
+    },
+    "hydrogen_sulfide": {
+      "name": "Hydrogen Sulfide (H₂S)",
+      "description": "A dissolved gas producing a distinctive rotten-egg odour — primarily an aesthetic concern in drinking water but corrosive to plumbing.",
+      "sources": "Microbial reduction of sulphate by sulphate-reducing bacteria in anaerobic groundwater. Volcanic and geothermal sources. Industrial discharges from petroleum refining and paper manufacturing. Natural organic matter decomposition in deep anaerobic aquifers. A common complaint with private well water in areas with sulphate-rich geology.",
+      "healthRisks": "At concentrations detectable in drinking water (typically below 1 mg/L), hydrogen sulfide is primarily an aesthetic problem causing objectionable odour and taste. It is corrosive to copper and silver plumbing. At higher dissolved concentrations from industrial sources, it is toxic, but these levels are not normally encountered in drinking water supplies. WHO does not set a health-based guideline; odour is detectable above 0.05 mg/L.",
+      "detection": "Detectable by its unmistakable rotten-egg smell at concentrations above 0.05 mg/L. No reliable field test strips for dissolved H₂S — the gas degasses rapidly on exposure to air, making measurement unreliable without immediate preservation. Laboratory analysis requires rapid processing with a specific sulphide-fixing preservative."
+    },
+    "pharmaceuticals": {
+      "name": "Pharmaceutical Residues",
+      "description": "Trace concentrations of medicines excreted by humans and animals, incompletely removed by conventional wastewater treatment.",
+      "sources": "Human excretion of parent compounds and metabolites of antibiotics, antidepressants, anti-epileptics, pain relievers, and other medicines. Improper disposal of unused medicines into toilets and drains. Veterinary pharmaceuticals from intensive livestock operations. Wastewater treatment plants remove most but not all pharmaceutical compounds — effluents discharge to rivers used as drinking water sources downstream.",
+      "healthRisks": "Most pharmaceuticals are present in ng/L concentrations in treated water — far below therapeutic doses. Long-term health effects of chronic low-level exposure are uncertain. Antibiotic residues may contribute to the development and spread of antimicrobial resistance, a serious public health concern. Endocrine-active compounds may have hormonal effects at very low concentrations. WHO has reviewed available evidence and has not established guideline values for most compounds at detected levels.",
+      "detection": "Requires sophisticated laboratory analysis — LC-MS/MS methods with low ng/L detection limits. No field tests are available. Not detected by standard water quality tests. Research monitoring programmes detect pharmaceuticals in source water and treated drinking water worldwide."
+    },
+    "hormones": {
+      "name": "Hormones & Endocrine Disruptors",
+      "description": "Natural and synthetic hormones and hormone-mimicking industrial chemicals that interfere with endocrine signalling even at very low concentrations.",
+      "sources": "Natural oestrogens excreted by humans and livestock in wastewater (oestradiol, oestrone). Synthetic oestrogens from oral contraceptives (ethinyl oestradiol) are particularly potent and persistent. Industrial endocrine-disrupting chemicals including bisphenol A (BPA) and phthalates from plastics manufacturing. Some pesticides have endocrine-disrupting properties.",
+      "healthRisks": "Demonstrated aquatic ecosystem effects include feminisation of fish at extremely low concentrations of ethinyl oestradiol (sub-ng/L range), with population-level reproductive impacts documented. The relevance of these concentrations for human health via drinking water is debated — most evidence suggests current exposures are below pharmacologically active thresholds. WHO does not set drinking water guidelines for most natural oestrogens. The precautionary approach supports continued monitoring.",
+      "detection": "Requires highly sensitive laboratory methods — ELISA immunoassay or LC-MS/MS. Concentrations in treated drinking water are typically in the sub-ng/L to low ng/L range. Not detectable by standard water quality tests or field kits."
+    },
+    "uranium": {
+      "name": "Uranium (U)",
+      "description": "A naturally occurring radioactive metal that dissolves from uranium-bearing geological formations into groundwater, acting primarily as a chemical nephrotoxin.",
+      "sources": "Natural weathering of granitic and sedimentary rock containing uranium deposits — particularly significant in Finland, Scandinavia, parts of the United States Southwest, and phosphate-mining regions. Uranium ore mining and processing operations. Phosphate fertilisers contain uranium as a naturally occurring trace impurity that can leach into groundwater.",
+      "healthRisks": "Uranium's primary health concern in drinking water is chemical nephrotoxicity (kidney damage) from the uranyl cation, rather than radiation. WHO guideline: 30 µg/L. Long-term exposure above guideline levels causes renal injury detectable through biomarkers. As a radioactive element, uranium also contributes to total radiation dose, though chemical toxicity typically dominates at concentrations found in drinking water.",
+      "detection": "Cannot be detected by taste, smell, or appearance. Laboratory ICP-MS analysis is the standard method. Alpha spectrometry provides isotopic analysis. Radon measurement (a radium/uranium decay product) may indicate uranium-rich geology but is not a reliable proxy for uranium in water. Testing is recommended in areas with known granitic or uranium-bearing geology."
+    },
+    "radon": {
+      "name": "Radon (Rn-222)",
+      "description": "A naturally occurring radioactive gas produced by radium decay in soil and rock, which dissolves in groundwater and is released into indoor air during water use.",
+      "sources": "Decay of radium-226 from uranium-bearing rock and soil — primarily in granite, dark shale, and phosphate-rich sedimentary formations. Well water in affected geological areas can contain elevated dissolved radon. Surface water (rivers, lakes) rarely contains significant radon as it degasses rapidly into the atmosphere.",
+      "healthRisks": "The primary radon exposure pathway for most people is inhalation of radon gas accumulating in indoor air, not drinking water. Waterborne radon contributes approximately 2% of total radon exposure. During showering, cooking, and dishwashing, dissolved radon is released from water into indoor air, elevating concentrations. WHO reference level: 300 Bq/L in drinking water. Radon inhalation is the second leading cause of lung cancer after smoking (IARC Group 1).",
+      "detection": "Liquid scintillation counting and electret ion chambers are standard laboratory methods. Water samples must be collected without air exposure and analysed immediately (radon has a 3.8-day half-life and degasses rapidly). Specialised kits are available for well water screening. Testing is recommended for all well owners in high-radon geological areas."
+    },
+    "radionuclides": {
+      "name": "Radionuclides (General Radioactivity)",
+      "description": "A group of radioactive isotopes beyond uranium and radon that can contaminate water through natural geological sources or human industrial and nuclear activity.",
+      "sources": "Natural radionuclides: radium-226 and radium-228 (from uranium and thorium decay chains), polonium-210, and gross alpha and beta radiation from geological sources. Anthropogenic sources: nuclear power plant discharges (tritium, cesium-137), fallout from historical nuclear weapons testing (strontium-90, plutonium), and mining waste tailings containing concentrated natural radionuclides.",
+      "healthRisks": "Health risk depends on the isotope, concentration, and duration of exposure. Ionising radiation damages DNA and increases cancer risk proportionally with dose (no threshold). Radium-226 and Ra-228 are bone-seeking isotopes with long biological half-lives. WHO sets guidelines for total indicative dose from radionuclides at 0.1 mSv per year, with screening values for individual isotopes. Most naturally occurring radioactivity in drinking water is at low levels that represent minimal risk.",
+      "detection": "Gross alpha and gross beta screening tests provide a first-pass indication; positive results trigger isotope-specific analysis by alpha or beta spectrometry. ICP-MS can detect uranium and other radionuclides. Monitoring is required by regulation for all public water supplies in most countries. Private wells in high-risk geological areas should be tested."
     }
   },
   "methods": {
     "boiling": {
       "name": "Boiling",
-      "description": "The most accessible disinfection method — kills bacteria, viruses, and protozoa.",
-      "howItWorks": "Sustained boiling at 100 °C kills all biological pathogens by denaturing proteins and disrupting cell membranes. One minute of rolling boil is sufficient at sea level; three minutes above 2000 m altitude.",
-      "limitations": "Does not remove chemical contaminants, heavy metals, nitrates, or fluoride. Requires a reliable fuel source and adds cost and smoke exposure. Re-contamination is possible if water is stored in a dirty container.",
-      "typicalUse": "Emergency disinfection in any setting, daily household use where fuel is accessible, and as a last-resort backup when other systems fail."
+      "description": "The most universally accessible disinfection method — kills bacteria, viruses, and protozoa without any equipment.",
+      "howItWorks": "Sustained boiling at 100 °C kills all biological pathogens by denaturing proteins and disrupting cell membranes and nucleic acids. One minute of rolling boil is sufficient at sea level; three minutes above 2000 m altitude where water boils at lower temperature. Bring water to a full rolling boil — vigorous bubbling, not a simmer.",
+      "limitations": "Does not remove chemical contaminants, heavy metals, nitrates, fluoride, PFAS, or dissolved inorganic compounds — and may concentrate them slightly as water evaporates. Requires a reliable fuel source, adding cost and time. Smoke from solid fuel combustion causes serious indoor air pollution in poorly ventilated settings. Re-contamination occurs if water is stored in dirty containers after boiling.",
+      "typicalUse": "Emergency disinfection in any setting. Daily household use where fuel is accessible and consistent. Backup method when other treatment systems fail or are unavailable."
     },
     "biosand": {
       "name": "Biosand Filter",
-      "description": "A DIY sand filter with a biological layer that removes pathogens and turbidity.",
-      "howItWorks": "Water percolates slowly through layers of fine sand and gravel. Over 2–3 weeks, a biological layer (Schmutzdecke) forms on the surface and consumes incoming pathogens. Physical straining simultaneously removes turbidity.",
-      "limitations": "Requires 1–3 weeks to establish the biological layer. Slow flow rate (0.3–0.6 L/min). Ineffective against dissolved chemicals, viruses (partial only), and taste or odour. The bio-layer dies if the filter dries out.",
-      "typicalUse": "Rural and peri-urban communities with consistently turbid surface water where local construction materials are available and initial setup can be supervised."
+      "description": "A DIY sand filter that develops a biological layer reducing bacteria, protozoa, and turbidity — with limited virus removal.",
+      "howItWorks": "Water percolates slowly through layers of fine sand and gravel. Over 2–3 weeks, a biological layer (Schmutzdecke) of predatory microorganisms forms on the sand surface and consumes incoming pathogens. Physical straining simultaneously removes turbidity and large particles. Flow rate must remain low (0.1–0.4 m/h) to allow adequate contact time with the biological layer.",
+      "limitations": "Does not reliably remove viruses — virus removal is typically 0–1 log reduction, which is insufficient for virus-contaminated water. Requires 2–3 weeks to establish the biological layer before effective treatment begins. Slow flow rate (0.3–0.6 L/min). The biolayer dies if the filter dries out — requires daily use. No effect on dissolved chemicals, heavy metals, or fluoride.",
+      "typicalUse": "Rural and peri-urban communities with consistently turbid surface water where the primary concern is bacterial and protozoan contamination and local construction materials are available. Should be combined with chlorination or boiling when viral contamination is suspected."
     },
     "ceramic_filtration": {
       "name": "Ceramic Filtration",
-      "description": "Porous ceramic pots remove bacteria, protozoa, and suspended solids.",
-      "howItWorks": "Micropores in fired clay (0.1–1 µm) physically block bacteria and protozoa. Many pots are impregnated with colloidal silver for additional bactericidal effect. Water flows by gravity into a lower storage vessel.",
-      "limitations": "Slow throughput (1–3 L/hr). Fragile — cracks eliminate filtration. Requires regular cleaning to prevent clogging. No effect on viruses, dissolved chemicals, or nitrates. Storage vessel must be kept clean and covered.",
-      "typicalUse": "Household point-of-use treatment where the main concern is bacterial contamination and turbidity. Widely deployed in sub-Saharan Africa, Southeast Asia, and Central America."
+      "description": "Porous ceramic pots physically remove bacteria, protozoa, and suspended solids by straining them through sub-micron pores.",
+      "howItWorks": "Micropores in fired clay (0.1–1 µm in diameter) physically block bacteria and protozoa. Many pots are impregnated with colloidal silver for additional bactericidal effect at the filter surface. Water flows by gravity through the ceramic element into a lower storage vessel, typically producing 1–3 litres per hour.",
+      "limitations": "Does not remove viruses (20–300 nm — smaller than ceramic pore size). Slow throughput (1–3 L/hr). Fragile — any crack or chip eliminates filtration effectiveness. Requires regular gentle cleaning to prevent clogging. No effect on dissolved chemicals, nitrates, fluoride, or heavy metals. Storage vessel must be kept clean and covered.",
+      "typicalUse": "Household point-of-use treatment where the primary concern is bacterial contamination and turbidity. Widely deployed in sub-Saharan Africa, Southeast Asia, and Central America. Must be combined with a viral disinfection step when viral contamination is a concern."
     },
     "activated_carbon": {
       "name": "Activated Carbon",
-      "description": "Adsorbs chlorine, pesticides, and heavy metals through a porous carbon block.",
-      "howItWorks": "Highly porous activated carbon adsorbs organic molecules, chlorine by-products, pesticides, and some heavy metals onto its vast internal surface area (up to 1500 m²/g). Water passes through a solid carbon block or granular bed under gravity or pressure.",
-      "limitations": "Does not kill or remove biological pathogens alone — must be combined with disinfection. The carbon bed saturates and must be replaced every 3–6 months. Ineffective against nitrates, fluoride, and dissolved salts.",
-      "typicalUse": "Polishing stage after disinfection — improving taste, odour, and colour of chlorinated tap water, or reducing chemical load before other treatment stages."
+      "description": "Adsorbs chlorine, chlorination by-products, many pesticides, and organic chemicals through an enormous internal surface area.",
+      "howItWorks": "Highly porous activated carbon provides an enormous internal surface area (700–1500 m²/g) that adsorbs organic molecules, free chlorine, trihalomethanes, pesticides, herbicides, and volatile organic compounds. Water passes through a solid carbon block or granular activated carbon (GAC) bed. NSF/ANSI 53-certified carbon blocks can also reduce lead specifically through adsorption when tested and certified for this purpose — standard carbon does not reliably remove lead.",
+      "limitations": "Does not kill or remove biological pathogens — must be combined with a disinfection method. Carbon bed becomes saturated and must be replaced every 3–6 months (or per manufacturer specification) — an exhausted carbon filter provides no adsorption and may release accumulated contaminants. No effect on nitrates, fluoride, dissolved inorganic salts, or heavy metals (except NSF 53-certified lead reduction).",
+      "typicalUse": "Post-disinfection polishing to improve taste, odour, and appearance of chlorinated tap water. Chemical pre-treatment stage before UV or RO to protect membranes from chlorine damage. Reduction of pesticide and VOC contamination from agricultural and industrial groundwater."
     },
     "uv_disinfection": {
       "name": "UV Disinfection",
-      "description": "Ultraviolet light destroys the DNA of bacteria, viruses, and protozoa.",
-      "howItWorks": "UV-C light at 254 nm penetrates microbial cells and disrupts DNA/RNA, preventing reproduction. A UV lamp in a flow-through chamber irradiates passing water. Effective against bacteria, viruses, and protozoa including Cryptosporidium.",
-      "limitations": "No effect on turbid water — suspended particles shield microbes from UV. Provides no residual protection after treatment. Requires stable electricity and annual lamp replacement. Does not remove chemical contaminants.",
-      "typicalUse": "Final disinfection stage for water that has already been pre-filtered for turbidity. Used in household under-sink systems, community kiosks, and field water treatment trains."
+      "description": "Ultraviolet light inactivates bacteria, viruses, and most protozoa — Cryptosporidium requires a validated high-dose system.",
+      "howItWorks": "UV-C light at 254 nm penetrates microbial cells and causes thymine dimer formation in DNA, preventing reproduction. A UV lamp in a flow-through chamber irradiates water passing at a controlled flow rate. The required dose for safe disinfection is typically 40 mJ/cm². Bacteria and most viruses are inactivated at this standard dose. Giardia cysts require 10 mJ/cm²; Cryptosporidium oocysts require 10–40 mJ/cm² for adequate inactivation — requiring a validated system, not a generic lamp.",
+      "limitations": "No effect on turbid water — suspended particles physically shield microbes from UV radiation. Pre-filtration to below 1 NTU is required. Provides no residual disinfection protection after treatment — water can be re-contaminated in storage. Requires stable electricity supply and annual lamp replacement. Does not remove any chemical contaminants.",
+      "typicalUse": "Final disinfection stage for pre-filtered water in household under-sink systems, community water kiosks, and field treatment trains. Particularly valuable as a chlorine-free disinfection option where taste and DBP concerns are important."
     },
     "reverse_osmosis": {
       "name": "Reverse Osmosis",
-      "description": "A semi-permeable membrane removes virtually all dissolved contaminants.",
-      "howItWorks": "Pressurised water is forced through a membrane with 0.0001 µm pores, rejecting dissolved salts, heavy metals, nitrates, fluoride, and microorganisms. Rejected contaminants are flushed away as brine; purified water is collected separately.",
-      "limitations": "Wastes 3–4 litres per litre produced. Requires inlet pressure of 4–8 bar — usually needs a booster pump. Expensive to install and maintain. Removes beneficial minerals. Membranes must be replaced every 2–3 years.",
-      "typicalUse": "Households or small businesses facing dissolved contamination that cannot be addressed otherwise — high salinity, nitrates, fluoride, or heavy metals — with access to reliable electricity."
+      "description": "Removes the majority of dissolved inorganic contaminants — heavy metals, nitrates, fluoride, and salinity — alongside biological and particulate contamination.",
+      "howItWorks": "Pressurised water is forced through a semi-permeable membrane with approximately 0.0001 µm pores. The membrane rejects dissolved ions, heavy metals, nitrates, fluoride, microorganisms, and most organic molecules. Rejection efficiency ranges from 85–99% depending on the contaminant and system design. Rejected contaminants are flushed away as brine; purified water passes through to a storage tank. Post-treatment remineralisation is recommended for long-term drinking use as RO also removes beneficial calcium and magnesium.",
+      "limitations": "Produces 3–4 litres of brine waste per litre of purified water. Requires inlet water pressure of 4–8 bar — a booster pump is usually necessary. Does not remove dissolved gases (radon, hydrogen sulfide, carbon dioxide, some volatile chlorination by-products). Membranes are damaged by free chlorine — activated carbon pre-filtration is essential with chlorinated source water. Membranes require replacement every 2–3 years; pre-filters every 6–12 months.",
+      "typicalUse": "Households facing dissolved inorganic contamination that other methods cannot address — high salinity, nitrates, fluoride, arsenic, lead, or heavy metals — with access to reliable electricity and technical maintenance capability."
     },
     "chlorination": {
       "name": "Chlorination",
-      "description": "Adding chlorine tablets or solution disinfects water and provides residual protection.",
-      "howItWorks": "Chlorine reacts with water to form hypochlorous acid, which penetrates microbial cell walls and disrupts vital enzymes, killing bacteria and viruses within 30 minutes. A residual of 0.2–0.5 mg/L maintains protection during storage.",
-      "limitations": "Protozoa including Cryptosporidium and Giardia are highly resistant. Reacts with organic matter to form potentially carcinogenic trihalomethanes. No effect on chemical contaminants, heavy metals, or turbidity. Taste and odour can be unpleasant.",
-      "typicalUse": "Point-of-use disinfection using tablets (NaDCC) or household bleach. Especially effective in emergencies and displacement settings where portability and low cost are critical."
+      "description": "Adding chlorine tablets or solution kills bacteria and viruses and provides residual protection during water storage.",
+      "howItWorks": "Chlorine reacts with water to form hypochlorous acid (HOCl), which penetrates microbial cell walls and disrupts enzymes, killing bacteria and viruses within 30 minutes at adequate concentrations. A maintained residual of 0.2–0.5 mg/L free chlorine provides protection against re-contamination during storage. Efficacy depends on contact time, pH, temperature, and water clarity.",
+      "limitations": "Cryptosporidium oocysts and Giardia cysts are highly resistant to chlorine at practical treatment doses — physical filtration is required to address protozoan contamination. Reacts with natural organic matter to form trihalomethanes (THMs) and haloacetic acids (HAAs), classified as probable human carcinogens (IARC Group 2A); risk increases with organic-rich source water. No effect on chemical contaminants, heavy metals, nitrates, fluoride, or turbidity. Taste and odour can be unpleasant at effective doses.",
+      "typicalUse": "Point-of-use disinfection using sodium dichloroisocyanurate (NaDCC) tablets or household bleach. Particularly valuable in emergencies and displacement settings where portability, cost, and residual protection are critical. Always use pre-settled or pre-filtered water to ensure effective contact."
+    },
+    "hollow_fiber": {
+      "name": "Hollow Fiber Ultrafiltration",
+      "description": "A membrane technology that physically removes bacteria, protozoa, and particles using bundles of hollow polymer fibres with sub-micron pores.",
+      "howItWorks": "Water is driven through bundles of hollow fibres made from polyethersulfone or PVDF polymer. Pore sizes of 0.01–0.1 µm physically block bacteria, protozoa, cyanobacteria, and particles larger than the pore size. The membrane acts as a physical barrier — no chemicals are required. Gravity-operated hollow fibre units are available for off-grid settings. Back-flushing (reversing flow) periodically clears accumulated material from the membrane surface.",
+      "limitations": "Does not remove dissolved chemicals, heavy metals, nitrates, fluoride, cyanotoxins, or viruses (most UF membranes do not provide reliable virus removal — only nanofiltration and RO do). Requires periodic back-flushing and periodic chemical cleaning. Membranes must be replaced every 2–5 years. Performance degrades with highly turbid or chemically complex water.",
+      "typicalUse": "Point-of-use household units and community water kiosks where biological contamination is the primary concern. Emergency response for rapid deployment. Pre-treatment stage before RO or UV in multi-stage systems."
+    },
+    "distillation": {
+      "name": "Distillation",
+      "description": "Boils water and recondenses the steam, leaving dissolved salts, metals, and most contaminants behind in the residue.",
+      "howItWorks": "Water is heated to boiling; steam rises, leaving dissolved salts, metals, and non-volatile contaminants in the boiling chamber. Steam condenses back to liquid in a separate cooling chamber, producing purified distillate. Electrical countertop distillers process approximately 3–5 litres per 4–6 hour cycle. Biological pathogens are killed during the boiling process.",
+      "limitations": "Does not remove volatile organic compounds (VOCs) — these have boiling points near or below water and carry over into the distillate with the steam. Some volatile pesticides and chlorine may also carry over. Energy-intensive (approximately 0.7–1 kWh per litre). Slow throughput. Removes beneficial minerals including calcium and magnesium — remineralisation recommended for long-term use. Provides no residual disinfection protection.",
+      "typicalUse": "Households facing dissolved inorganic contamination (arsenic, fluoride, nitrates, heavy metals, high salinity) where reverse osmosis is not available or practical. Emergency water production from diverse or unknown sources."
+    },
+    "ion_exchange": {
+      "name": "Ion Exchange",
+      "description": "Replaces unwanted dissolved ions in water with less harmful ones using a bed of charged resin — targeting specific chemical contaminants.",
+      "howItWorks": "Ion exchange resin beads in a pressure vessel selectively capture target ions from water, releasing a pre-loaded counter-ion in their place. Cation exchange resins (sodium or hydrogen form) capture positively charged ions such as lead, cadmium, calcium, and magnesium. Anion exchange resins (chloride or hydroxide form) capture negatively charged ions including nitrates, fluoride, arsenic (V), and chromate. Resin requires periodic regeneration with a concentrated salt solution to restore capacity.",
+      "limitations": "Does not remove biological pathogens, turbidity, or non-ionic organic chemicals including pesticides and VOCs. Resin exhaustion must be monitored — exhausted resin provides no treatment. Regeneration produces a concentrated brine waste stream requiring proper disposal. Specific resin formulations are required for different target contaminants. Arsenic removal efficiency depends on speciation — arsenate (As V) is well removed, arsenite (As III) is not.",
+      "typicalUse": "Nitrate removal from drinking water in agricultural regions. Arsenic removal in endemic geological areas using iron oxide or alumina anion exchange media. Hardness removal in commercial water softeners. High-purity water production using mixed-bed deionisation for laboratory and industrial applications."
+    },
+    "water_softening": {
+      "name": "Water Softening",
+      "description": "A cation exchange process that replaces calcium and magnesium responsible for hardness and scale with sodium, protecting plumbing and appliances.",
+      "howItWorks": "A sodium-form strong-acid cation exchange resin replaces calcium (Ca²⁺) and magnesium (Mg²⁺) ions with sodium (Na⁺) ions, eliminating scale-forming potential. Hardness is measured before and after to verify performance. The resin is regenerated periodically by flushing with concentrated sodium chloride (brine) solution, which displaces accumulated calcium and magnesium and restores sodium form.",
+      "limitations": "Does not remove biological pathogens, nitrates, fluoride, heavy metals, or most dissolved chemicals. Increases the sodium content of water — medically significant for individuals on sodium-restricted diets; typically adds 20–50 mg/L additional sodium per 100 mg/L CaCO₃ of hardness removed. Does not reduce total dissolved solids. Brine waste requires proper disposal and may be restricted by local regulations. Not recommended as the sole treatment for drinking water.",
+      "typicalUse": "Household and commercial water treatment in hard water areas (above 200 mg/L CaCO₃) to prevent scale in boilers, water heaters, washing machines, and dishwashers. Often installed with a dedicated bypass line providing untreated hard water for drinking, as softened water's elevated sodium content makes it unsuitable for direct consumption by some groups."
+    },
+    "sediment_filtration": {
+      "name": "Sediment / Mechanical Filtration",
+      "description": "A physical pre-treatment step that removes suspended particles and sediment using a porous filter cartridge or media bed.",
+      "howItWorks": "Water passes through a filter medium — polypropylene wound or melt-blown cartridge, ceramic, or a multimedia sand and gravel bed — that physically traps particles above a rated size (typically 1–50 µm). Finer-rated filters capture smaller particles but require more frequent replacement or backwashing. Sediment filters are always the first stage in multi-stage treatment systems.",
+      "limitations": "Does not remove dissolved chemical contaminants, biological pathogens, or chemical pollutants. Clogged or exhausted filters must be replaced or backwashed regularly — a blocked filter creates high pressure differential and can rupture, and it provides no filtration if bypassed by cracks. Fine bacteria and viruses pass through all standard sediment filter ratings.",
+      "typicalUse": "First pre-treatment stage in multi-stage systems (RO, UV, activated carbon) to protect downstream components from physical damage and premature fouling. Essential wherever source water contains significant suspended solids from turbid wells, rivers, or surface water."
     }
   },
   "modules": {
@@ -334,31 +559,31 @@
     },
     "activated_carbon_block": {
       "name": "Activated Carbon Block",
-      "description": "Removes chlorine, taste, odour, and some heavy metals."
+      "description": "Removes chlorine, taste, odour, pesticides, and organic chemicals."
     },
     "ceramic_candle": {
       "name": "Ceramic Candle Filter",
-      "description": "A porous ceramic element that blocks bacteria and protozoa."
+      "description": "A porous ceramic element that blocks bacteria and protozoa by physical straining."
     },
     "biosand_diy": {
       "name": "DIY Biosand Filter",
-      "description": "A locally built sand filter with biological filtration layer."
+      "description": "A locally built sand filter that reduces bacteria, protozoa, and turbidity."
     },
     "uv_lamp_6w": {
       "name": "UV Lamp 6W",
-      "description": "A 6-watt UV lamp for disinfecting up to 6 litres per minute."
+      "description": "A 6-watt UV-C lamp for disinfecting up to 6 litres per minute."
     },
     "ro_membrane_75gpd": {
       "name": "RO Membrane 75 GPD",
-      "description": "Reverse osmosis membrane removing dissolved salts and contaminants."
+      "description": "Reverse osmosis membrane removing dissolved salts, heavy metals, and most contaminants."
     },
     "slow_sand_diy": {
       "name": "DIY Slow Sand Filter",
-      "description": "A large-scale gravity filter using fine sand to remove pathogens."
+      "description": "A large-scale gravity filter using fine sand to reduce pathogens and turbidity."
     },
     "chlorine_tablet": {
       "name": "Chlorine Tablets (NaDCC)",
-      "description": "Sodium dichloroisocyanurate tablets for point-of-use disinfection."
+      "description": "Sodium dichloroisocyanurate tablets for point-of-use bacterial and viral disinfection."
     },
     "booster_pump": {
       "name": "Booster Pump",

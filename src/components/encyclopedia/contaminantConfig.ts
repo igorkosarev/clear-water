@@ -61,6 +61,31 @@ export const CONTAMINANT_ICONS: Record<string, LucideIcon> = {
   radionuclides:     Zap,
 }
 
+export const CATEGORY_ORDER = ['biological', 'physical', 'chemical', 'radiological'] as const
+
+export const CATEGORY_META: Record<string, { label: string; description: string; color: string }> = {
+  biological: {
+    label: 'Biological',
+    description: 'Living organisms and toxins that cause infection or illness',
+    color: '#f43f5e',
+  },
+  physical: {
+    label: 'Physical',
+    description: 'Particles, turbidity, and dissolved solids affecting water clarity',
+    color: '#f59e0b',
+  },
+  chemical: {
+    label: 'Chemical',
+    description: 'Dissolved inorganic compounds, metals, and synthetic chemicals',
+    color: '#60a5fa',
+  },
+  radiological: {
+    label: 'Radiological',
+    description: 'Naturally occurring and anthropogenic radioactive contaminants',
+    color: '#a78bfa',
+  },
+}
+
 export const BADGE_CLASS: Record<string, string> = {
   biological:   'text-red-400    border border-red-400/30    bg-red-400/10',
   chemical:     'text-blue-400   border border-blue-400/30   bg-blue-400/10',

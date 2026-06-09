@@ -6,7 +6,8 @@ import type { Contaminant } from '@/types'
 import contaminantsData from '@/data/contaminants.json'
 import {
   CONTAMINANT_ICONS,
-  BADGE_CLASS,
+  CATEGORY_META,
+  CATEGORY_ORDER,
 } from '@/components/encyclopedia/contaminantConfig'
 
 // ─── Hero particles ───────────────────────────────────────────────────────────
@@ -45,7 +46,7 @@ const ACCENT = '#ef4444'
 
 const gridVariants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } },
+  visible: { transition: { staggerChildren: 0.06, delayChildren: 0.05 } },
 }
 
 const cardVariants = {
@@ -53,9 +54,19 @@ const cardVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: 'easeOut' as const } },
 }
 
+const headerVariants = {
+  hidden: { opacity: 0, x: -16 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: 'easeOut' as const } },
+}
+
 // ─── Static data ──────────────────────────────────────────────────────────────
 
 const contaminants = contaminantsData as Contaminant[]
+
+const grouped = CATEGORY_ORDER.reduce<Record<string, Contaminant[]>>((acc, cat) => {
+  acc[cat] = contaminants.filter(c => c.category === cat)
+  return acc
+}, {})
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
@@ -115,60 +126,97 @@ export default function Contaminants() {
         </div>
       </section>
 
-      {/* ── Card grid ── */}
-      <div className="bg-slate-950 px-4 py-12">
-        <div className="max-w-5xl mx-auto">
-          <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-            variants={gridVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            {contaminants.map(c => {
-              const Icon = CONTAMINANT_ICONS[c.id]
-              const badgeClass = BADGE_CLASS[c.category] ?? 'text-slate-400 border border-slate-400/30 bg-slate-400/10'
+      {/* ── Category sections ── */}
+      <div className="bg-slate-950 px-4 py-12 space-y-14">
+        <div className="max-w-5xl mx-auto space-y-14">
+          {CATEGORY_ORDER.map(cat => {
+            const meta = CATEGORY_META[cat]
+            const items = grouped[cat] ?? []
+            if (!meta || items.length === 0) return null
 
-              return (
+            return (
+              <section key={cat}>
+                {/* Section header */}
                 <motion.div
-                  key={c.id}
-                  variants={cardVariants}
-                  className="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-hidden flex flex-col"
+                  className="flex items-start gap-4 mb-6 pl-4 py-3 rounded-xl bg-slate-900/60"
+                  style={{ borderLeft: `4px solid ${meta.color}` }}
+                  variants={headerVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: '-40px' }}
                 >
-                  {/* Accent strip */}
-                  <div className="h-1 w-full flex-shrink-0" style={{ backgroundColor: c.color }} />
-
-                  <div className="p-5 flex flex-col gap-3 flex-1">
-                    {/* Category badge + icon */}
-                    <div className="flex items-center justify-between">
-                      <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold ${badgeClass}`}>
-                        {t(`contaminant.category.${c.category}`)}
-                      </span>
-                      {Icon && <Icon size={20} strokeWidth={1.5} style={{ color: c.color }} />}
-                    </div>
-
-                    {/* Name */}
-                    <h3 className="text-white font-bold text-base leading-snug">
-                      {t(c.nameKey)}
-                    </h3>
-
-                    {/* Description */}
-                    <p className="text-slate-400 text-sm leading-relaxed line-clamp-3 flex-1">
-                      {t(c.descriptionKey)}
-                    </p>
-
-                    {/* Learn more */}
-                    <Link
-                      to={`/learn/contaminants/${c.id}`}
-                      className="inline-flex items-center gap-1.5 self-start mt-1 px-3 py-1.5 rounded-full text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors"
-                    >
-                      {t('learn.contaminants.learnMore', { defaultValue: 'Learn more' })}
-                      <ArrowRight size={12} />
-                    </Link>
+                  <div className="flex-1 min-w-0">
+                    <h2 className="text-xl font-bold text-white leading-tight">
+                      {meta.label}
+                    </h2>
+                    <p className="text-sm text-slate-400 mt-0.5">{meta.description}</p>
                   </div>
+                  <span
+                    className="flex-shrink-0 mt-0.5 px-2.5 py-1 rounded-full text-xs font-semibold tabular-nums"
+                    style={{
+                      backgroundColor: `${meta.color}18`,
+                      color: meta.color,
+                      border: `1px solid ${meta.color}30`,
+                    }}
+                  >
+                    {items.length}
+                  </span>
                 </motion.div>
-              )
-            })}
-          </motion.div>
+
+                {/* Card grid */}
+                <motion.div
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+                  variants={gridVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: '-60px' }}
+                >
+                  {items.map(c => {
+                    const Icon = CONTAMINANT_ICONS[c.id]
+
+                    return (
+                      <motion.div
+                        key={c.id}
+                        variants={cardVariants}
+                        className="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-hidden flex flex-col"
+                      >
+                        {/* Accent strip */}
+                        <div className="h-1 w-full flex-shrink-0" style={{ backgroundColor: c.color }} />
+
+                        <div className="p-5 flex flex-col gap-3 flex-1">
+                          {/* Icon row */}
+                          {Icon && (
+                            <div className="flex justify-end">
+                              <Icon size={20} strokeWidth={1.5} style={{ color: c.color }} />
+                            </div>
+                          )}
+
+                          {/* Name */}
+                          <h3 className="text-white font-bold text-base leading-snug">
+                            {t(c.nameKey)}
+                          </h3>
+
+                          {/* Description */}
+                          <p className="text-slate-400 text-sm leading-relaxed line-clamp-3 flex-1">
+                            {t(c.descriptionKey)}
+                          </p>
+
+                          {/* Learn more */}
+                          <Link
+                            to={`/learn/contaminants/${c.id}`}
+                            className="inline-flex items-center gap-1.5 self-start mt-1 px-3 py-1.5 rounded-full text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors"
+                          >
+                            {t('learn.contaminants.learnMore', { defaultValue: 'Learn more' })}
+                            <ArrowRight size={12} />
+                          </Link>
+                        </div>
+                      </motion.div>
+                    )
+                  })}
+                </motion.div>
+              </section>
+            )
+          })}
         </div>
       </div>
     </div>

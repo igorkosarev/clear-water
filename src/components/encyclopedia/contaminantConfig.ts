@@ -112,6 +112,30 @@ export const CATEGORY_META: Record<string, { label: string; description: string;
   },
 }
 
+// Chemical / elemental symbols — shown as periodic-table tiles instead of Lucide icons
+export const CHEMICAL_SYMBOLS: Record<string, string> = {
+  lead:             'Pb',
+  arsenic:          'As',
+  mercury:          'Hg',
+  cadmium:          'Cd',
+  chromium_6:       'Cr⁶⁺',
+  copper:           'Cu',
+  iron:             'Fe',
+  manganese:        'Mn',
+  uranium:          'U',
+  radon:            'Rn',
+  sodium:           'Na',
+  aluminum:         'Al',
+  nickel:           'Ni',
+  selenium:         'Se',
+  barium:           'Ba',
+  fluoride:         'F⁻',
+  chloride:         'Cl⁻',
+  nitrites:         'NO₂⁻',
+  nitrates:         'NO₃⁻',
+  hydrogen_sulfide: 'H₂S',
+}
+
 export const BADGE_CLASS: Record<string, string> = {
   biological:   'text-red-400    border border-red-400/30    bg-red-400/10',
   chemical:     'text-blue-400   border border-blue-400/30   bg-blue-400/10',

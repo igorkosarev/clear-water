@@ -291,42 +291,42 @@
       "detection": "Requires laboratory analysis — microscopy (stereomicroscopy, SEM) or spectroscopy (FTIR or Raman spectroscopy). No reliable field test kits are available. Standard water quality tests do not detect microplastics. Concentrations in tap water are typically below 100 particles per litre."
     },
     "lead": {
-      "name": "Lead (Pb)",
+      "name": "Lead",
       "description": "A toxic heavy metal that leaches into drinking water primarily from lead service pipes, lead solder, and lead-containing brass fittings in older plumbing systems.",
       "sources": "Lead service lines (installed before 1986–1990 in most developed countries), lead-tin solder in copper plumbing, and lead-containing brass fittings are the primary sources. Lead is rarely present in source water itself — contamination predominantly occurs within the distribution system and household plumbing. Soft, acidic, and stagnant water conditions increase lead leaching significantly.",
       "healthRisks": "There is no safe level of lead exposure in children. Lead causes irreversible neurological damage, reduced IQ, behavioural problems, and developmental delays — with the greatest harm during fetal development and early childhood. In adults, chronic exposure elevates blood pressure, is linked to kidney disease and cardiovascular events. WHO guideline: 10 µg/L; US EPA action level: 15 µg/L, with a health goal of zero.",
       "detection": "Cannot be detected by taste, smell, or appearance. Requires laboratory analysis (ICP-MS gold standard) or certified home test kits. Flush the tap for 30 seconds before sampling to avoid first-draw lead concentrations from standing water in pipes. All homes with pre-1986 plumbing or lead service lines should be tested."
     },
     "arsenic": {
-      "name": "Arsenic (As)",
+      "name": "Arsenic",
       "description": "A naturally occurring metalloid that contaminates groundwater through geological dissolution and industrial activity, affecting over 140 million people worldwide.",
       "sources": "Natural weathering of arsenic-rich rock formations is the primary source — particularly severe in South and Southeast Asia (Bangladesh, India, Myanmar, Vietnam), parts of Latin America (Chile, Argentina), and sub-Saharan Africa. Mining operations, coal combustion, and historical use of arsenical pesticides are anthropogenic sources.",
       "healthRisks": "Arsenic is an IARC Group 1 human carcinogen. Chronic exposure via drinking water causes cancers of the bladder, lung, kidney, and skin. Non-cancerous effects include peripheral neuropathy, skin lesions (arsenical keratosis), and cardiovascular disease. WHO guideline: 10 µg/L. In severely affected regions, natural concentrations can exceed 1000 µg/L.",
       "detection": "Arsenic is odourless and tasteless at all relevant concentrations. Colourimetric field test kits are available with sensitivity to approximately 10–50 µg/L; laboratory ICP-MS testing is required for regulatory compliance. Communities in endemic geological regions should test all drinking water sources."
     },
     "mercury": {
-      "name": "Mercury (Hg)",
+      "name": "Mercury",
       "description": "A toxic heavy metal occurring in elemental, inorganic, and organic (methylmercury) forms, with methylmercury being the most hazardous for human health.",
       "sources": "Industrial discharges from chlor-alkali plants, artisanal and small-scale gold mining (mercury amalgamation), coal combustion, and waste incineration. Natural degassing from volcanic activity and mercury-bearing rock contributes background levels. Methylmercury accumulates in aquatic food chains — fish consumption is the primary human exposure pathway, but industrial point sources contaminate water directly.",
       "healthRisks": "Methylmercury is a potent neurotoxin that readily crosses the blood-brain barrier and placenta. Prenatal exposure causes developmental delays and neurological damage in children. Inorganic mercury affects kidneys and the central nervous system. WHO guideline for inorganic mercury in drinking water: 6 µg/L.",
       "detection": "Cannot be detected by taste, smell, or appearance at guideline levels. Requires laboratory analysis — cold vapour atomic absorption spectroscopy or ICP-MS. Standard field tests are unreliable. Testing is recommended near industrial facilities, mining sites, and in artisanal gold mining communities."
     },
     "cadmium": {
-      "name": "Cadmium (Cd)",
+      "name": "Cadmium",
       "description": "A heavy metal that accumulates in the kidneys over decades, primarily entering water through phosphate fertiliser use and industrial contamination.",
       "sources": "Phosphate fertilisers contain cadmium as a geological impurity — agricultural runoff is a significant diffuse source. Zinc smelting, battery manufacturing, and electroplating operations discharge cadmium into water bodies. Some galvanised pipes and plumbing materials may also leach cadmium.",
       "healthRisks": "Cadmium is an IARC Group 1 carcinogen. Chronic low-level exposure accumulates in the kidneys over decades, eventually causing irreversible kidney damage (cadmium nephropathy). Associated with increased risk of lung and prostate cancer. Bone damage (Itai-itai disease) occurred at very high industrial exposures in Japan. WHO guideline: 3 µg/L.",
       "detection": "Cadmium is colourless, odourless, and tasteless at all relevant concentrations. Laboratory ICP-MS analysis is required for detection below WHO guideline levels. Field test kits have limited sensitivity. Testing is recommended in agricultural areas with intensive fertiliser use and near industrial facilities."
     },
     "chromium_6": {
-      "name": "Chromium-6 (Hexavalent Chromium, Cr-VI)",
+      "name": "Chromium-6",
       "description": "The toxic hexavalent form of chromium used in industrial processes — more mobile and carcinogenic than trivalent chromium (Cr-III).",
       "sources": "Industrial discharge from chrome plating, leather tanning, and dye manufacturing. Improper disposal of chromate-containing waste. Natural geological sources in ultramafic rock regions. Chromium-6 contamination affects water systems in industrial regions of China, India, and parts of the United States (notably Hinkley, California).",
       "healthRisks": "Chromium-6 is an IARC Group 1 carcinogen. Ingestion is linked to stomach cancer in epidemiological studies. Occupational inhalation causes lung cancer. The WHO and US EPA MCL of 100 µg/L as total chromium is considered inadequate by many researchers given the evidence for ingestion risks. California's Public Health Goal for Cr-VI is 0.02 µg/L.",
       "detection": "Requires laboratory testing — colorimetric diphenylcarbazide method distinguishes Cr-VI from total chromium. ICP-MS with speciation measures both forms. Standard total chromium tests do not identify the toxic Cr-VI form. Testing is recommended near industrial facilities and in geological regions with ultramafic rock."
     },
     "copper": {
-      "name": "Copper (Cu)",
+      "name": "Copper",
       "description": "A metal that leaches from copper plumbing into drinking water, especially in soft or acidic water — detectable by a metallic taste at elevated concentrations.",
       "sources": "Corrosion of copper pipes and fittings is the primary source in treated water distribution systems. Copper is rarely a concern in natural source water. Soft, acidic, or low-pH water accelerates copper leaching — standing water in copper pipes overnight concentrates copper significantly. Agricultural fungicides (copper sulphate) can contaminate surface water.",
       "healthRisks": "Acute exposure at high concentrations (above 1–2 mg/L) causes nausea, vomiting, and gastrointestinal irritation. Chronic exposure at lower levels can cause liver and kidney damage over time. Children with Wilson's disease (inherited copper metabolism disorder) are particularly susceptible. WHO guideline: 2 mg/L. Copper is detectable as a metallic taste above approximately 1 mg/L.",
@@ -340,14 +340,14 @@
       "detection": "Inexpensive DPD colorimetric test strips and drop test kits are widely available and reliable for free chlorine. Detectable by smell at concentrations above 0.3 mg/L. Municipal water quality reports disclose chlorine and THM levels. THMs require laboratory analysis (GC-MS) for accurate measurement."
     },
     "nitrates": {
-      "name": "Nitrates (NO₃⁻)",
+      "name": "Nitrates",
       "description": "High nitrate levels from agricultural fertilisers are particularly dangerous for infants under six months.",
       "sources": "Agricultural fertiliser runoff is the dominant source, especially in regions with intensive arable farming. Septic system leakage, animal feedlots, and microbial decomposition of organic matter also contribute. Nitrate is highly soluble and mobile in groundwater — it persists for decades after the original contamination event.",
       "healthRisks": "Nitrates are converted to nitrite in the body, which oxidises haemoglobin to methaemoglobin, reducing oxygen-carrying capacity. In infants under six months, this causes methaemoglobinaemia (blue baby syndrome), which can be rapidly fatal. Long-term adult exposure at elevated levels has been linked to increased colorectal cancer risk in some epidemiological studies. WHO guideline: 50 mg/L (as NO₃⁻); US EPA MCL: 10 mg/L as nitrogen.",
       "detection": "Nitrate test strips are widely available at aquarium and pool supply stores and are reliably accurate. Laboratory ion chromatography provides precise regulatory-compliance measurements. The WHO guideline of 50 mg/L applies to adults; infant safety requires levels below 10 mg/L (as NO₃-N)."
     },
     "nitrites": {
-      "name": "Nitrites (NO₂⁻)",
+      "name": "Nitrites",
       "description": "A reactive nitrogen compound more acutely toxic than nitrates at equivalent concentrations — its presence in drinking water often indicates microbiological activity.",
       "sources": "Microbial conversion of nitrates by bacteria in distribution pipes or stored water. Incompletely treated sewage and organic matter decomposition. Nitrites are an intermediate in the nitrogen cycle and rarely persist in well-oxygenated groundwater — their presence in finished water often signals bacterial activity or sewage contamination.",
       "healthRisks": "Nitrites directly convert haemoglobin to methaemoglobin, reducing blood oxygen-carrying capacity — more acutely toxic than nitrates because the conversion step already occurred. Most dangerous for infants under six months (blue baby syndrome). WHO guideline: 3 mg/L. Elevated nitrites in finished water may also indicate bacterial contamination that warrants investigation.",
@@ -403,14 +403,14 @@
       "detection": "Standard hardness test strips are widely available and accurate. Results expressed in mg/L CaCO₃ or degrees of hardness (°dH). Soft: below 60 mg/L; moderate: 60–120 mg/L; hard: 120–180 mg/L; very hard: above 180 mg/L. Practical indicators include soap scum formation, kettle scale, and reduced washing machine efficiency."
     },
     "iron": {
-      "name": "Iron (Fe)",
+      "name": "Iron",
       "description": "A naturally occurring metal that causes orange-brown staining, metallic taste, and supports bacterial growth in water at elevated concentrations.",
       "sources": "Natural dissolution from iron-rich geological formations is the primary source — common in groundwater from wells in areas with iron-bearing rock. Corrosion of unlined steel and cast iron pipes in distribution systems adds iron in older infrastructure. Anaerobic (oxygen-depleted) groundwater typically contains more dissolved ferrous iron than surface water.",
       "healthRisks": "Iron is an essential nutrient. WHO does not set a health-based guideline but sets an aesthetic guideline of 0.3 mg/L. Elevated iron causes rust-orange staining of laundry, porcelain, and plumbing fixtures, metallic taste, and promotes growth of iron-oxidising bacteria in pipes (which form slime deposits). Very high levels above 1 mg/L may indicate other groundwater quality issues.",
       "detection": "Orange-brown discolouration and metallic taste are practical indicators. Colourimetric iron test strips and kits are reliable and widely available. Note the distinction between ferrous iron (dissolved, water appears clear when drawn) and ferric iron (oxidised, rust-coloured particles visible)."
     },
     "manganese": {
-      "name": "Manganese (Mn)",
+      "name": "Manganese",
       "description": "A naturally occurring metal that causes black staining and may impair neurological development at elevated concentrations.",
       "sources": "Geological dissolution from manganese-containing sedimentary and metamorphic rock, particularly in deep anaerobic groundwater. Industrial discharges from steel manufacturing, battery production, and mining. Often co-occurs with iron in reducing groundwater conditions.",
       "healthRisks": "Manganese is an essential trace nutrient but neurotoxic at elevated chronic exposures. WHO updated its provisional guideline to 0.08 mg/L (2022) following evidence linking chronic exposure to reduced cognitive function in children. Studies from Bangladesh and Canada have shown IQ deficits and neurological effects in children exposed to drinking water above 100–300 µg/L. Black or dark-brown staining of fixtures occurs above 0.1 mg/L.",
@@ -424,7 +424,7 @@
       "detection": "TDS meters are inexpensive and widely available — dip and read results in mg/L or ppm. Electrical conductivity meters measure a closely related parameter. A distinctly salty or brackish taste is detectable above approximately 600 mg/L. Laboratory ionic analysis identifies specific dissolved minerals."
     },
     "hydrogen_sulfide": {
-      "name": "Hydrogen Sulfide (H₂S)",
+      "name": "Hydrogen Sulfide",
       "description": "A dissolved gas producing a distinctive rotten-egg odour — primarily an aesthetic concern in drinking water but corrosive to plumbing.",
       "sources": "Microbial reduction of sulphate by sulphate-reducing bacteria in anaerobic groundwater. Volcanic and geothermal sources. Industrial discharges from petroleum refining and paper manufacturing. Natural organic matter decomposition in deep anaerobic aquifers. A common complaint with private well water in areas with sulphate-rich geology.",
       "healthRisks": "At concentrations detectable in drinking water (typically below 1 mg/L), hydrogen sulfide is primarily an aesthetic problem causing objectionable odour and taste. It is corrosive to copper and silver plumbing. At higher dissolved concentrations from industrial sources, it is toxic, but these levels are not normally encountered in drinking water supplies. WHO does not set a health-based guideline; odour is detectable above 0.05 mg/L.",
@@ -445,14 +445,14 @@
       "detection": "Requires highly sensitive laboratory methods — ELISA immunoassay or LC-MS/MS. Concentrations in treated drinking water are typically in the sub-ng/L to low ng/L range. Not detectable by standard water quality tests or field kits."
     },
     "uranium": {
-      "name": "Uranium (U)",
+      "name": "Uranium",
       "description": "A naturally occurring radioactive metal that dissolves from uranium-bearing geological formations into groundwater, acting primarily as a chemical nephrotoxin.",
       "sources": "Natural weathering of granitic and sedimentary rock containing uranium deposits — particularly significant in Finland, Scandinavia, parts of the United States Southwest, and phosphate-mining regions. Uranium ore mining and processing operations. Phosphate fertilisers contain uranium as a naturally occurring trace impurity that can leach into groundwater.",
       "healthRisks": "Uranium's primary health concern in drinking water is chemical nephrotoxicity (kidney damage) from the uranyl cation, rather than radiation. WHO guideline: 30 µg/L. Long-term exposure above guideline levels causes renal injury detectable through biomarkers. As a radioactive element, uranium also contributes to total radiation dose, though chemical toxicity typically dominates at concentrations found in drinking water.",
       "detection": "Cannot be detected by taste, smell, or appearance. Laboratory ICP-MS analysis is the standard method. Alpha spectrometry provides isotopic analysis. Radon measurement (a radium/uranium decay product) may indicate uranium-rich geology but is not a reliable proxy for uranium in water. Testing is recommended in areas with known granitic or uranium-bearing geology."
     },
     "radon": {
-      "name": "Radon (Rn-222)",
+      "name": "Radon",
       "description": "A naturally occurring radioactive gas produced by radium decay in soil and rock, which dissolves in groundwater and is released into indoor air during water use.",
       "sources": "Decay of radium-226 from uranium-bearing rock and soil — primarily in granite, dark shale, and phosphate-rich sedimentary formations. Well water in affected geological areas can contain elevated dissolved radon. Surface water (rivers, lakes) rarely contains significant radon as it degasses rapidly into the atmosphere.",
       "healthRisks": "The primary radon exposure pathway for most people is inhalation of radon gas accumulating in indoor air, not drinking water. Waterborne radon contributes approximately 2% of total radon exposure. During showering, cooking, and dishwashing, dissolved radon is released from water into indoor air, elevating concentrations. WHO reference level: 300 Bq/L in drinking water. Radon inhalation is the second leading cause of lung cancer after smoking (IARC Group 1).",

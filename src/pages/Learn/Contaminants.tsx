@@ -6,9 +6,33 @@ import type { Contaminant } from '@/types'
 import contaminantsData from '@/data/contaminants.json'
 import {
   CONTAMINANT_ICONS,
+  CHEMICAL_SYMBOLS,
   CATEGORY_META,
   CATEGORY_ORDER,
 } from '@/components/encyclopedia/contaminantConfig'
+
+// ─── Periodic-table tile for elemental / ionic contaminants ──────────────────
+
+function ChemBadge({ symbol, color }: { symbol: string; color: string }) {
+  const len = symbol.length
+  const fontSize = len <= 2 ? 14 : len === 3 ? 11 : 9
+  return (
+    <div
+      className="flex-shrink-0 flex items-center justify-center rounded font-mono font-bold leading-none"
+      style={{
+        minWidth: 34,
+        height: 36,
+        paddingInline: 5,
+        border: `1px solid ${color}55`,
+        backgroundColor: `${color}12`,
+        color,
+        fontSize,
+      }}
+    >
+      {symbol}
+    </div>
+  )
+}
 
 // ─── Hero particles ───────────────────────────────────────────────────────────
 
@@ -274,7 +298,8 @@ export default function Contaminants() {
                   viewport={{ once: true, margin: '-60px' }}
                 >
                   {items.map(c => {
-                    const CIcon = CONTAMINANT_ICONS[c.id]
+                    const sym = CHEMICAL_SYMBOLS[c.id]
+                    const CIcon = sym ? null : CONTAMINANT_ICONS[c.id]
 
                     return (
                       <motion.div
@@ -286,14 +311,16 @@ export default function Contaminants() {
                         <div className="h-0.5 w-full flex-shrink-0" style={{ backgroundColor: c.color }} />
 
                         <div className="p-5 flex flex-col gap-3 flex-1">
-                          {/* Name + icon */}
+                          {/* Name + icon / chem badge */}
                           <div className="flex items-start justify-between gap-2">
                             <h3 className="text-white font-bold text-base leading-snug">
                               {t(c.nameKey)}
                             </h3>
-                            {CIcon && (
+                            {sym ? (
+                              <ChemBadge symbol={sym} color={c.color} />
+                            ) : CIcon ? (
                               <CIcon size={20} strokeWidth={1.5} style={{ color: c.color }} className="flex-shrink-0 mt-0.5" />
-                            )}
+                            ) : null}
                           </div>
 
                           {/* Description */}

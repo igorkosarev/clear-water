@@ -9,6 +9,7 @@ import { LanguageSelector } from './LanguageSelector'
 export interface NavItem {
   to: string
   labelKey: string
+  end?: boolean
 }
 
 interface MobileDrawerProps {
@@ -70,6 +71,7 @@ export function MobileDrawer({ open, onClose, navItems }: MobileDrawerProps) {
                 <NavLink
                   key={item.to}
                   to={item.to}
+                  end={item.end ?? true}
                   onClick={onClose}
                   className={({ isActive }) =>
                     `block px-5 py-3.5 text-base font-medium transition-colors border-b border-slate-800 last:border-0 ${

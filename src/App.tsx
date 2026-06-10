@@ -7,14 +7,14 @@ import { CountrySelector } from '@/components/ui/CountrySelector'
 import { LanguageSelector } from '@/components/ui/LanguageSelector'
 import { MobileDrawer } from '@/components/ui/MobileDrawer'
 import type { NavItem } from '@/components/ui/MobileDrawer'
+import { ScrollToTop } from '@/components/ScrollToTop'
 
 const NAV_ITEMS: NavItem[] = [
-  { to: '/configurator',       labelKey: 'nav.configurator' },
-  { to: '/learn/contaminants', labelKey: 'nav.contaminants' },
-  { to: '/learn/methods',      labelKey: 'nav.methods' },
-  { to: '/systems',            labelKey: 'nav.systems' },
-  { to: '/build',              labelKey: 'nav.build' },
-  { to: '/suppliers',          labelKey: 'nav.suppliers' },
+  { to: '/configurator', labelKey: 'nav.configurator' },
+  { to: '/learn',        labelKey: 'nav.learn',        end: false },
+  { to: '/systems',      labelKey: 'nav.systems' },
+  { to: '/build',        labelKey: 'nav.build' },
+  { to: '/suppliers',    labelKey: 'nav.suppliers' },
 ]
 
 export default function App() {
@@ -39,7 +39,7 @@ export default function App() {
             {/* Desktop nav */}
             <nav className="hidden md:flex items-center gap-6">
               {NAV_ITEMS.map(item => (
-                <NavLink key={item.to} to={item.to} className={navClass}>
+                <NavLink key={item.to} to={item.to} end={item.end ?? true} className={navClass}>
                   {t(item.labelKey)}
                 </NavLink>
               ))}
@@ -71,6 +71,7 @@ export default function App() {
         />
 
         <main className="flex-1">
+          <ScrollToTop />
           <Outlet />
         </main>
 

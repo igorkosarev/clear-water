@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { ChevronLeft, Zap, AlertTriangle, Target } from 'lucide-react'
+import { ChevronLeft, Zap, AlertTriangle, Target, Link2 } from 'lucide-react'
 import type { TreatmentMethod, Contaminant } from '@/types'
 import methodsData from '@/data/treatment-methods.json'
 import contaminantsData from '@/data/contaminants.json'
@@ -217,6 +217,7 @@ export default function MethodDetail() {
       <div className="relative z-20 max-w-6xl mx-auto px-6 md:px-10 pt-6">
         <Link
           to="/learn/methods"
+          state={{ scrollTo: method.mechanismGroup }}
           className="inline-flex items-center gap-1 text-slate-400 hover:text-white text-sm transition-colors"
         >
           <ChevronLeft size={16} />
@@ -329,6 +330,12 @@ export default function MethodDetail() {
                 <InfoRow icon={<Zap size={13} />} label={t('learn.methods.howItWorks')} text={t(method.howItWorksKey)} />
                 <InfoRow icon={<AlertTriangle size={13} />} label={t('learn.methods.limitations')} text={t(method.limitationsKey)} />
                 <InfoRow icon={<Target size={13} />} label={t('learn.methods.typicalUse')} text={t(method.typicalUseKey)} />
+                {(() => {
+                  const note = t(`methods.${method.id}.contextNote`, { defaultValue: '' })
+                  return note ? (
+                    <InfoRow icon={<Link2 size={13} />} label={t('learn.methods.usedWith', { defaultValue: 'Used with' })} text={note} />
+                  ) : null
+                })()}
               </motion.div>
 
               {removedContaminants.length > 0 && (

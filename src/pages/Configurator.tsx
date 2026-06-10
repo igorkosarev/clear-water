@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
-import { Beaker } from 'lucide-react'
+import { Beaker, ArrowRight } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 import { SimulationCanvas } from '@/components/simulation/SimulationCanvas'
 import type { FilterType, ContaminantId } from '@/types'
 
@@ -63,6 +64,34 @@ export default function Configurator() {
           <SimulationCanvas filters={DEMO_FILTERS} inputContaminants={ALL_CONTAMINANT_IDS} />
         </motion.div>
       </div>
+
+      {/* Learn-more links */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.5 }}
+        className="max-w-xl mx-auto px-4 pb-12"
+      >
+        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider text-center mb-4">
+          {t('configurator.learnMore.title')}
+        </p>
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <Link
+            to="/learn/basics#section-multiStage"
+            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-sm transition-colors"
+          >
+            {t('configurator.learnMore.multiStage')}
+            <ArrowRight size={14} />
+          </Link>
+          <Link
+            to="/learn/basics#section-howToChoose"
+            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-sm transition-colors"
+          >
+            {t('configurator.learnMore.howToChoose')}
+            <ArrowRight size={14} />
+          </Link>
+        </div>
+      </motion.div>
     </div>
   )
 }

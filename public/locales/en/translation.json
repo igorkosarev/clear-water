@@ -7,7 +7,8 @@
     "build": "Build",
     "suppliers": "Suppliers",
     "open": "Open menu",
-    "close": "Close menu"
+    "close": "Close menu",
+    "learn": "Learn"
   },
   "home": {
     "hero": {
@@ -111,6 +112,11 @@
         "label": "Higher ($200+)",
         "description": "Best available technology"
       }
+    },
+    "learnMore": {
+      "title": "Want to learn more?",
+      "multiStage": "How multi-stage treatment works",
+      "howToChoose": "How to choose a system"
     }
   },
   "result": {
@@ -142,6 +148,31 @@
       "howItWorks": "How It Works",
       "limitations": "Limitations",
       "typicalUse": "Typical Use"
+    },
+    "index": {
+      "title": "Learn",
+      "description": "The Clear Water encyclopedia: contaminants, treatment methods, and the educational foundations that connect them.",
+      "contaminantsCard": {
+        "title": "Contaminants",
+        "description": "50 contaminants — biological, physical, chemical, and radiological. Understand what is in your water and how it affects health.",
+        "stat": "50",
+        "statLabel": "contaminants"
+      },
+      "methodsCard": {
+        "title": "Treatment Methods",
+        "description": "15 treatment technologies with effectiveness data, limitations, and operational guidance.",
+        "stat": "15",
+        "statLabel": "methods"
+      },
+      "basicsCard": {
+        "title": "Water Treatment Basics",
+        "description": "Multi-stage treatment, surface water risks, certification standards, and common misconceptions.",
+        "stat": "6",
+        "statLabel": "topics"
+      }
+    },
+    "basics": {
+      "back": "Back to Learn"
     }
   },
   "method": {
@@ -622,7 +653,8 @@
       "description": "A DIY sand filter that develops a biological layer reducing bacteria, protozoa, and turbidity — with limited virus removal.",
       "howItWorks": "Water percolates slowly through layers of fine sand and gravel. Over 2–3 weeks, a biological layer (Schmutzdecke) of predatory microorganisms forms on the sand surface and consumes incoming pathogens. Physical straining simultaneously removes turbidity and large particles. Flow rate must remain low (0.1–0.4 m/h) to allow adequate contact time with the biological layer.",
       "limitations": "Does not reliably remove viruses — virus removal is typically 0–1 log reduction, which is insufficient for virus-contaminated water. Requires 2–3 weeks to establish the biological layer before effective treatment begins. Slow flow rate (0.3–0.6 L/min). The biolayer dies if the filter dries out — requires daily use. No effect on dissolved chemicals, heavy metals, or fluoride.",
-      "typicalUse": "Rural and peri-urban communities with consistently turbid surface water where the primary concern is bacterial and protozoan contamination and local construction materials are available. Should be combined with chlorination or boiling when viral contamination is suspected."
+      "typicalUse": "Rural and peri-urban communities with consistently turbid surface water where the primary concern is bacterial and protozoan contamination and local construction materials are available. Should be combined with chlorination or boiling when viral contamination is suspected.",
+      "contextNote": "The biological layer (schmutzdecke) requires 2-4 weeks to establish. Consistent daily use is essential — the filter must not dry out."
     },
     "ceramic_filtration": {
       "name": "Ceramic Filtration",
@@ -635,43 +667,49 @@
       "name": "Activated Carbon",
       "description": "Adsorbs chlorine, chlorination by-products, many pesticides, and organic chemicals through an enormous internal surface area.",
       "howItWorks": "Highly porous activated carbon provides an enormous internal surface area (700–1500 m²/g) that adsorbs organic molecules, free chlorine, trihalomethanes, pesticides, herbicides, and volatile organic compounds. Water passes through a solid carbon block or granular activated carbon (GAC) bed. NSF/ANSI 53-certified carbon blocks can also reduce lead specifically through adsorption when tested and certified for this purpose — standard carbon does not reliably remove lead.",
-      "limitations": "Does not kill or remove biological pathogens — must be combined with a disinfection method. Carbon bed becomes saturated and must be replaced every 3–6 months (or per manufacturer specification) — an exhausted carbon filter provides no adsorption and may release accumulated contaminants. No effect on nitrates, fluoride, dissolved inorganic salts, or heavy metals (except NSF 53-certified lead reduction).",
-      "typicalUse": "Post-disinfection polishing to improve taste, odour, and appearance of chlorinated tap water. Chemical pre-treatment stage before UV or RO to protect membranes from chlorine damage. Reduction of pesticide and VOC contamination from agricultural and industrial groundwater."
+      "limitations": "Does not kill or remove biological pathogens — must be combined with a disinfection method. Carbon bed becomes saturated and must be replaced every 3–6 months (or per manufacturer specification) — an exhausted carbon filter provides no adsorption and may release accumulated contaminants. Effectiveness depends on sufficient contact time with the carbon bed; high flow rates reduce removal efficiency. No effect on nitrates, fluoride, dissolved inorganic salts, or heavy metals (except NSF 53-certified lead reduction). Does not remove pharmaceuticals, hormones, or PFAS at concentrations of health concern.",
+      "typicalUse": "Post-disinfection polishing to improve taste, odour, and appearance of chlorinated tap water. Chemical pre-treatment stage before UV or RO to protect membranes from chlorine damage. Reduction of pesticide and VOC contamination from agricultural and industrial groundwater.",
+      "contextNote": "Performance depends on remaining cartridge capacity. Part of most multi-stage systems; does not replace disinfection."
     },
     "uv_disinfection": {
       "name": "UV Disinfection",
       "description": "Ultraviolet light inactivates bacteria, viruses, and most protozoa — Cryptosporidium requires a validated high-dose system.",
       "howItWorks": "UV-C light at 254 nm penetrates microbial cells and causes thymine dimer formation in DNA, preventing reproduction. A UV lamp in a flow-through chamber irradiates water passing at a controlled flow rate. The required dose for safe disinfection is typically 40 mJ/cm². Bacteria and most viruses are inactivated at this standard dose. Giardia cysts require 10 mJ/cm²; Cryptosporidium oocysts require 10–40 mJ/cm² for adequate inactivation — requiring a validated system, not a generic lamp.",
-      "limitations": "No effect on turbid water — suspended particles physically shield microbes from UV radiation. Pre-filtration to below 1 NTU is required. Provides no residual disinfection protection after treatment — water can be re-contaminated in storage. Requires stable electricity supply and annual lamp replacement. Does not remove any chemical contaminants. When cyanobacteria cells are present in the water, UV inactivates the cells but may cause them to lyse and release dissolved cyanotoxins. UV radiation does not destroy dissolved cyanotoxins — activated carbon or reverse osmosis is required for their removal.",
-      "typicalUse": "Final disinfection stage for pre-filtered water in household under-sink systems, community water kiosks, and field treatment trains. Particularly valuable as a chlorine-free disinfection option where taste and DBP concerns are important."
+      "limitations": "No effect on turbid water — suspended particles physically shield microbes from UV radiation. Pre-filtration to below 1 NTU is required. Cryptosporidium oocysts require approximately 4x the UV dose needed for bacteria to achieve equivalent log inactivation — verify the system is rated Class A (NSF/ANSI 55) for reliable protozoan control. Provides no residual disinfection after treatment — water can be re-contaminated in storage. Requires stable electricity and annual lamp replacement. Does not remove any chemical contaminants, heavy metals, nitrates, or dissolved solids. When cyanobacteria cells are present, UV inactivates cells but may cause lysis, releasing dissolved cyanotoxins — activated carbon or RO is required to remove those toxins.",
+      "typicalUse": "Final disinfection stage for pre-filtered water in household under-sink systems, community water kiosks, and field treatment trains. Particularly valuable as a chlorine-free disinfection option where taste and DBP concerns are important.",
+      "contextNote": "Requires low turbidity (< 1 NTU). Typically installed last, after sediment and carbon filtration."
     },
     "reverse_osmosis": {
       "name": "Reverse Osmosis",
       "description": "Removes the majority of dissolved inorganic contaminants — heavy metals, nitrates, fluoride, and salinity — alongside biological and particulate contamination.",
       "howItWorks": "Pressurised water is forced through a semi-permeable membrane with approximately 0.0001 µm pores. The membrane rejects dissolved ions, heavy metals, nitrates, fluoride, microorganisms, and most organic molecules. Rejection efficiency ranges from 85–99% depending on the contaminant and system design. Rejected contaminants are flushed away as brine; purified water passes through to a storage tank. Post-treatment remineralisation is recommended for long-term drinking use as RO also removes beneficial calcium and magnesium.",
-      "limitations": "Produces 1–4 litres of brine waste per litre of purified water depending on system design — standard household units typically waste 3–4 litres per litre purified; modern high-efficiency systems can achieve 1:1 or better recovery. Requires inlet water pressure of 4–8 bar — a booster pump is usually necessary. Does not remove dissolved gases (radon, hydrogen sulfide, carbon dioxide, some volatile chlorination by-products). Membranes are damaged by free chlorine — activated carbon pre-filtration is essential with chlorinated source water. Membranes require replacement every 2–3 years; pre-filters every 6–12 months. Membrane integrity cannot be verified without specialist pressure-decay testing equipment. In settings with high biological contamination risk, a downstream UV or chlorination step is advisable as an additional safety barrier.",
-      "typicalUse": "Households facing dissolved inorganic contamination that other methods cannot address — high salinity, nitrates, fluoride, arsenic, lead, or heavy metals — with access to reliable electricity and technical maintenance capability."
+      "limitations": "Requires staged pre-filtration: a sediment filter first (to remove particles that would foul the carbon), followed by an activated carbon filter (to remove chlorine that would destroy the membrane). Arsenic removal depends on oxidation state: As(V) is rejected at 90%+ by certified systems; As(III) is poorly rejected — oxidation pre-treatment (e.g. aeration or chlorination) is required for reliable arsenic removal. Produces 3–4 litres of brine waste per litre purified in standard household units; high-efficiency systems can approach 1:1 recovery. Requires inlet pressure of 4–8 bar — a booster pump is usually necessary. Does not remove dissolved gases (radon, hydrogen sulphide, carbon dioxide, some volatile chlorination by-products). Membranes require replacement every 2–3 years; pre-filters every 6–12 months. Membrane integrity cannot be verified without pressure-decay testing. In settings with high biological contamination risk, a downstream UV or chlorination step is advisable.",
+      "typicalUse": "Households facing dissolved inorganic contamination that other methods cannot address — high salinity, nitrates, fluoride, arsenic, lead, or heavy metals — with access to reliable electricity and technical maintenance capability.",
+      "contextNote": "Requires pre-filtration (sediment + activated carbon) to protect the membrane. Often the final stage in a multi-step system."
     },
     "chlorination": {
       "name": "Chlorination",
       "description": "Adding chlorine tablets or solution kills bacteria and viruses and provides residual protection during water storage.",
       "howItWorks": "Chlorine reacts with water to form hypochlorous acid (HOCl), which penetrates microbial cell walls and disrupts enzymes, killing bacteria and viruses within 30 minutes at adequate concentrations. A maintained residual of 0.2–0.5 mg/L free chlorine provides protection against re-contamination during storage. Efficacy depends on contact time, pH, temperature, and water clarity.",
-      "limitations": "Cryptosporidium is essentially impervious to practical chlorine doses — the CT values (concentration × contact time) required for adequate inactivation are approximately 100 times higher than those needed for bacteria. Giardia cysts require very high CT values but can theoretically be inactivated by high-dose chlorine; in practical field conditions, neither protozoan is reliably controlled by chlorination alone. Physical filtration is required to address all protozoan contamination. Reacts with natural organic matter to form trihalomethanes (THMs) and haloacetic acids (HAAs), classified as probable human carcinogens (IARC Group 2A); risk increases with organic-rich source water. No effect on chemical contaminants, heavy metals, nitrates, fluoride, or turbidity. Taste and odour can be unpleasant at effective doses.",
-      "typicalUse": "Point-of-use disinfection using sodium dichloroisocyanurate (NaDCC) tablets or household bleach. Particularly valuable in emergencies and displacement settings where portability, cost, and residual protection are critical. Always use pre-settled or pre-filtered water to ensure effective contact."
+      "limitations": "Requires adequate contact time — a minimum of 30 minutes at standard dosage — before water reaches the consumer. Cryptosporidium is essentially impervious to practical chlorine doses; Giardia requires very high CT values rarely achievable in field conditions. Physical filtration is required to address protozoan contamination. Reacts with natural organic matter to form trihalomethanes (THMs) and haloacetic acids (HAAs), classified as probable human carcinogens; risk increases with organic-rich source water. Does not remove pharmaceuticals, hormones, heavy metals, nitrates, fluoride, PFAS, or turbidity. Taste and odour can be unpleasant at effective doses.",
+      "typicalUse": "Point-of-use disinfection using sodium dichloroisocyanurate (NaDCC) tablets or household bleach. Particularly valuable in emergencies and displacement settings where portability, cost, and residual protection are critical. Always use pre-settled or pre-filtered water to ensure effective contact.",
+      "contextNote": "Requires sufficient contact time before the water reaches the consumer. Often followed by activated carbon to remove taste and disinfection by-products."
     },
     "hollow_fiber": {
       "name": "Hollow Fiber Ultrafiltration",
       "description": "A membrane technology that physically removes bacteria, protozoa, and particles using bundles of hollow polymer fibres with sub-micron pores.",
       "howItWorks": "Water is driven through bundles of hollow fibres made from polyethersulfone or PVDF polymer. Pore sizes of 0.01–0.1 µm physically block bacteria, protozoa, cyanobacteria, and particles larger than the pore size. The membrane acts as a physical barrier — no chemicals are required. Gravity-operated hollow fibre units are available for off-grid settings. Back-flushing (reversing flow) periodically clears accumulated material from the membrane surface.",
       "limitations": "Does not remove dissolved chemicals, heavy metals, nitrates, fluoride, cyanotoxins, or viruses (most UF membranes do not provide reliable virus removal — only nanofiltration and RO do). Requires periodic back-flushing and periodic chemical cleaning. Membranes must be replaced every 2–5 years. Performance degrades with highly turbid or chemically complex water.",
-      "typicalUse": "Point-of-use household units and community water kiosks where biological contamination is the primary concern. Emergency response for rapid deployment. Pre-treatment stage before RO or UV in multi-stage systems."
+      "typicalUse": "Point-of-use household units and community water kiosks where biological contamination is the primary concern. Emergency response for rapid deployment. Pre-treatment stage before RO or UV in multi-stage systems.",
+      "contextNote": "Does not remove dissolved chemicals or heavy metals. Typically combined with activated carbon for comprehensive treatment."
     },
     "distillation": {
       "name": "Distillation",
       "description": "Boils water and recondenses the steam, leaving dissolved salts, metals, and most contaminants behind in the residue.",
       "howItWorks": "Water is heated to boiling; steam rises, leaving dissolved salts, metals, and non-volatile contaminants in the boiling chamber. Steam condenses back to liquid in a separate cooling chamber, producing purified distillate. Electrical countertop distillers process approximately 3–5 litres per 4–6 hour cycle. Biological pathogens are killed during the boiling process.",
-      "limitations": "Does not remove volatile organic compounds (VOCs) — these have boiling points near or below water and carry over into the distillate with the steam. Some volatile pesticides and chlorine may also carry over. Energy-intensive (approximately 0.7–1 kWh per litre). Slow throughput. Removes beneficial minerals including calcium and magnesium — remineralisation recommended for long-term use. Provides no residual disinfection protection.",
-      "typicalUse": "Households facing dissolved inorganic contamination (arsenic, fluoride, nitrates, heavy metals, high salinity) where reverse osmosis is not available or practical. Emergency water production from diverse or unknown sources."
+      "limitations": "Does not remove volatile organic compounds (VOCs) — these have boiling points near or below water and carry over into the distillate. A carbon post-filter is recommended when VOC contamination is a concern. Some volatile pesticides and chlorine may also carry over. Energy-intensive (approximately 0.7–1 kWh per litre). Slow throughput. Removes beneficial minerals including calcium and magnesium — remineralisation recommended for long-term use. Provides no residual disinfection protection.",
+      "typicalUse": "Households facing dissolved inorganic contamination (arsenic, fluoride, nitrates, heavy metals, high salinity) where reverse osmosis is not available or practical. Emergency water production from diverse or unknown sources.",
+      "contextNote": "VOC carry-over risk; a carbon post-filter is recommended for complete treatment."
     },
     "ion_exchange": {
       "name": "Ion Exchange",
@@ -752,6 +790,165 @@
     "booster_pump": {
       "name": "Booster Pump",
       "description": "Increases inlet water pressure to meet the requirements of high-pressure filters such as reverse osmosis."
+    }
+  },
+  "basics": {
+    "pageTitle": "Water Treatment Basics",
+    "pageDescription": "Foundational knowledge about water treatment: why multiple stages matter, how to evaluate technologies, and what common misconceptions to avoid.",
+    "nav": {
+      "multiStage": "Multi-Stage Treatment",
+      "surfaceWater": "Surface Water Risks",
+      "waterTesting": "Water Testing",
+      "certification": "Certification & Standards",
+      "howToChoose": "How to Choose",
+      "misconceptions": "Misconceptions"
+    },
+    "multiStage": {
+      "title": "Multi-Stage Treatment",
+      "intro": "Most water sources contain a mix of contaminants that no single technology can address completely. Effective water treatment nearly always involves multiple stages working in sequence — each handling what the previous stage cannot.",
+      "whySingleTitle": "Why a Single Method Rarely Suffices",
+      "whySingleBody": "Individual treatment methods are designed to target specific contaminant classes. UV disinfection kills pathogens but leaves dissolved chemicals untouched. Activated carbon removes organics and chlorine but not heavy metals or nitrates. Reverse osmosis removes almost everything but requires a functioning membrane that chlorinated water will destroy without carbon pre-treatment. No single method provides complete protection against all contaminant classes simultaneously.",
+      "trainConceptTitle": "The Treatment Train",
+      "trainConceptBody": "A treatment train is a sequence of methods where each stage performs a specific function and may also protect downstream stages. The order matters: coarse filtration typically comes first to reduce turbidity, followed by finer filtration, followed by disinfection. Getting the order wrong wastes consumables and can allow failures the system was designed to prevent.",
+      "examplesTitle": "Common Treatment Trains",
+      "examples": [
+        {
+          "name": "Emergency field treatment",
+          "chain": "Coagulation / flocculation + ceramic filtration + chlorination",
+          "note": "For rivers, lakes, or turbid groundwater with no infrastructure. Coagulation settles suspended particles; ceramic removes pathogens and residual sediment; chlorination inactivates remaining bacteria and viruses."
+        },
+        {
+          "name": "Urban tap water improvement",
+          "chain": "Sediment filter + activated carbon + UV",
+          "note": "For municipal tap water with chlorine, taste, and pathogen concerns. Sediment removes particles; carbon removes chlorine and organic compounds; UV provides final disinfection without adding chemicals."
+        },
+        {
+          "name": "Well water with hardness",
+          "chain": "Sediment filter + water softener + activated carbon + UV",
+          "note": "For hard groundwater with biological risk. Sediment first protects the softener resin; softening removes calcium and magnesium; carbon polishes taste; UV disinfects."
+        }
+      ],
+      "ctaText": "Not sure which system fits your situation?",
+      "ctaLink": "Use the Configurator"
+    },
+    "surfaceWater": {
+      "title": "Surface Water Risks",
+      "intro": "Rivers, lakes, reservoirs, and ponds present a broader and more variable range of contamination risks than groundwater. Their open surfaces and connections to catchment areas make them susceptible to biological, agricultural, and industrial inputs.",
+      "biologyTitle": "Biological Risks",
+      "biologyBody": "Surface water receiving runoff from land with animal waste, human sewage, or decaying organic matter can carry bacteria (E. coli, Salmonella), viruses (hepatitis A, norovirus), protozoa (Cryptosporidium, Giardia), and helminths. Contamination levels fluctuate with rainfall, season, and upstream activity. Water that appears safe may become dangerous within hours after heavy rain.",
+      "agricultureTitle": "Agricultural Runoff",
+      "agricultureBody": "Agricultural land adjacent to watercourses releases nitrates and phosphates from fertilisers, and pesticide and herbicide residues from crop treatment. These inputs peak immediately after application and during rainfall. Nitrate contamination of surface water used directly is a particular concern for infant feeding.",
+      "industrialTitle": "Industrial Contamination",
+      "industrialBody": "Industrial activity upstream can introduce heavy metals (lead, cadmium, mercury, chromium), solvents, petroleum products, and PFAS into surface water. These inputs may be continuous or episodic. Unlike biological contamination, chemical contamination cannot be reversed by disinfection alone.",
+      "clarityTitle": "Visual Clarity Is Not a Safety Indicator",
+      "clarityBody": "Visual clarity is not a reliable indicator of microbiological or chemical safety. Pathogen concentrations sufficient to cause illness are invisible to the naked eye. Dissolved chemical contaminants produce no visible signal at any concentration of health relevance. A river running clear may carry more Cryptosporidium oocysts than when visibly turbid.",
+      "minimumTreatmentTitle": "Minimum Treatment for Surface Water",
+      "minimumTreatmentBody": "Surface water intended for drinking should receive at minimum: coagulation and settling or pre-filtration to reduce turbidity; fine filtration to remove pathogens (ceramic, hollow fibre, or RO); and disinfection (UV or chlorination) as a final safety barrier. A single stage such as boiling alone or chlorination alone is insufficient for untreated surface water."
+    },
+    "waterTesting": {
+      "title": "Water Testing and Laboratory Analysis",
+      "intro": "Choosing a treatment system without first testing the water is equivalent to prescribing medicine without a diagnosis. Testing establishes the baseline contamination profile, guides technology selection, and verifies that a treatment system is performing as expected.",
+      "whenTitle": "When to Test",
+      "whenItems": [
+        "Before installing a treatment system — to identify which contaminants are present and at what concentrations.",
+        "After installing a new system — to verify the system achieves the required reductions.",
+        "Periodically during operation — at least annually for private wells; more frequently if source conditions change.",
+        "After any known contamination event: flooding, agricultural activity, or construction near the water source.",
+        "If taste, colour, or odour changes unexpectedly."
+      ],
+      "typesTitle": "Types of Tests",
+      "typesItems": [
+        "Basic potability panel: total coliform, E. coli, nitrates, pH, turbidity. Suitable for initial biological and chemical screening.",
+        "Heavy metals panel: lead, arsenic, cadmium, mercury, chromium, copper. Required for well water in areas with mining, industrial activity, or old plumbing.",
+        "Full chemical analysis: covers ions, minerals, and synthetic chemicals including PFAS and pesticides. Required when source is surface water or contamination history is unknown."
+      ],
+      "interpretTitle": "How to Interpret Results",
+      "interpretBody": "WHO guideline values represent concentrations below which no significant health risk is expected over a lifetime of consumption. A result 'below detection limit' does not mean a contaminant is absent — it means the concentration is below what the instrument can measure. Always compare results against the applicable national standard and the WHO guideline.",
+      "kitsVsLabTitle": "Home Test Kits vs. Accredited Laboratory",
+      "kitsVsLabBody": "Home test kits are suitable for monitoring specific parameters (nitrates, chlorine, pH) once a system is established. They are not reliable for establishing a baseline contamination profile or detecting pathogens, heavy metals, or PFAS at guideline-relevant concentrations. For any technology selection decision, use an accredited laboratory with documented detection limits.",
+      "verifyTitle": "Testing After Installation",
+      "verifyBody": "After installing a treatment system, testing the treated water confirms it is functioning. For biological treatment, test total coliform and E. coli before and after. For chemical removal, test for specific target contaminants at the point of use. Re-test if flow rate or system behaviour changes significantly."
+    },
+    "certification": {
+      "title": "Certification and Standards",
+      "intro": "Not all products claiming to use a given treatment technology perform equally. Certification programmes provide independent evidence that a product achieves specific contaminant reductions under defined test conditions.",
+      "whyDifferTitle": "Why the Same Technology Can Perform Differently",
+      "whyDifferBody": "A product may correctly claim to use reverse osmosis, activated carbon, or UV while performing at a fraction of a certified product's level. Reasons include inferior membrane quality, inadequate UV lamp intensity, insufficient contact time in the carbon bed, or testing under conditions more favourable than real-world use. Without independent certification, there is no way to verify manufacturer performance claims.",
+      "nsfTitle": "NSF/ANSI Certification Standards",
+      "nsfItems": [
+        {
+          "std": "NSF/ANSI 42",
+          "covers": "Aesthetic effects — reduction of chlorine, taste, odour, and particulates. Does not certify pathogen or health-contaminant removal."
+        },
+        {
+          "std": "NSF/ANSI 53",
+          "covers": "Health effects — reduction of specific health-related contaminants including lead, arsenic, cysts, and VOCs. Products must demonstrate reduction to below the applicable MCL."
+        },
+        {
+          "std": "NSF/ANSI 58",
+          "covers": "Reverse osmosis systems — certifies reduction of TDS, heavy metals, nitrates, and other RO-specific contaminants."
+        },
+        {
+          "std": "NSF/ANSI 55",
+          "covers": "UV systems — Class A: 4-log bacteria/viruses, 3-log Giardia/Cryptosporidium. Class B: 2-log bacteria only."
+        }
+      ],
+      "whoTitle": "WHO Performance Targets",
+      "whoBody": "The WHO Household Water Treatment targets classify systems as Highly Protective (>=4-log bacteria, >=5-log viruses, >=4-log protozoa) or Protective (>=2-log across all categories). These targets are relevant for point-of-use treatment in settings without reliable municipal infrastructure.",
+      "redFlagsTitle": "Red Flags When Evaluating Products",
+      "redFlags": [
+        "Performance claims without a cited certification body and certificate number.",
+        "Test results expressed only as percentages without specifying starting concentration, test organism, or test conditions.",
+        "Claims that a single product removes 'all contaminants' without listing which contaminants were tested.",
+        "Certification by the manufacturer's own laboratory rather than an accredited independent body."
+      ]
+    },
+    "howToChoose": {
+      "title": "How to Choose a Treatment System",
+      "intro": "Choosing a water treatment system should follow the contamination profile of your specific water source, not the marketing claims of a product.",
+      "stepsTitle": "Decision Framework",
+      "steps": [
+        "Test your water. Identify which contaminants are present at what concentrations. Do not rely on assumed typical profiles.",
+        "Identify your source type. Groundwater (well, spring), surface water (river, lake), or treated municipal supply each carry different risk profiles.",
+        "Prioritise by health risk. Address microbiological contamination first. Chemical contaminants at low concentrations often pose lower immediate risk.",
+        "Match technology to contaminant. If your target contaminant is not in a method's demonstrated removal profile, do not rely on that method to remove it.",
+        "Consider operational context. Electricity availability, flow rate, maintenance capacity, and budget constrain which technologies are viable.",
+        "Build a treatment train. Most systems require multiple stages. Sequence correctly: pre-filtration before membranes, disinfection last.",
+        "Verify with certification. For any health-related claim, confirm NSF/ANSI or equivalent independent certification.",
+        "Test the treated water after installation to verify the system achieves the required reductions."
+      ],
+      "ctaText": "The configurator walks through these steps and recommends a matched system based on your inputs.",
+      "ctaLink": "Open Configurator"
+    },
+    "misconceptions": {
+      "title": "Common Misconceptions",
+      "intro": "Several widespread beliefs about water treatment lead to inadequate protection.",
+      "items": [
+        {
+          "myth": "Clear water is safe water.",
+          "fact": "Turbidity is not a reliable indicator of microbiological or chemical safety. Pathogen concentrations causing illness are invisible. Dissolved heavy metals, nitrates, and PFAS produce no visible signal at any concentration of health relevance."
+        },
+        {
+          "myth": "Boiling removes everything.",
+          "fact": "Boiling kills pathogens but does not remove heavy metals, nitrates, fluoride, PFAS, or dissolved chemicals — and may slightly concentrate them. For water with cyanobacterial blooms, boiling kills the cells but triggers cyanotoxin release, making the water more dangerous."
+        },
+        {
+          "myth": "More filtration stages is always better.",
+          "fact": "Redundant or mismatched stages add cost and maintenance without improving safety. A poorly sequenced train — UV before sediment removal, for example — reduces downstream effectiveness. The goal is a well-matched sequence, not a long one."
+        },
+        {
+          "myth": "My filter is working because the water tastes good.",
+          "fact": "Taste and odour thresholds are far above safety limits for most regulated contaminants. Lead, arsenic, nitrates, PFAS, and most pathogens are undetectable by taste or odour at concentrations that pose health risks."
+        },
+        {
+          "myth": "Reverse osmosis is the safest option for every situation.",
+          "fact": "RO removes a wide range of contaminants but strips beneficial minerals, produces 3–4 L of wastewater per litre purified, requires electricity and regular maintenance, and is not appropriate for all deployment contexts."
+        },
+        {
+          "myth": "Once installed, a filter works indefinitely.",
+          "fact": "All treatment systems require maintenance. Activated carbon saturates. UV lamp output degrades. RO membranes foul. Ceramic filters accumulate pathogens. An unmaintained system may perform worse than no treatment by creating a false sense of security."
+        }
+      ]
     }
   }
 }

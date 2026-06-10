@@ -1,6 +1,7 @@
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import type { Contaminant } from '@/types'
 import contaminantsData from '@/data/contaminants.json'
@@ -100,6 +101,15 @@ const grouped = CATEGORY_ORDER.reduce<Record<string, Contaminant[]>>((acc, cat) 
 
 export default function Contaminants() {
   const { t } = useTranslation()
+  const location = useLocation()
+
+  useEffect(() => {
+    const scrollTo = (location.state as { scrollTo?: string } | null)?.scrollTo
+    if (!scrollTo) return
+    requestAnimationFrame(() => {
+      document.getElementById(`section-${scrollTo}`)?.scrollIntoView({ behavior: 'smooth' })
+    })
+  }, [location.state])
 
   return (
     <div>
@@ -165,6 +175,7 @@ export default function Contaminants() {
           return (
             <motion.section
               key={cat}
+              id={`section-${cat}`}
               className="relative overflow-hidden"
               variants={sectionVariants}
               initial="hidden"

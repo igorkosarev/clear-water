@@ -226,6 +226,7 @@ export default function ContaminantDetail() {
       <div className="relative z-20 max-w-6xl mx-auto px-6 md:px-10 pt-6">
         <Link
           to="/learn/contaminants"
+          state={{ scrollTo: contaminant.category }}
           className="inline-flex items-center gap-1 text-slate-400 hover:text-white text-sm transition-colors"
         >
           <ChevronLeft size={16} />

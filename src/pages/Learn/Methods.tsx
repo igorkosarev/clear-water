@@ -1,6 +1,7 @@
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import {
   Flame, Layers, Filter, Hexagon, Sun, Waves, TestTube, Wind,
   Thermometer, FlaskConical, Droplets, Package, ShieldCheck, ArrowRight,
@@ -149,6 +150,15 @@ const grouped = MECHANISM_ORDER.reduce<Record<string, TreatmentMethod[]>>((acc, 
 
 export default function Methods() {
   const { t } = useTranslation()
+  const location = useLocation()
+
+  useEffect(() => {
+    const scrollTo = (location.state as { scrollTo?: string } | null)?.scrollTo
+    if (!scrollTo) return
+    requestAnimationFrame(() => {
+      document.getElementById(`section-${scrollTo}`)?.scrollIntoView({ behavior: 'smooth' })
+    })
+  }, [location.state])
 
   return (
     <div>
@@ -214,6 +224,7 @@ export default function Methods() {
           return (
             <motion.section
               key={mechKey}
+              id={`section-${mechKey}`}
               className="relative overflow-hidden"
               variants={sectionVariants}
               initial="hidden"

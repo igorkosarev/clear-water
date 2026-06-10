@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import {
   Flame, Layers, Filter, Hexagon, Sun, Waves, TestTube, Wind,
   Thermometer, FlaskConical, Droplets, Package, ShieldCheck, ArrowRight,
+  Sunrise, GitMerge, Sparkles,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import type { TreatmentMethod } from '@/types'
@@ -44,18 +45,21 @@ const ACCENT = '#10b981'
 // ─── Method icons ─────────────────────────────────────────────────────────────
 
 export const METHOD_ICONS: Record<string, LucideIcon> = {
-  boiling:             Flame,
-  biosand:             Layers,
-  ceramic_filtration:  Filter,
-  activated_carbon:    Hexagon,
-  uv_disinfection:     Sun,
-  reverse_osmosis:     Waves,
-  chlorination:        TestTube,
-  hollow_fiber:        Wind,
-  distillation:        Thermometer,
-  ion_exchange:        FlaskConical,
-  water_softening:     Droplets,
-  sediment_filtration: Package,
+  boiling:                 Flame,
+  biosand:                 Layers,
+  ceramic_filtration:      Filter,
+  activated_carbon:        Hexagon,
+  uv_disinfection:         Sun,
+  reverse_osmosis:         Waves,
+  chlorination:            TestTube,
+  hollow_fiber:            Wind,
+  distillation:            Thermometer,
+  ion_exchange:            FlaskConical,
+  water_softening:         Droplets,
+  sediment_filtration:     Package,
+  solar_disinfection:      Sunrise,
+  coagulation_flocculation: GitMerge,
+  aeration:                Sparkles,
 }
 
 // ─── Mechanism groups ─────────────────────────────────────────────────────────

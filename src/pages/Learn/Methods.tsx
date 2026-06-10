@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import {
   Flame, Layers, Filter, Hexagon, Sun, Waves, TestTube, Wind,
-  Thermometer, FlaskConical, Droplets, Package, ShieldCheck,
+  Thermometer, FlaskConical, Droplets, Package, ShieldCheck, ArrowRight,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import type { TreatmentMethod } from '@/types'
@@ -326,29 +326,29 @@ export default function Methods() {
                       <motion.div
                         key={m.id}
                         variants={cardVariants}
-                        whileHover={{
-                          y: -4,
-                          boxShadow: '0 20px 48px rgba(0,0,0,0.45)',
-                          transition: { duration: 0.18, ease: 'easeOut' as const },
-                        }}
-                        className="rounded-2xl overflow-hidden border border-slate-700/60 hover:border-slate-600/60 transition-colors duration-200"
+                        className="bg-slate-950/75 border border-slate-700/60 rounded-2xl overflow-hidden flex flex-col backdrop-blur-sm"
                       >
-                        <Link to={`/learn/methods/${m.id}`} className="block bg-slate-950/75 backdrop-blur-sm h-full">
-                          <div className="h-0.5 w-full" style={{ backgroundColor: m.color }} />
-                          <div className="p-5 flex flex-col gap-3">
-                            <div className="flex items-start justify-between gap-2">
-                              <h3 className="text-white font-bold text-base leading-snug">
-                                {t(m.nameKey)}
-                              </h3>
-                              {MIcon && (
-                                <MIcon size={20} strokeWidth={1.5} style={{ color: m.color }} className="flex-shrink-0 mt-0.5" />
-                              )}
-                            </div>
-                            <p className="text-slate-400 text-sm leading-relaxed line-clamp-3">
-                              {t(m.descriptionKey)}
-                            </p>
+                        <div className="h-0.5 w-full flex-shrink-0" style={{ backgroundColor: m.color }} />
+                        <div className="p-5 flex flex-col gap-3 flex-1">
+                          <div className="flex items-start justify-between gap-2">
+                            <h3 className="text-white font-bold text-base leading-snug">
+                              {t(m.nameKey)}
+                            </h3>
+                            {MIcon && (
+                              <MIcon size={20} strokeWidth={1.5} style={{ color: m.color }} className="flex-shrink-0 mt-0.5" />
+                            )}
                           </div>
-                        </Link>
+                          <p className="text-slate-400 text-sm leading-relaxed line-clamp-3 flex-1">
+                            {t(m.descriptionKey)}
+                          </p>
+                          <Link
+                            to={`/learn/methods/${m.id}`}
+                            className="inline-flex items-center gap-1.5 self-start mt-1 px-3 py-1.5 rounded-full text-xs font-semibold bg-slate-800/80 hover:bg-slate-700 text-slate-200 transition-colors"
+                          >
+                            {t('learn.methods.learnMore', { defaultValue: 'Learn more' })}
+                            <ArrowRight size={12} />
+                          </Link>
+                        </div>
                       </motion.div>
                     )
                   })}

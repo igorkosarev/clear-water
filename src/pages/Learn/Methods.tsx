@@ -1,7 +1,10 @@
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import { Flame, Layers, Filter, Hexagon, Sun, Waves, TestTube, Wind, Thermometer, FlaskConical, Droplets, Package } from 'lucide-react'
+import {
+  Flame, Layers, Filter, Hexagon, Sun, Waves, TestTube, Wind,
+  Thermometer, FlaskConical, Droplets, Package, ShieldCheck,
+} from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import type { TreatmentMethod } from '@/types'
 import methodsData from '@/data/treatment-methods.json'
@@ -38,7 +41,7 @@ const HERO_PARTICLES: HeroParticle[] = [
 
 const ACCENT = '#10b981'
 
-// ─── Icons ────────────────────────────────────────────────────────────────────
+// ─── Method icons ─────────────────────────────────────────────────────────────
 
 export const METHOD_ICONS: Record<string, LucideIcon> = {
   boiling:             Flame,
@@ -55,11 +58,73 @@ export const METHOD_ICONS: Record<string, LucideIcon> = {
   sediment_filtration: Package,
 }
 
+// ─── Mechanism groups ─────────────────────────────────────────────────────────
+
+export const MECHANISM_ORDER = ['thermal', 'mechanical', 'disinfection', 'adsorption_ion'] as const
+
+export const MECHANISM_META: Record<string, { label: string; description: string; color: string; Icon: LucideIcon }> = {
+  thermal: {
+    label: 'Thermal',
+    description: 'Heat-based purification that kills pathogens or separates water from dissolved impurities through evaporation and condensation.',
+    color: '#ef4444',
+    Icon: Flame,
+  },
+  mechanical: {
+    label: 'Mechanical Filtration',
+    description: 'Physical barriers and membranes that remove particles, sediment, and microorganisms by size exclusion.',
+    color: '#f59e0b',
+    Icon: Layers,
+  },
+  disinfection: {
+    label: 'Disinfection',
+    description: 'Chemical and radiation-based methods that neutralise bacteria, viruses, and other biological pathogens.',
+    color: '#10b981',
+    Icon: ShieldCheck,
+  },
+  adsorption_ion: {
+    label: 'Adsorption & Ion Exchange',
+    description: 'Sorption and ion-exchange processes that remove dissolved chemicals, heavy metals, and mineral ions from water.',
+    color: '#60a5fa',
+    Icon: FlaskConical,
+  },
+}
+
+// ─── Section header particles ─────────────────────────────────────────────────
+
+type SectionParticle = {
+  x: number; topPx: number; s: number
+  dur: number; dl: number
+  dx: number; dy: number
+}
+
+const SECTION_PARTICLES: SectionParticle[] = [
+  { x:  4, topPx:  30, s:  7, dur: 6.5, dl: 0.0, dx:  9, dy: -18 },
+  { x: 13, topPx: 140, s: 12, dur: 8.0, dl: 1.2, dx: -6, dy: -25 },
+  { x: 23, topPx:  60, s:  5, dur: 5.5, dl: 0.5, dx: 11, dy: -14 },
+  { x: 35, topPx: 160, s: 18, dur: 9.5, dl: 1.8, dx: -4, dy: -20 },
+  { x: 51, topPx:  20, s:  9, dur: 7.0, dl: 0.3, dx:  6, dy: -28 },
+  { x: 64, topPx: 120, s:  6, dur: 6.0, dl: 2.0, dx: -8, dy: -16 },
+  { x: 76, topPx:  45, s: 21, dur:10.0, dl: 0.8, dx:  4, dy: -12 },
+  { x: 87, topPx: 150, s: 10, dur: 7.5, dl: 1.5, dx: -5, dy: -22 },
+  { x: 46, topPx:  90, s:  8, dur: 5.8, dl: 1.0, dx:  7, dy: -20 },
+  { x: 96, topPx:  70, s: 14, dur: 8.5, dl: 0.4, dx: -3, dy: -16 },
+]
+
 // ─── Animation variants ───────────────────────────────────────────────────────
+
+const sectionVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.5, ease: 'easeOut' as const } },
+}
+
+const headerVariants = {
+  hidden: { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' as const } },
+}
 
 const gridVariants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } },
+  visible: { transition: { staggerChildren: 0.06, delayChildren: 0.08 } },
 }
 
 const cardVariants = {
@@ -70,6 +135,11 @@ const cardVariants = {
 // ─── Static data ──────────────────────────────────────────────────────────────
 
 const methods = methodsData as TreatmentMethod[]
+
+const grouped = MECHANISM_ORDER.reduce<Record<string, TreatmentMethod[]>>((acc, key) => {
+  acc[key] = methods.filter(m => m.mechanismGroup === key)
+  return acc
+}, {})
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
@@ -83,7 +153,7 @@ export default function Methods() {
         <motion.div
           className="absolute inset-0 pointer-events-none"
           animate={{ opacity: [0.6, 1, 0.6] }}
-          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' as const }}
           style={{ background: `radial-gradient(ellipse at 50% 50%, ${ACCENT}2e 0%, ${ACCENT}0a 45%, transparent 70%)` }}
         />
 
@@ -103,7 +173,7 @@ export default function Methods() {
               y: [0, p.dy * 0.5, p.dy, p.dy * 0.5, 0],
               opacity: [0, 0.32, 0.12, 0.32, 0],
             }}
-            transition={{ duration: p.dur, delay: p.delay, repeat: Infinity, ease: 'easeInOut' }}
+            transition={{ duration: p.dur, delay: p.delay, repeat: Infinity, ease: 'easeInOut' as const }}
           />
         ))}
 
@@ -129,55 +199,165 @@ export default function Methods() {
         </div>
       </section>
 
-      {/* ── Card grid ── */}
-      <div className="bg-slate-950 px-4 py-12">
-        <div className="max-w-5xl mx-auto">
-          <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-            variants={gridVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            {methods.map(m => {
-              const Icon = METHOD_ICONS[m.id]
+      {/* ── Mechanism sections ── */}
+      <div className="bg-slate-950 divide-y divide-slate-800/50">
+        {MECHANISM_ORDER.map(mechKey => {
+          const meta = MECHANISM_META[mechKey]
+          const items = grouped[mechKey] ?? []
+          if (!meta || items.length === 0) return null
+          const { Icon } = meta
 
-              return (
+          return (
+            <motion.section
+              key={mechKey}
+              className="relative overflow-hidden"
+              variants={sectionVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-80px' }}
+            >
+              {/* ── Full-section background ── */}
+              <div className="absolute inset-0 bg-slate-900" />
+
+              {/* Color wash */}
+              <motion.div
+                className="absolute inset-0 pointer-events-none"
+                animate={{ opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' as const }}
+                style={{
+                  background: `radial-gradient(ellipse at 70% 30%, ${meta.color}22 0%, ${meta.color}0a 50%, transparent 75%)`,
+                }}
+              />
+
+              {/* ── Header zone: particles + watermark icon ── */}
+              <div className="absolute left-0 right-0 top-0 overflow-hidden pointer-events-none" style={{ height: 220 }}>
+                {/* Pulsing glow */}
                 <motion.div
-                  key={m.id}
-                  variants={cardVariants}
-                  whileHover={{
-                    y: -4,
-                    boxShadow: '0 20px 48px rgba(0,0,0,0.45)',
-                    transition: { duration: 0.18, ease: 'easeOut' as const },
-                  }}
-                  className="rounded-2xl overflow-hidden border border-slate-800/80 hover:border-slate-600/60 transition-colors duration-200"
+                  className="absolute inset-0 flex items-center justify-center"
+                  animate={{ opacity: [0.4, 0.9, 0.4] }}
+                  transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' as const }}
                 >
-                  <Link to={`/learn/methods/${m.id}`} className="block bg-slate-900/80 h-full">
-                    {/* Accent strip */}
-                    <div className="h-0.5 w-full" style={{ backgroundColor: m.color }} />
-
-                    <div className="p-5 flex flex-col gap-3">
-                      {/* Title + icon */}
-                      <div className="flex items-start justify-between gap-2">
-                        <h3 className="text-white font-bold text-base leading-snug">
-                          {t(m.nameKey)}
-                        </h3>
-                        {Icon && (
-                          <Icon size={20} strokeWidth={1.5} style={{ color: m.color }} className="flex-shrink-0 mt-0.5" />
-                        )}
-                      </div>
-
-                      {/* Description */}
-                      <p className="text-slate-400 text-sm leading-relaxed line-clamp-3">
-                        {t(m.descriptionKey)}
-                      </p>
-                    </div>
-                  </Link>
+                  <div style={{
+                    width: 420,
+                    height: 420,
+                    borderRadius: '50%',
+                    background: `radial-gradient(circle, ${meta.color}1a 0%, transparent 70%)`,
+                  }} />
                 </motion.div>
-              )
-            })}
-          </motion.div>
-        </div>
+
+                {/* Watermark icon */}
+                <motion.div
+                  className="absolute inset-0 flex items-center justify-center"
+                  style={{ color: meta.color, opacity: 0.07 }}
+                  animate={{ scale: [1, 1.06, 1] }}
+                  transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' as const }}
+                >
+                  <Icon size={310} strokeWidth={0.65} />
+                </motion.div>
+
+                {/* Floating particles */}
+                {SECTION_PARTICLES.map((p, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute rounded-full"
+                    style={{
+                      left: `${p.x}%`,
+                      top: p.topPx,
+                      width: p.s,
+                      height: p.s,
+                      backgroundColor: meta.color,
+                    }}
+                    animate={{
+                      x: [0, p.dx, p.dx * 0.5, 0],
+                      y: [0, p.dy * 0.5, p.dy, p.dy * 0.5, 0],
+                      opacity: [0, 0.38, 0.14, 0.38, 0],
+                    }}
+                    transition={{ duration: p.dur, delay: p.dl, repeat: Infinity, ease: 'easeInOut' as const }}
+                  />
+                ))}
+              </div>
+
+              {/* ── Readable content ── */}
+              <div className="relative z-10 max-w-5xl mx-auto px-4">
+
+                {/* Section heading */}
+                <motion.div
+                  className="pt-14 pb-10 md:pt-16 md:pb-12 flex items-end justify-between gap-6"
+                  variants={headerVariants}
+                >
+                  <div>
+                    <div
+                      className="inline-block w-10 h-1 rounded-full mb-4"
+                      style={{ backgroundColor: meta.color }}
+                    />
+                    <h2
+                      className="text-4xl md:text-5xl font-bold text-white tracking-tight leading-tight mb-3"
+                      style={{ textShadow: `0 0 80px ${meta.color}55` }}
+                    >
+                      {meta.label}
+                    </h2>
+                    <p className="text-slate-400 text-base leading-relaxed max-w-lg">
+                      {meta.description}
+                    </p>
+                  </div>
+                  <span
+                    className="flex-shrink-0 px-5 py-2.5 rounded-full text-sm font-bold tabular-nums mb-1"
+                    style={{
+                      backgroundColor: `${meta.color}18`,
+                      color: meta.color,
+                      border: `1px solid ${meta.color}45`,
+                    }}
+                  >
+                    {items.length}
+                  </span>
+                </motion.div>
+
+                {/* Card grid */}
+                <motion.div
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 pb-14"
+                  variants={gridVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: '-60px' }}
+                >
+                  {items.map(m => {
+                    const MIcon = METHOD_ICONS[m.id]
+                    return (
+                      <motion.div
+                        key={m.id}
+                        variants={cardVariants}
+                        whileHover={{
+                          y: -4,
+                          boxShadow: '0 20px 48px rgba(0,0,0,0.45)',
+                          transition: { duration: 0.18, ease: 'easeOut' as const },
+                        }}
+                        className="rounded-2xl overflow-hidden border border-slate-700/60 hover:border-slate-600/60 transition-colors duration-200"
+                      >
+                        <Link to={`/learn/methods/${m.id}`} className="block bg-slate-950/75 backdrop-blur-sm h-full">
+                          <div className="h-0.5 w-full" style={{ backgroundColor: m.color }} />
+                          <div className="p-5 flex flex-col gap-3">
+                            <div className="flex items-start justify-between gap-2">
+                              <h3 className="text-white font-bold text-base leading-snug">
+                                {t(m.nameKey)}
+                              </h3>
+                              {MIcon && (
+                                <MIcon size={20} strokeWidth={1.5} style={{ color: m.color }} className="flex-shrink-0 mt-0.5" />
+                              )}
+                            </div>
+                            <p className="text-slate-400 text-sm leading-relaxed line-clamp-3">
+                              {t(m.descriptionKey)}
+                            </p>
+                          </div>
+                        </Link>
+                      </motion.div>
+                    )
+                  })}
+                </motion.div>
+
+              </div>
+            </motion.section>
+          )
+        })}
       </div>
     </div>
   )

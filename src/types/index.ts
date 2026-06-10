@@ -26,6 +26,8 @@ export interface Contaminant {
   color: string
 }
 
+export type MechanismGroup = 'thermal' | 'mechanical' | 'disinfection' | 'adsorption_ion'
+
 export interface TreatmentMethod {
   id: string
   nameKey: string
@@ -36,6 +38,7 @@ export interface TreatmentMethod {
   removes: ContaminantId[]
   complexity: 'beginner' | 'intermediate' | 'advanced'
   costTier: BudgetTier
+  mechanismGroup: MechanismGroup
   icon: string
   color: string
 }

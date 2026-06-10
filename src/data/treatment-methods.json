@@ -6,11 +6,17 @@
     "howItWorksKey": "methods.boiling.howItWorks",
     "limitationsKey": "methods.boiling.limitations",
     "typicalUseKey": "methods.boiling.typicalUse",
-    "removes": ["bacteria", "viruses", "protozoa", "cyanobacteria"],
+    "removes": [
+      "bacteria",
+      "viruses",
+      "protozoa",
+      "cyanobacteria"
+    ],
     "complexity": "beginner",
     "costTier": "low",
     "icon": "🔥",
-    "color": "#ef4444"
+    "color": "#ef4444",
+    "mechanismGroup": "thermal"
   },
   {
     "id": "biosand",
@@ -19,11 +25,18 @@
     "howItWorksKey": "methods.biosand.howItWorks",
     "limitationsKey": "methods.biosand.limitations",
     "typicalUseKey": "methods.biosand.typicalUse",
-    "removes": ["bacteria", "protozoa", "cyanobacteria", "turbidity", "sediment"],
+    "removes": [
+      "bacteria",
+      "protozoa",
+      "cyanobacteria",
+      "turbidity",
+      "sediment"
+    ],
     "complexity": "intermediate",
     "costTier": "low",
     "icon": "🪨",
-    "color": "#a8a29e"
+    "color": "#a8a29e",
+    "mechanismGroup": "mechanical"
   },
   {
     "id": "ceramic_filtration",
@@ -32,11 +45,18 @@
     "howItWorksKey": "methods.ceramic_filtration.howItWorks",
     "limitationsKey": "methods.ceramic_filtration.limitations",
     "typicalUseKey": "methods.ceramic_filtration.typicalUse",
-    "removes": ["bacteria", "protozoa", "cyanobacteria", "turbidity", "sediment"],
+    "removes": [
+      "bacteria",
+      "protozoa",
+      "cyanobacteria",
+      "turbidity",
+      "sediment"
+    ],
     "complexity": "beginner",
     "costTier": "low",
     "icon": "🫙",
-    "color": "#d97706"
+    "color": "#d97706",
+    "mechanismGroup": "mechanical"
   },
   {
     "id": "activated_carbon",
@@ -45,11 +65,18 @@
     "howItWorksKey": "methods.activated_carbon.howItWorks",
     "limitationsKey": "methods.activated_carbon.limitations",
     "typicalUseKey": "methods.activated_carbon.typicalUse",
-    "removes": ["chlorine", "pesticides", "herbicides", "vocs", "petroleum"],
+    "removes": [
+      "chlorine",
+      "pesticides",
+      "herbicides",
+      "vocs",
+      "petroleum"
+    ],
     "complexity": "beginner",
     "costTier": "medium",
     "icon": "⬛",
-    "color": "#64748b"
+    "color": "#64748b",
+    "mechanismGroup": "adsorption_ion"
   },
   {
     "id": "uv_disinfection",
@@ -58,11 +85,17 @@
     "howItWorksKey": "methods.uv_disinfection.howItWorks",
     "limitationsKey": "methods.uv_disinfection.limitations",
     "typicalUseKey": "methods.uv_disinfection.typicalUse",
-    "removes": ["bacteria", "viruses", "protozoa", "cyanobacteria"],
+    "removes": [
+      "bacteria",
+      "viruses",
+      "protozoa",
+      "cyanobacteria"
+    ],
     "complexity": "intermediate",
     "costTier": "medium",
     "icon": "☀️",
-    "color": "#facc15"
+    "color": "#facc15",
+    "mechanismGroup": "disinfection"
   },
   {
     "id": "reverse_osmosis",
@@ -72,18 +105,39 @@
     "limitationsKey": "methods.reverse_osmosis.limitations",
     "typicalUseKey": "methods.reverse_osmosis.typicalUse",
     "removes": [
-      "bacteria", "viruses", "protozoa", "cyanobacteria", "cyanotoxins",
-      "turbidity", "sediment", "microplastics",
-      "lead", "arsenic", "mercury", "cadmium", "chromium_6", "copper",
-      "nitrates", "nitrites", "fluoride",
-      "pesticides", "herbicides", "pfas",
-      "hardness", "iron", "manganese", "salinity",
-      "pharmaceuticals", "hormones", "uranium"
+      "bacteria",
+      "viruses",
+      "protozoa",
+      "cyanobacteria",
+      "cyanotoxins",
+      "turbidity",
+      "sediment",
+      "microplastics",
+      "lead",
+      "arsenic",
+      "mercury",
+      "cadmium",
+      "chromium_6",
+      "copper",
+      "nitrates",
+      "nitrites",
+      "fluoride",
+      "pesticides",
+      "herbicides",
+      "pfas",
+      "hardness",
+      "iron",
+      "manganese",
+      "salinity",
+      "pharmaceuticals",
+      "hormones",
+      "uranium"
     ],
     "complexity": "advanced",
     "costTier": "high",
     "icon": "🌊",
-    "color": "#0284c7"
+    "color": "#0284c7",
+    "mechanismGroup": "mechanical"
   },
   {
     "id": "chlorination",
@@ -92,11 +146,15 @@
     "howItWorksKey": "methods.chlorination.howItWorks",
     "limitationsKey": "methods.chlorination.limitations",
     "typicalUseKey": "methods.chlorination.typicalUse",
-    "removes": ["bacteria", "viruses"],
+    "removes": [
+      "bacteria",
+      "viruses"
+    ],
     "complexity": "beginner",
     "costTier": "low",
     "icon": "🧪",
-    "color": "#4ade80"
+    "color": "#4ade80",
+    "mechanismGroup": "disinfection"
   },
   {
     "id": "hollow_fiber",
@@ -105,11 +163,19 @@
     "howItWorksKey": "methods.hollow_fiber.howItWorks",
     "limitationsKey": "methods.hollow_fiber.limitations",
     "typicalUseKey": "methods.hollow_fiber.typicalUse",
-    "removes": ["bacteria", "protozoa", "cyanobacteria", "turbidity", "sediment", "microplastics"],
+    "removes": [
+      "bacteria",
+      "protozoa",
+      "cyanobacteria",
+      "turbidity",
+      "sediment",
+      "microplastics"
+    ],
     "complexity": "intermediate",
     "costTier": "medium",
     "icon": "💧",
-    "color": "#38bdf8"
+    "color": "#38bdf8",
+    "mechanismGroup": "mechanical"
   },
   {
     "id": "distillation",
@@ -119,17 +185,36 @@
     "limitationsKey": "methods.distillation.limitations",
     "typicalUseKey": "methods.distillation.typicalUse",
     "removes": [
-      "bacteria", "viruses", "protozoa", "cyanobacteria", "cyanotoxins",
-      "turbidity", "sediment", "microplastics",
-      "lead", "arsenic", "cadmium", "chromium_6", "copper",
-      "nitrates", "nitrites", "fluoride",
-      "pfas", "hardness", "iron", "manganese", "salinity",
-      "pharmaceuticals", "hormones", "uranium"
+      "bacteria",
+      "viruses",
+      "protozoa",
+      "cyanobacteria",
+      "cyanotoxins",
+      "turbidity",
+      "sediment",
+      "microplastics",
+      "lead",
+      "arsenic",
+      "cadmium",
+      "chromium_6",
+      "copper",
+      "nitrates",
+      "nitrites",
+      "fluoride",
+      "pfas",
+      "hardness",
+      "iron",
+      "manganese",
+      "salinity",
+      "pharmaceuticals",
+      "hormones",
+      "uranium"
     ],
     "complexity": "beginner",
     "costTier": "medium",
     "icon": "🌡️",
-    "color": "#94a3b8"
+    "color": "#94a3b8",
+    "mechanismGroup": "thermal"
   },
   {
     "id": "ion_exchange",
@@ -139,14 +224,25 @@
     "limitationsKey": "methods.ion_exchange.limitations",
     "typicalUseKey": "methods.ion_exchange.typicalUse",
     "removes": [
-      "lead", "arsenic", "cadmium", "chromium_6", "copper",
-      "nitrates", "nitrites", "fluoride",
-      "hardness", "iron", "manganese", "salinity", "uranium"
+      "lead",
+      "arsenic",
+      "cadmium",
+      "chromium_6",
+      "copper",
+      "nitrates",
+      "nitrites",
+      "fluoride",
+      "hardness",
+      "iron",
+      "manganese",
+      "salinity",
+      "uranium"
     ],
     "complexity": "advanced",
     "costTier": "high",
     "icon": "⚗️",
-    "color": "#f59e0b"
+    "color": "#f59e0b",
+    "mechanismGroup": "adsorption_ion"
   },
   {
     "id": "water_softening",
@@ -155,11 +251,16 @@
     "howItWorksKey": "methods.water_softening.howItWorks",
     "limitationsKey": "methods.water_softening.limitations",
     "typicalUseKey": "methods.water_softening.typicalUse",
-    "removes": ["hardness", "iron", "manganese"],
+    "removes": [
+      "hardness",
+      "iron",
+      "manganese"
+    ],
     "complexity": "intermediate",
     "costTier": "medium",
     "icon": "💧",
-    "color": "#60a5fa"
+    "color": "#60a5fa",
+    "mechanismGroup": "adsorption_ion"
   },
   {
     "id": "sediment_filtration",
@@ -168,10 +269,14 @@
     "howItWorksKey": "methods.sediment_filtration.howItWorks",
     "limitationsKey": "methods.sediment_filtration.limitations",
     "typicalUseKey": "methods.sediment_filtration.typicalUse",
-    "removes": ["turbidity", "sediment"],
+    "removes": [
+      "turbidity",
+      "sediment"
+    ],
     "complexity": "beginner",
     "costTier": "low",
     "icon": "🪨",
-    "color": "#a8a29e"
+    "color": "#a8a29e",
+    "mechanismGroup": "mechanical"
   }
 ]

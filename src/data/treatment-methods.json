@@ -10,13 +10,122 @@
       "bacteria",
       "viruses",
       "protozoa",
-      "cyanobacteria"
+      "cyanobacteria",
+      "helminths",
+      "legionella"
     ],
     "complexity": "beginner",
     "costTier": "low",
     "icon": "🔥",
     "color": "#ef4444",
     "mechanismGroup": "thermal"
+  },
+  {
+    "id": "distillation",
+    "nameKey": "methods.distillation.name",
+    "descriptionKey": "methods.distillation.description",
+    "howItWorksKey": "methods.distillation.howItWorks",
+    "limitationsKey": "methods.distillation.limitations",
+    "typicalUseKey": "methods.distillation.typicalUse",
+    "removes": [
+      "bacteria",
+      "viruses",
+      "protozoa",
+      "cyanobacteria",
+      "cyanotoxins",
+      "turbidity",
+      "sediment",
+      "microplastics",
+      "lead",
+      "arsenic",
+      "mercury",
+      "cadmium",
+      "chromium_6",
+      "copper",
+      "nitrates",
+      "nitrites",
+      "fluoride",
+      "pfas",
+      "hardness",
+      "iron",
+      "manganese",
+      "salinity",
+      "pharmaceuticals",
+      "hormones",
+      "uranium",
+      "sulfate",
+      "chloride",
+      "sodium",
+      "nickel",
+      "selenium",
+      "barium",
+      "aluminum",
+      "helminths",
+      "legionella",
+      "boron",
+      "cyanide"
+    ],
+    "complexity": "beginner",
+    "costTier": "medium",
+    "icon": "🌡️",
+    "color": "#94a3b8",
+    "mechanismGroup": "thermal"
+  },
+  {
+    "id": "coagulation_flocculation",
+    "nameKey": "methods.coagulation_flocculation.name",
+    "descriptionKey": "methods.coagulation_flocculation.description",
+    "howItWorksKey": "methods.coagulation_flocculation.howItWorks",
+    "limitationsKey": "methods.coagulation_flocculation.limitations",
+    "typicalUseKey": "methods.coagulation_flocculation.typicalUse",
+    "removes": [
+      "turbidity",
+      "sediment",
+      "microplastics",
+      "helminths"
+    ],
+    "complexity": "beginner",
+    "costTier": "low",
+    "icon": "🌀",
+    "color": "#a78bfa",
+    "mechanismGroup": "mechanical"
+  },
+  {
+    "id": "aeration",
+    "nameKey": "methods.aeration.name",
+    "descriptionKey": "methods.aeration.description",
+    "howItWorksKey": "methods.aeration.howItWorks",
+    "limitationsKey": "methods.aeration.limitations",
+    "typicalUseKey": "methods.aeration.typicalUse",
+    "removes": [
+      "iron",
+      "manganese",
+      "hydrogen_sulfide",
+      "radon",
+      "vocs"
+    ],
+    "complexity": "beginner",
+    "costTier": "low",
+    "icon": "🌬️",
+    "color": "#67e8f9",
+    "mechanismGroup": "mechanical"
+  },
+  {
+    "id": "sediment_filtration",
+    "nameKey": "methods.sediment_filtration.name",
+    "descriptionKey": "methods.sediment_filtration.description",
+    "howItWorksKey": "methods.sediment_filtration.howItWorks",
+    "limitationsKey": "methods.sediment_filtration.limitations",
+    "typicalUseKey": "methods.sediment_filtration.typicalUse",
+    "removes": [
+      "turbidity",
+      "sediment"
+    ],
+    "complexity": "beginner",
+    "costTier": "low",
+    "icon": "🪨",
+    "color": "#a8a29e",
+    "mechanismGroup": "mechanical"
   },
   {
     "id": "biosand",
@@ -30,7 +139,9 @@
       "protozoa",
       "cyanobacteria",
       "turbidity",
-      "sediment"
+      "sediment",
+      "helminths",
+      "legionella"
     ],
     "complexity": "intermediate",
     "costTier": "low",
@@ -50,7 +161,10 @@
       "protozoa",
       "cyanobacteria",
       "turbidity",
-      "sediment"
+      "sediment",
+      "asbestos",
+      "helminths",
+      "legionella"
     ],
     "complexity": "beginner",
     "costTier": "low",
@@ -59,43 +173,28 @@
     "mechanismGroup": "mechanical"
   },
   {
-    "id": "activated_carbon",
-    "nameKey": "methods.activated_carbon.name",
-    "descriptionKey": "methods.activated_carbon.description",
-    "howItWorksKey": "methods.activated_carbon.howItWorks",
-    "limitationsKey": "methods.activated_carbon.limitations",
-    "typicalUseKey": "methods.activated_carbon.typicalUse",
-    "removes": [
-      "chlorine",
-      "pesticides",
-      "herbicides",
-      "vocs",
-      "petroleum"
-    ],
-    "complexity": "beginner",
-    "costTier": "medium",
-    "icon": "⬛",
-    "color": "#64748b",
-    "mechanismGroup": "adsorption_ion"
-  },
-  {
-    "id": "uv_disinfection",
-    "nameKey": "methods.uv_disinfection.name",
-    "descriptionKey": "methods.uv_disinfection.description",
-    "howItWorksKey": "methods.uv_disinfection.howItWorks",
-    "limitationsKey": "methods.uv_disinfection.limitations",
-    "typicalUseKey": "methods.uv_disinfection.typicalUse",
+    "id": "hollow_fiber",
+    "nameKey": "methods.hollow_fiber.name",
+    "descriptionKey": "methods.hollow_fiber.description",
+    "howItWorksKey": "methods.hollow_fiber.howItWorks",
+    "limitationsKey": "methods.hollow_fiber.limitations",
+    "typicalUseKey": "methods.hollow_fiber.typicalUse",
     "removes": [
       "bacteria",
-      "viruses",
       "protozoa",
-      "cyanobacteria"
+      "cyanobacteria",
+      "turbidity",
+      "sediment",
+      "microplastics",
+      "asbestos",
+      "helminths",
+      "legionella"
     ],
     "complexity": "intermediate",
     "costTier": "medium",
-    "icon": "☀️",
-    "color": "#facc15",
-    "mechanismGroup": "disinfection"
+    "icon": "💧",
+    "color": "#38bdf8",
+    "mechanismGroup": "mechanical"
   },
   {
     "id": "reverse_osmosis",
@@ -131,13 +230,48 @@
       "salinity",
       "pharmaceuticals",
       "hormones",
-      "uranium"
+      "uranium",
+      "sulfate",
+      "chloride",
+      "sodium",
+      "nickel",
+      "selenium",
+      "barium",
+      "aluminum",
+      "asbestos",
+      "chloramines",
+      "disinfection_byproducts",
+      "helminths",
+      "legionella",
+      "ammonia",
+      "boron",
+      "cyanide"
     ],
     "complexity": "advanced",
     "costTier": "high",
     "icon": "🌊",
     "color": "#0284c7",
     "mechanismGroup": "mechanical"
+  },
+  {
+    "id": "solar_disinfection",
+    "nameKey": "methods.solar_disinfection.name",
+    "descriptionKey": "methods.solar_disinfection.description",
+    "howItWorksKey": "methods.solar_disinfection.howItWorks",
+    "limitationsKey": "methods.solar_disinfection.limitations",
+    "typicalUseKey": "methods.solar_disinfection.typicalUse",
+    "removes": [
+      "bacteria",
+      "viruses",
+      "protozoa",
+      "cyanobacteria",
+      "legionella"
+    ],
+    "complexity": "beginner",
+    "costTier": "low",
+    "icon": "☀️",
+    "color": "#fbbf24",
+    "mechanismGroup": "disinfection"
   },
   {
     "id": "chlorination",
@@ -148,7 +282,9 @@
     "typicalUseKey": "methods.chlorination.typicalUse",
     "removes": [
       "bacteria",
-      "viruses"
+      "viruses",
+      "legionella",
+      "cyanide"
     ],
     "complexity": "beginner",
     "costTier": "low",
@@ -157,64 +293,49 @@
     "mechanismGroup": "disinfection"
   },
   {
-    "id": "hollow_fiber",
-    "nameKey": "methods.hollow_fiber.name",
-    "descriptionKey": "methods.hollow_fiber.description",
-    "howItWorksKey": "methods.hollow_fiber.howItWorks",
-    "limitationsKey": "methods.hollow_fiber.limitations",
-    "typicalUseKey": "methods.hollow_fiber.typicalUse",
-    "removes": [
-      "bacteria",
-      "protozoa",
-      "cyanobacteria",
-      "turbidity",
-      "sediment",
-      "microplastics"
-    ],
-    "complexity": "intermediate",
-    "costTier": "medium",
-    "icon": "💧",
-    "color": "#38bdf8",
-    "mechanismGroup": "mechanical"
-  },
-  {
-    "id": "distillation",
-    "nameKey": "methods.distillation.name",
-    "descriptionKey": "methods.distillation.description",
-    "howItWorksKey": "methods.distillation.howItWorks",
-    "limitationsKey": "methods.distillation.limitations",
-    "typicalUseKey": "methods.distillation.typicalUse",
+    "id": "uv_disinfection",
+    "nameKey": "methods.uv_disinfection.name",
+    "descriptionKey": "methods.uv_disinfection.description",
+    "howItWorksKey": "methods.uv_disinfection.howItWorks",
+    "limitationsKey": "methods.uv_disinfection.limitations",
+    "typicalUseKey": "methods.uv_disinfection.typicalUse",
     "removes": [
       "bacteria",
       "viruses",
       "protozoa",
       "cyanobacteria",
+      "legionella"
+    ],
+    "complexity": "intermediate",
+    "costTier": "medium",
+    "icon": "☀️",
+    "color": "#facc15",
+    "mechanismGroup": "disinfection"
+  },
+  {
+    "id": "activated_carbon",
+    "nameKey": "methods.activated_carbon.name",
+    "descriptionKey": "methods.activated_carbon.description",
+    "howItWorksKey": "methods.activated_carbon.howItWorks",
+    "limitationsKey": "methods.activated_carbon.limitations",
+    "typicalUseKey": "methods.activated_carbon.typicalUse",
+    "removes": [
+      "chlorine",
+      "pesticides",
+      "herbicides",
+      "vocs",
+      "petroleum",
+      "chloramines",
+      "disinfection_byproducts",
+      "hydrogen_sulfide",
       "cyanotoxins",
-      "turbidity",
-      "sediment",
-      "microplastics",
-      "lead",
-      "arsenic",
-      "cadmium",
-      "chromium_6",
-      "copper",
-      "nitrates",
-      "nitrites",
-      "fluoride",
-      "pfas",
-      "hardness",
-      "iron",
-      "manganese",
-      "salinity",
-      "pharmaceuticals",
-      "hormones",
-      "uranium"
+      "cyanide"
     ],
     "complexity": "beginner",
     "costTier": "medium",
-    "icon": "🌡️",
-    "color": "#94a3b8",
-    "mechanismGroup": "thermal"
+    "icon": "⬛",
+    "color": "#64748b",
+    "mechanismGroup": "adsorption_ion"
   },
   {
     "id": "ion_exchange",
@@ -236,7 +357,12 @@
       "iron",
       "manganese",
       "salinity",
-      "uranium"
+      "uranium",
+      "sulfate",
+      "barium",
+      "nickel",
+      "selenium",
+      "ammonia"
     ],
     "complexity": "advanced",
     "costTier": "high",
@@ -254,29 +380,13 @@
     "removes": [
       "hardness",
       "iron",
-      "manganese"
+      "manganese",
+      "barium"
     ],
     "complexity": "intermediate",
     "costTier": "medium",
     "icon": "💧",
     "color": "#60a5fa",
     "mechanismGroup": "adsorption_ion"
-  },
-  {
-    "id": "sediment_filtration",
-    "nameKey": "methods.sediment_filtration.name",
-    "descriptionKey": "methods.sediment_filtration.description",
-    "howItWorksKey": "methods.sediment_filtration.howItWorks",
-    "limitationsKey": "methods.sediment_filtration.limitations",
-    "typicalUseKey": "methods.sediment_filtration.typicalUse",
-    "removes": [
-      "turbidity",
-      "sediment"
-    ],
-    "complexity": "beginner",
-    "costTier": "low",
-    "icon": "🪨",
-    "color": "#a8a29e",
-    "mechanismGroup": "mechanical"
   }
 ]

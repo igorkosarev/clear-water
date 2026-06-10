@@ -33,6 +33,17 @@
     "color": "#14b8a6"
   },
   {
+    "id": "helminths",
+    "nameKey": "contaminants.helminths.name",
+    "descriptionKey": "contaminants.helminths.description",
+    "sourcesKey": "contaminants.helminths.sources",
+    "healthRisksKey": "contaminants.helminths.healthRisks",
+    "detectionKey": "contaminants.helminths.detection",
+    "category": "biological",
+    "icon": "🪱",
+    "color": "#818cf8"
+  },
+  {
     "id": "cyanobacteria",
     "nameKey": "contaminants.cyanobacteria.name",
     "descriptionKey": "contaminants.cyanobacteria.description",
@@ -53,6 +64,17 @@
     "category": "biological",
     "icon": "⚗️",
     "color": "#15803d"
+  },
+  {
+    "id": "legionella",
+    "nameKey": "contaminants.legionella.name",
+    "descriptionKey": "contaminants.legionella.description",
+    "sourcesKey": "contaminants.legionella.sources",
+    "healthRisksKey": "contaminants.legionella.healthRisks",
+    "detectionKey": "contaminants.legionella.detection",
+    "category": "biological",
+    "icon": "🦠",
+    "color": "#f59e0b"
   },
   {
     "id": "turbidity",
@@ -308,6 +330,17 @@
     "color": "#fde047"
   },
   {
+    "id": "ammonia",
+    "nameKey": "contaminants.ammonia.name",
+    "descriptionKey": "contaminants.ammonia.description",
+    "sourcesKey": "contaminants.ammonia.sources",
+    "healthRisksKey": "contaminants.ammonia.healthRisks",
+    "detectionKey": "contaminants.ammonia.detection",
+    "category": "chemical",
+    "icon": "🔬",
+    "color": "#fcd34d"
+  },
+  {
     "id": "pharmaceuticals",
     "nameKey": "contaminants.pharmaceuticals.name",
     "descriptionKey": "contaminants.pharmaceuticals.description",
@@ -328,6 +361,28 @@
     "category": "chemical",
     "icon": "🔬",
     "color": "#c084fc"
+  },
+  {
+    "id": "boron",
+    "nameKey": "contaminants.boron.name",
+    "descriptionKey": "contaminants.boron.description",
+    "sourcesKey": "contaminants.boron.sources",
+    "healthRisksKey": "contaminants.boron.healthRisks",
+    "detectionKey": "contaminants.boron.detection",
+    "category": "chemical",
+    "icon": "⚗️",
+    "color": "#34d399"
+  },
+  {
+    "id": "cyanide",
+    "nameKey": "contaminants.cyanide.name",
+    "descriptionKey": "contaminants.cyanide.description",
+    "sourcesKey": "contaminants.cyanide.sources",
+    "healthRisksKey": "contaminants.cyanide.healthRisks",
+    "detectionKey": "contaminants.cyanide.detection",
+    "category": "chemical",
+    "icon": "⚠️",
+    "color": "#ef4444"
   },
   {
     "id": "uranium",

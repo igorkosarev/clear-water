@@ -7,6 +7,7 @@ import {
   Pill, Activity, RadioTower, AlertOctagon, Zap,
   TrendingDown, TrendingUp, Pipette, ShieldAlert, Sigma,
   Droplet, Scale, Beaker, CircleDot, Scan, BarChart2, LayoutGrid,
+  Microscope, Building2,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
@@ -15,8 +16,10 @@ export const CONTAMINANT_ICONS: Record<string, LucideIcon> = {
   bacteria:          Biohazard,
   viruses:           Dna,
   protozoa:          Worm,
+  helminths:         Worm,
   cyanobacteria:     Waves,
   cyanotoxins:       AlertTriangle,
+  legionella:        Building2,
 
   // Physical
   turbidity:         Droplets,
@@ -52,6 +55,11 @@ export const CONTAMINANT_ICONS: Record<string, LucideIcon> = {
   iron:              Magnet,
   manganese:         Atom,
   hydrogen_sulfide:  Cloud,
+  ammonia:           Microscope,
+
+  // Industrial
+  boron:             FlaskConical,
+  cyanide:           AlertOctagon,
 
   // Emerging
   pharmaceuticals:   Pill,
@@ -134,6 +142,9 @@ export const CHEMICAL_SYMBOLS: Record<string, string> = {
   nitrites:         'NO₂⁻',
   nitrates:         'NO₃⁻',
   hydrogen_sulfide: 'H₂S',
+  ammonia:          'NH₄⁺',
+  boron:            'B',
+  cyanide:          'CN⁻',
 }
 
 export const BADGE_CLASS: Record<string, string> = {

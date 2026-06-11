@@ -47,13 +47,25 @@ interface Particle {
   absorbAt: number
 }
 
+// Small translucent droplets that travel the whole path to show flowing water.
+interface WaterDrop {
+  dist: number
+  speed: number
+  r: number
+  alpha: number
+}
+
 // ─── Layout constants ─────────────────────────────────────────────────────────
 
 const FH    = 64    // filter height px
 const GAP   = 50    // gap between filter rows px
 const PX    = 52    // horizontal port inset from canvas edges
 const BULGE = 48    // bezier U-turn control point outward offset
-const WBH   = 104   // "Water In" box height
+const WBH_MIN = 104  // "Water In" box minimum height
+const WB_HEAD = 30   // y where chip rows begin (below the header)
+const WB_ROW  = 26   // chip row vertical spacing
+const WB_CHIP = 20   // chip height
+const WB_PAD  = 24   // padding below the last chip row
 const WBM_TOP = 28   // Water In box → first filter
 const WBM_BOT = 72   // last filter → Clean Water box
 const CBH   = 80    // "Clean Water" box height
@@ -62,6 +74,8 @@ const PR    = 4     // particle radius
 const GLOW  = 8     // particle glow blur
 const N_PAR = 3     // particles per contaminant
 const SPD   = 72    // base particle speed px/s
+const WSP   = 8     // approx spacing between water droplets along the path (px)
+const WCOL  = '#7dd3fc' // water droplet colour (light blue)
 
 // ─── Layout ───────────────────────────────────────────────────────────────────
 
@@ -72,23 +86,41 @@ interface Layout {
   cbY: number
   ch: number
   cw: number
+  wbh: number
 }
 
-function computeLayout(cw: number, filters: FilterType[]): Layout {
+// Measure how tall the "Water In" box must be so every contaminant chip fits.
+// Mirrors the wrapping logic in drawWaterBox so the two never disagree.
+function waterBoxHeight(ctx: CanvasRenderingContext2D, cw: number, conts: Contaminant[]): number {
+  const x = 16, w = cw - 32
+  let chipX = x + 14
+  let rows = 1
+  ctx.save()
+  ctx.font = '500 11px system-ui'
+  for (const c of conts) {
+    const cw2 = ctx.measureText(c.id.replace(/_/g, ' ')).width + 28
+    if (chipX + cw2 > x + w - 14) { chipX = x + 14; rows++ }
+    chipX += cw2 + 6
+  }
+  ctx.restore()
+  return Math.max(WBH_MIN, WB_HEAD + (rows - 1) * WB_ROW + WB_CHIP + WB_PAD)
+}
+
+function computeLayout(cw: number, filters: FilterType[], wbh: number): Layout {
   const lx = PX, rx = cw - PX
   const rows: Row[] = filters.map((ft, i) => {
-    const y = WBH + WBM_TOP + i * (FH + GAP)
+    const y = wbh + WBM_TOP + i * (FH + GAP)
     return { x: lx, y, w: rx - lx, h: FH, ft, ltr: i % 2 === 0, cy: y + FH / 2 }
   })
   const lr = rows[rows.length - 1]
   const cbY = lr.y + FH + WBM_BOT
-  return { rows, cbY, ch: cbY + CBH + 20, cw }
+  return { rows, cbY, ch: cbY + CBH + 20, cw, wbh }
 }
 
 // ─── Path ─────────────────────────────────────────────────────────────────────
 
 function buildPath(L: Layout): PSeg[] {
-  const { rows, cbY, cw } = L
+  const { rows, cbY, cw, wbh } = L
   const lx = PX, rx = cw - PX, cx = cw / 2
   const segs: PSeg[] = []
   let cum = 0
@@ -106,9 +138,9 @@ function buildPath(L: Layout): PSeg[] {
   //        (3) arc (U-bend, bulging away from the housing) into the port.
   const r0 = rows[0]
   const ex0 = r0.ltr ? lx : rx               // first filter input port
-  const entryRunY = WBH + (r0.y - WBH) * 0.5 // horizontal run, mid-gap below the box
+  const entryRunY = wbh + (r0.y - wbh) * 0.5 // horizontal run, mid-gap below the box
   const eBulge = r0.ltr ? -BULGE : BULGE     // bulge outward, away from the filter
-  add({ k: 'L', x0: cx, y0: WBH - 2, x1: cx, y1: entryRunY }, null)   // 1. down
+  add({ k: 'L', x0: cx, y0: wbh - 2, x1: cx, y1: entryRunY }, null)   // 1. down
   add({ k: 'L', x0: cx, y0: entryRunY, x1: ex0, y1: entryRunY }, null) // 2. across to port side
   add({                                                                // 3. arc into the port
     k: 'B',
@@ -301,103 +333,187 @@ function drawPump(ctx: CanvasRenderingContext2D, row: Row) {
   ctx.restore()
 }
 
-function drawFilter(ctx: CanvasRenderingContext2D, row: Row, removed: Contaminant[]) {
+// Pass 1 — housing + flow channel. Drawn BEFORE the particles so they appear to
+// stream through the module. No text here, so nothing readable is at risk.
+function drawFilterBody(ctx: CanvasRenderingContext2D, row: Row) {
   const { x, y, w, h, ft, ltr } = row
   if (ft === 'booster_pump') { drawPump(ctx, row); return }
   const cfg = FILTER_TYPE_CONFIG[ft]
-  const r = 32, capW = 70
+  const r = 32
 
-  // Glow
+  // Housing — dark technical canister with a soft coloured glow
   ctx.save()
-  ctx.shadowColor = cfg.color + '50'
-  ctx.shadowBlur = 20
+  ctx.shadowColor = cfg.color + '38'
+  ctx.shadowBlur = 18
   ctx.beginPath(); ctx.roundRect(x, y, w, h, r)
-  ctx.fillStyle = cfg.color + '18'
+  ctx.fillStyle = '#0b1422d8'
   ctx.fill()
   ctx.restore()
 
-  // Housing border
+  // Colour tint + outer border
   ctx.save()
   ctx.beginPath(); ctx.roundRect(x, y, w, h, r)
-  ctx.strokeStyle = cfg.color + '60'
+  ctx.fillStyle = cfg.color + '0f'
+  ctx.fill()
+  ctx.strokeStyle = cfg.color + '50'
   ctx.lineWidth = 1.5
   ctx.stroke()
   ctx.restore()
 
-  // Left cap
+  // Inner sheen line — gives the canister a glassy, engineered edge
   ctx.save()
-  ctx.beginPath(); ctx.roundRect(x, y, capW, h, [r, 0, 0, r])
-  ctx.fillStyle = cfg.color + '28'
-  ctx.fill()
-  ctx.strokeStyle = cfg.color + '40'
+  ctx.beginPath(); ctx.roundRect(x + 9, y + 3, w - 18, h - 6, r - 7)
+  ctx.strokeStyle = cfg.color + '16'
   ctx.lineWidth = 1
   ctx.stroke()
   ctx.restore()
 
-  // Right end cap
-  ctx.save()
-  ctx.beginPath(); ctx.roundRect(x + w - 18, y, 18, h, [0, r, r, 0])
-  ctx.fillStyle = cfg.color + '14'
-  ctx.fill()
-  ctx.restore()
-
-  // Icon (top half of cap)
-  ctx.save()
-  ctx.fillStyle = cfg.color
-  ctx.font = '15px system-ui'
-  ctx.textAlign = 'center'
-  ctx.textBaseline = 'middle'
-  ctx.fillText(SYMBOLS[ft] ?? '◆', x + capW / 2, y + h / 2 - (removed.length > 0 ? 12 : 4))
-  ctx.restore()
-
-  // Removed contaminant dots — below icon inside cap
-  if (removed.length > 0) {
-    const dotR = 4
-    const maxPerRow = 4
-    const rowCount = Math.ceil(removed.length / maxPerRow)
-    const dotSpacing = Math.min(12, (capW - 16) / Math.min(removed.length, maxPerRow))
-    removed.forEach((c, i) => {
-      const col = i % maxPerRow
-      const row = Math.floor(i / maxPerRow)
-      const rowW = Math.min(removed.length - row * maxPerRow, maxPerRow) * dotSpacing
-      const dotX = x + capW / 2 - rowW / 2 + col * dotSpacing + dotSpacing / 2
-      const dotY = y + h / 2 + 4 + row * (dotR * 2 + 3)
-      ctx.save()
-      ctx.beginPath(); ctx.arc(dotX, dotY, dotR, 0, Math.PI * 2)
-      ctx.fillStyle = c.color
-      ctx.shadowColor = c.color + 'bb'
-      ctx.shadowBlur = 6
-      ctx.fill()
-      ctx.restore()
-    })
-    void rowCount // suppress unused warning
-  }
-
-  // Label
-  ctx.save()
-  ctx.fillStyle = '#dde6f0'
-  ctx.font = '600 13px system-ui'
-  ctx.textAlign = 'left'
-  ctx.textBaseline = 'middle'
-  ctx.fillText(cfg.label, x + capW + 10, y + h / 2)
-  ctx.restore()
-
-  // Flow direction arrow
-  const ax = x + capW + (w - capW) * 0.68
+  // Flow-direction chevrons in the channel (subtle, sit behind the particles)
   const dir = ltr ? 1 : -1
   ctx.save()
-  ctx.strokeStyle = cfg.color + '50'
-  ctx.lineWidth = 1.5
+  ctx.strokeStyle = cfg.color + '24'
+  ctx.lineWidth = 2
   ctx.lineCap = 'round'
-  ctx.beginPath()
-  ctx.moveTo(ax - 7 * dir, y + h / 2); ctx.lineTo(ax + 7 * dir, y + h / 2)
-  ctx.moveTo(ax + 3 * dir, y + h / 2 - 4); ctx.lineTo(ax + 7 * dir, y + h / 2); ctx.lineTo(ax + 3 * dir, y + h / 2 + 4)
-  ctx.stroke()
+  ctx.lineJoin = 'round'
+  for (let k = 0; k < 3; k++) {
+    const cxk = x + w * (0.62 + k * 0.11)
+    ctx.beginPath()
+    ctx.moveTo(cxk - 5 * dir, y + h / 2 - 6)
+    ctx.lineTo(cxk + 5 * dir, y + h / 2)
+    ctx.lineTo(cxk - 5 * dir, y + h / 2 + 6)
+    ctx.stroke()
+  }
   ctx.restore()
 }
 
-function drawWaterBox(ctx: CanvasRenderingContext2D, cw: number, conts: Contaminant[]) {
-  const x = 16, y = 0, w = cw - 32, h = WBH, r = 12
+// Pass 2 — opaque nameplate (icon, filter name, and the contaminants this stage
+// removes). Drawn AFTER the particles so flowing dots can never obscure the text.
+function drawFilterPlate(ctx: CanvasRenderingContext2D, row: Row, removed: Contaminant[]) {
+  const { x, y, w, h, ft } = row
+  if (ft === 'booster_pump') return
+  const cfg = FILTER_TYPE_CONFIG[ft]
+  const r = 32
+  const padL = 16, badge = 26, gap = 11, padR = 16
+  const midY = y + h / 2
+
+  // ── Left nameplate: icon + name only ──────────────────────────────────────
+  ctx.font = '600 13px system-ui'
+  const nameW = ctx.measureText(cfg.label).width
+  const plateW = Math.max(112, Math.min(padL + badge + gap + nameW + padR, w * 0.55))
+
+  // Opaque panel + colour tint (hides any particle that flows behind it)
+  ctx.save()
+  ctx.beginPath(); ctx.roundRect(x, y, plateW, h, [r, 12, 12, r])
+  ctx.fillStyle = '#0a1320'
+  ctx.fill()
+  ctx.fillStyle = cfg.color + '1c'
+  ctx.fill()
+  ctx.restore()
+
+  // Bright right seam — reads as a module slotted into the housing
+  ctx.save()
+  ctx.beginPath(); ctx.moveTo(x + plateW, y + 7); ctx.lineTo(x + plateW, y + h - 7)
+  ctx.strokeStyle = cfg.color + '99'
+  ctx.lineWidth = 2
+  ctx.lineCap = 'round'
+  ctx.stroke()
+  ctx.restore()
+
+  // Panel border + corner screws
+  ctx.save()
+  ctx.beginPath(); ctx.roundRect(x + 0.75, y + 0.75, plateW - 1.5, h - 1.5, [r, 12, 12, r])
+  ctx.strokeStyle = cfg.color + '3a'
+  ctx.lineWidth = 1
+  ctx.stroke()
+  ctx.fillStyle = cfg.color + '40'
+  for (const sy of [y + 13, y + h - 13]) {
+    ctx.beginPath(); ctx.arc(x + 13, sy, 1.6, 0, Math.PI * 2); ctx.fill()
+  }
+  ctx.restore()
+
+  // Icon badge
+  const bx = x + padL, by = midY - badge / 2
+  ctx.save()
+  ctx.beginPath(); ctx.roundRect(bx, by, badge, badge, 7)
+  ctx.fillStyle = cfg.color + '2e'
+  ctx.fill()
+  ctx.strokeStyle = cfg.color + '70'
+  ctx.lineWidth = 1
+  ctx.stroke()
+  ctx.fillStyle = cfg.color
+  ctx.font = '15px system-ui'
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle'
+  ctx.fillText(SYMBOLS[ft] ?? '◆', bx + badge / 2, by + badge / 2 + 0.5)
+  ctx.restore()
+
+  // Filter name
+  ctx.save()
+  ctx.fillStyle = '#eef4fb'
+  ctx.font = '600 13px system-ui'
+  ctx.textAlign = 'left'; ctx.textBaseline = 'middle'
+  ctx.fillText(cfg.label, x + padL + badge + gap, midY)
+  ctx.restore()
+
+  // ── Right frosted label: what this stage removes (its own dedicated zone) ──
+  if (removed.length === 0) return
+  const dotR = 4, step = 13, COLS = 5, MAXR = 2
+  const maxDots = COLS * MAXR
+  const nShown = Math.min(removed.length, maxDots)
+  const overflow = removed.length - nShown
+  const slots = nShown + (overflow > 0 ? 1 : 0)
+  const cols = Math.min(slots, COLS)
+  const rows = Math.ceil(slots / COLS)
+  const lpx = 13, lpy = 9
+  const labelW = (cols - 1) * step + 2 * dotR + 2 * lpx
+  const labelH = (rows - 1) * step + 2 * dotR + 2 * lpy
+
+  // Anchor in the last third, right-aligned, clear of the nameplate seam
+  const inset = 16
+  const lx2 = Math.max(x + plateW + 18, x + w - inset - labelW)
+  const ly2 = midY - labelH / 2
+
+  // Frosted glass panel — translucent so the flowing particles stay softly
+  // visible behind it, with a soft drop shadow and a top sheen highlight
+  ctx.save()
+  ctx.shadowColor = 'rgba(0,0,0,0.45)'; ctx.shadowBlur = 9; ctx.shadowOffsetY = 2
+  ctx.beginPath(); ctx.roundRect(lx2, ly2, labelW, labelH, 11)
+  ctx.fillStyle = 'rgba(12,20,34,0.60)'
+  ctx.fill()
+  ctx.restore()
+  ctx.save()
+  ctx.beginPath(); ctx.roundRect(lx2, ly2, labelW, labelH, 11)
+  ctx.fillStyle = cfg.color + '16'; ctx.fill()
+  ctx.strokeStyle = cfg.color + '44'; ctx.lineWidth = 1; ctx.stroke()
+  ctx.beginPath(); ctx.moveTo(lx2 + 9, ly2 + 1.5); ctx.lineTo(lx2 + labelW - 9, ly2 + 1.5)
+  ctx.strokeStyle = 'rgba(255,255,255,0.10)'; ctx.lineWidth = 1; ctx.stroke()
+  ctx.restore()
+
+  // Removed-contaminant LEDs, laid out in a tidy grid
+  ctx.save()
+  for (let i = 0; i < nShown; i++) {
+    const c = removed[i]
+    const dx = lx2 + lpx + dotR + (i % COLS) * step
+    const dy = ly2 + lpy + dotR + Math.floor(i / COLS) * step
+    ctx.beginPath(); ctx.arc(dx, dy, dotR, 0, Math.PI * 2)
+    ctx.fillStyle = c.color
+    ctx.shadowColor = c.color + 'cc'; ctx.shadowBlur = 6
+    ctx.fill()
+  }
+  ctx.restore()
+  if (overflow > 0) {
+    const dx = lx2 + lpx + dotR + (nShown % COLS) * step
+    const dy = ly2 + lpy + dotR + Math.floor(nShown / COLS) * step
+    ctx.save()
+    ctx.fillStyle = '#aebfd2'
+    ctx.font = '600 9px system-ui'
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle'
+    ctx.fillText(`+${overflow}`, dx, dy)
+    ctx.restore()
+  }
+}
+
+function drawWaterBox(ctx: CanvasRenderingContext2D, cw: number, conts: Contaminant[], wbh: number) {
+  const x = 16, y = 0, w = cw - 32, h = wbh, r = 12
   ctx.save()
   ctx.beginPath(); ctx.roundRect(x, y, w, h, r)
   ctx.fillStyle = '#0b1526e8'
@@ -416,14 +532,14 @@ function drawWaterBox(ctx: CanvasRenderingContext2D, cw: number, conts: Contamin
   ctx.restore()
 
   // Chips
-  let chipX = x + 14, chipY = y + 30
+  let chipX = x + 14, chipY = y + WB_HEAD
   ctx.save()
   conts.forEach(c => {
     const lbl = c.id.replace(/_/g, ' ')
     ctx.font = '500 11px system-ui'
     const tw = ctx.measureText(lbl).width
-    const cw2 = tw + 28, ch2 = 20
-    if (chipX + cw2 > x + w - 14) { chipX = x + 14; chipY += 26 }
+    const cw2 = tw + 28, ch2 = WB_CHIP
+    if (chipX + cw2 > x + w - 14) { chipX = x + 14; chipY += WB_ROW }
     ctx.beginPath(); ctx.roundRect(chipX, chipY, cw2, ch2, ch2 / 2)
     ctx.fillStyle = c.color + '22'; ctx.fill()
     ctx.strokeStyle = c.color + '44'; ctx.lineWidth = 1; ctx.stroke()
@@ -468,7 +584,7 @@ export function SimulationCanvas({ filters, inputContaminants }: SimulationCanva
   const containerRef = useRef<HTMLDivElement>(null)
   const rafRef = useRef<number>(0)
   const lastTRef = useRef<number>(0)
-  const stateRef = useRef<{ segs: PSeg[]; layout: Layout; particles: Particle[]; tl: number } | null>(null)
+  const stateRef = useRef<{ segs: PSeg[]; layout: Layout; particles: Particle[]; water: WaterDrop[]; tl: number } | null>(null)
 
   const allConts = useMemo(
     () => (contaminantsData as Contaminant[]).filter(c => inputContaminants.includes(c.id)),
@@ -508,7 +624,8 @@ export function SimulationCanvas({ filters, inputContaminants }: SimulationCanva
       const dpr = window.devicePixelRatio || 1
       const cw = container!.clientWidth
       if (cw < 1) return
-      const L = computeLayout(cw, filtersRef.current)
+      const wbh = waterBoxHeight(ctx!, cw, allContsRef.current)
+      const L = computeLayout(cw, filtersRef.current, wbh)
       const segs = buildPath(L)
       const tl = pathLen(segs)
       canvas!.width = cw * dpr
@@ -519,7 +636,14 @@ export function SimulationCanvas({ filters, inputContaminants }: SimulationCanva
       const particles = allContsRef.current.flatMap((c, _i) =>
         Array.from({ length: N_PAR }, (_, j) => makeParticle(c, j, segs, filtersRef.current, tl)),
       )
-      stateRef.current = { segs, layout: L, particles, tl }
+      const waterCount = Math.max(60, Math.floor(tl / WSP))
+      const water: WaterDrop[] = Array.from({ length: waterCount }, (_, i) => ({
+        dist: (i / waterCount) * tl,
+        speed: SPD * (0.8 + Math.random() * 0.5),
+        r: 1.5 + Math.random() * 1.1,
+        alpha: 0.16 + Math.random() * 0.2,
+      }))
+      stateRef.current = { segs, layout: L, particles, water, tl }
     }
 
     function frame(now: number) {
@@ -527,18 +651,26 @@ export function SimulationCanvas({ filters, inputContaminants }: SimulationCanva
       lastTRef.current = now
       const S = stateRef.current
       if (!S) { rafRef.current = requestAnimationFrame(frame); return }
-      const { segs, layout, particles, tl } = S
+      const { segs, layout, particles, water, tl } = S
       const { rows, cbY, ch, cw } = layout
 
       ctx!.clearRect(0, 0, cw, ch)
       drawPipes(ctx!, segs)
-      rows.forEach((row, i) => {
-        const removedIds = stageContsRef.current[i].filter(id => !stageContsRef.current[i + 1].includes(id))
-        const removed = (contaminantsData as Contaminant[]).filter(c => removedIds.includes(c.id))
-        drawFilter(ctx!, row, removed)
-      })
-      drawWaterBox(ctx!, cw, allContsRef.current)
-      drawCleanBox(ctx!, cw, cbY, allClearRef.current)
+      // Housings first — particles then stream through them
+      rows.forEach(row => drawFilterBody(ctx!, row))
+
+      // Flowing water — small translucent droplets behind the contaminants
+      ctx!.save()
+      ctx!.fillStyle = WCOL
+      for (const wd of water) {
+        wd.dist += wd.speed * dt
+        if (wd.dist >= tl) wd.dist -= tl
+        const pos = ptAt(segs, wd.dist)
+        ctx!.globalAlpha = wd.alpha
+        ctx!.beginPath(); ctx!.arc(pos.x, pos.y, wd.r, 0, Math.PI * 2)
+        ctx!.fill()
+      }
+      ctx!.restore()
 
       for (const p of particles) {
         if (p.absorbing) {
@@ -574,6 +706,15 @@ export function SimulationCanvas({ filters, inputContaminants }: SimulationCanva
         ctx!.fillStyle = p.color; ctx!.fill()
         ctx!.restore()
       }
+
+      // Labels & boxes ON TOP — flowing contaminants never obscure the text
+      rows.forEach((row, i) => {
+        const removedIds = stageContsRef.current[i].filter(id => !stageContsRef.current[i + 1].includes(id))
+        const removed = (contaminantsData as Contaminant[]).filter(c => removedIds.includes(c.id))
+        drawFilterPlate(ctx!, row, removed)
+      })
+      drawWaterBox(ctx!, cw, allContsRef.current, layout.wbh)
+      drawCleanBox(ctx!, cw, cbY, allClearRef.current)
 
       rafRef.current = requestAnimationFrame(frame)
     }

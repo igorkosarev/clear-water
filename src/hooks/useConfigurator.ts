@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { getBestRecommendation } from '@/engine/configurator'
-import type { WaterInput, RankedRecommendation } from '@/types'
+import type { WaterInput, TierResult } from '@/types'
 
 export function useConfigurator() {
-  const [recommendation, setRecommendation] = useState<RankedRecommendation | null>(null)
+  const [recommendation, setRecommendation] = useState<TierResult | null>(null)
   const [input, setInput] = useState<WaterInput | null>(null)
 
   const configure = (waterInput: WaterInput) => {

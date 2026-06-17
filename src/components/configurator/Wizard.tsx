@@ -7,38 +7,46 @@ import { StepBudget } from './steps/StepBudget'
 import { StepPressure } from './steps/StepPressure'
 import type { PreviewModule } from './steps/StepPressure'
 import { runSimulation } from '@/engine/simulation'
+import { useCountry } from '@/context/CountryContext'
 import modulesData from '@/data/modules.json'
 import type { WaterInput } from '@/types'
 
 const STEPS = ['source', 'problems', 'use', 'budget', 'pressure'] as const
 
 interface WizardProps {
-  onComplete: (input: Omit<WaterInput, 'country'>) => void
+  onComplete: (input: WaterInput) => void
+  onBack?: () => void
 }
 
-export function Wizard({ onComplete }: WizardProps) {
+export function Wizard({ onComplete, onBack }: WizardProps) {
   const { t } = useTranslation()
+  const { country } = useCountry()
   const [step, setStep] = useState(0)
-  const [data, setData] = useState<Partial<Omit<WaterInput, 'country'>>>({})
+  const [data, setData] = useState<Partial<WaterInput>>({ preference: 'cost' })
   const [previewModules, setPreviewModules] = useState<PreviewModule[]>([])
 
   const update = (patch: Partial<WaterInput>) => setData(prev => ({ ...prev, ...patch }))
+
   const next = () => setStep(s => Math.min(s + 1, STEPS.length - 1))
-  const back = () => setStep(s => Math.max(s - 1, 0))
+  const back = () => {
+    if (step === 0) { onBack?.(); return }
+    setStep(s => Math.max(s - 1, 0))
+  }
 
   const advanceFromBudget = () => {
     if (!data.source || !data.contaminants || !data.use || !data.budget) return
     const result = runSimulation({
-      country: '',
+      country: country ?? '',
       source: data.source,
       contaminants: data.contaminants,
       use: data.use,
       budget: data.budget,
-      inletPressureBar: 100,
+      inletPressureBar: 100, // assume ample pressure to get the target module list
+      preference: data.preference ?? 'cost',
     })
-    const topModuleIds = result.recommendations[0]?.template.modules ?? []
+    const primaryTier = result.tiers.find(t => t.budget === data.budget) ?? result.tiers[0]
+    const topModuleIds = primaryTier?.modules.filter(id => id !== 'booster_pump') ?? []
     const mods: PreviewModule[] = topModuleIds
-      .filter(id => id !== 'booster_pump')
       .map(id => {
         const raw = (modulesData as Array<{ id: string; nameKey: string; minPressureBar: number }>)
           .find(m => m.id === id)
@@ -58,12 +66,12 @@ export function Wizard({ onComplete }: WizardProps) {
         {STEPS.map((_, i) => (
           <div
             key={i}
-            className={`flex-1 h-1.5 rounded-full transition-colors ${i <= step ? 'bg-blue-500' : 'bg-gray-200'}`}
+            className={`flex-1 h-1 rounded-full transition-colors ${i <= step ? 'bg-sky-500' : 'bg-slate-700'}`}
           />
         ))}
       </div>
 
-      <div className="text-sm text-gray-500 mb-4">
+      <div className="text-xs text-slate-500 mb-6 uppercase tracking-wider font-medium">
         {t('configurator.step', { current: step + 1, total: STEPS.length })}
       </div>
 
@@ -85,7 +93,15 @@ export function Wizard({ onComplete }: WizardProps) {
               data.budget &&
               data.inletPressureBar !== undefined
             ) {
-              onComplete(data as Omit<WaterInput, 'country'>)
+              onComplete({
+                country: country ?? '',
+                source: data.source,
+                contaminants: data.contaminants,
+                use: data.use,
+                budget: data.budget,
+                inletPressureBar: data.inletPressureBar,
+                preference: data.preference ?? 'cost',
+              })
             }
           }}
         />

@@ -1,7 +1,7 @@
 import { runSimulation } from './simulation'
-import type { WaterInput, RankedRecommendation } from '@/types'
+import type { WaterInput, TierResult } from '@/types'
 
-export function getBestRecommendation(input: WaterInput): RankedRecommendation | null {
+export function getBestRecommendation(input: WaterInput): TierResult | null {
   const result = runSimulation(input)
-  return result.recommendations[0] ?? null
+  return result.tiers.find(t => t.budget === input.budget) ?? result.tiers[0] ?? null
 }

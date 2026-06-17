@@ -1,7 +1,7 @@
 import type { ButtonHTMLAttributes } from 'react'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'ghost'
+  variant?: 'primary' | 'secondary' | 'ghost' | 'dark-secondary'
   size?: 'sm' | 'md' | 'lg'
 }
 
@@ -12,6 +12,7 @@ export function Button({ variant = 'primary', size = 'md', className = '', child
     primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500',
     secondary: 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 focus:ring-blue-500',
     ghost: 'text-gray-600 hover:bg-gray-100 focus:ring-gray-400',
+    'dark-secondary': 'bg-slate-800 text-slate-300 border border-slate-600 hover:bg-slate-700 hover:text-slate-100 focus:ring-slate-500',
   }
 
   const sizes = {

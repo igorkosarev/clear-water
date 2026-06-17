@@ -26,11 +26,11 @@ interface PressureOption {
 }
 
 const SOURCE_DEFAULT_PRESSURE: Record<WaterSourceType, number> = {
-  tap: 2.5,
-  well: 2.0,
-  river: 0.1,
-  rain: 0.1,
-  pond: 0.1,
+  tap:    2.5,
+  well:   2.0,
+  river:  0.1,
+  rain:   0.1,
+  pond:   0.1,
   spring: 0.1,
 }
 
@@ -39,7 +39,7 @@ function buildOptions(previewModules: PreviewModule[]): {
   thresholds: number[]
 } {
   const thresholds = [...new Set(
-    previewModules.map(m => m.minPressureBar).filter(p => p > 0)
+    previewModules.map(m => m.minPressureBar).filter(p => p > 0),
   )].sort((a, b) => a - b)
 
   if (thresholds.length === 0) {
@@ -51,9 +51,8 @@ function buildOptions(previewModules: PreviewModule[]): {
 
   const options: PressureOption[] = []
 
-  const belowValue = thresholds[0] * 0.5
   options.push({
-    value: belowValue,
+    value: thresholds[0] * 0.5,
     labelKey: 'configurator.pressure.below',
     labelParams: { value: thresholds[0] },
     needsPump: true,
@@ -69,9 +68,8 @@ function buildOptions(previewModules: PreviewModule[]): {
     })
   }
 
-  const aboveValue = thresholds[thresholds.length - 1] + 1
   options.push({
-    value: aboveValue,
+    value: thresholds[thresholds.length - 1] + 1,
     labelKey: 'configurator.pressure.aboveOrEqual',
     labelParams: { value: thresholds[thresholds.length - 1] },
     needsPump: false,
@@ -112,38 +110,40 @@ export function StepPressure({ data, update, onBack, onFinish, previewModules }:
 
   return (
     <div className="space-y-4">
-      <h2 className="text-2xl font-bold text-gray-900">{t('configurator.steps.pressure.title')}</h2>
-      <p className="text-sm text-gray-500">{t('configurator.steps.pressure.description')}</p>
+      <h2 className="text-2xl font-bold text-white">{t('configurator.steps.pressure.title')}</h2>
+      <p className="text-sm text-slate-400">{t('configurator.steps.pressure.description')}</p>
 
       {noRequirements ? (
-        <div className="flex items-start gap-3 p-4 bg-green-50 border border-green-200 rounded-lg">
-          <CheckCircle size={20} className="text-green-600 flex-shrink-0 mt-0.5" />
-          <p className="text-sm text-green-800">{t('configurator.steps.pressure.noRequirements')}</p>
+        <div className="flex items-start gap-3 p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-xl">
+          <CheckCircle size={18} className="text-emerald-400 shrink-0 mt-0.5" />
+          <p className="text-sm text-emerald-300">{t('configurator.steps.pressure.noRequirements')}</p>
         </div>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-2">
           {options.map((option, i) => {
-            const selected = selectedIndex === i
+            const isSelected = selectedIndex === i
             return (
               <button
                 key={i}
-                className={`w-full p-4 rounded-lg border-2 text-left transition-colors ${
-                  selected ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-gray-300'
+                className={`w-full p-4 rounded-xl border text-left transition-all ${
+                  isSelected
+                    ? 'border-sky-500 bg-sky-500/10 text-white'
+                    : 'border-slate-700 bg-slate-800/60 text-slate-300 hover:border-slate-500'
                 }`}
                 onClick={() => handleSelect(i)}
               >
-                <div className="font-medium text-gray-800">
+                <div className="font-medium text-sm">
                   {t(option.labelKey, option.labelParams)}
                 </div>
                 {option.needsPump ? (
                   <div className="flex items-center gap-1.5 mt-1">
-                    <AlertTriangle size={13} className="text-amber-500 flex-shrink-0" />
-                    <span className="text-xs text-amber-700">{t('configurator.pressure.pumpAdded')}</span>
+                    <AlertTriangle size={12} className="text-amber-400 shrink-0" />
+                    <span className="text-xs text-amber-400">{t('configurator.pressure.pumpAdded')}</span>
                   </div>
                 ) : (
                   <div className="flex items-center gap-1.5 mt-1">
-                    <CheckCircle size={13} className="text-green-500 flex-shrink-0" />
-                    <span className="text-xs text-green-700">{t('configurator.pressure.allWork')}</span>
+                    <CheckCircle size={12} className="text-emerald-400 shrink-0" />
+                    <span className="text-xs text-emerald-400">{t('configurator.pressure.allWork')}</span>
                   </div>
                 )}
               </button>
@@ -152,9 +152,14 @@ export function StepPressure({ data, update, onBack, onFinish, previewModules }:
         </div>
       )}
 
-      <div className="flex gap-3">
-        <Button variant="secondary" onClick={onBack} className="flex-1">{t('common.back')}</Button>
-        <Button onClick={onFinish} className="flex-1">{t('configurator.getResults')}</Button>
+      <div className="flex gap-3 pt-2">
+        <Button variant="dark-secondary" onClick={onBack} className="flex-1">{t('common.back')}</Button>
+        <button
+          onClick={onFinish}
+          className="flex-1 inline-flex items-center justify-center font-semibold rounded-lg transition-colors px-4 py-2 text-sm bg-sky-600 hover:bg-sky-500 text-white"
+        >
+          {t('configurator.getResults')}
+        </button>
       </div>
     </div>
   )

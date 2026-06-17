@@ -76,7 +76,7 @@ export default function Basics() {
     }
   }, [location.hash])
 
-  const navKeys: SectionKey[] = SECTION_ORDER
+  const navKeys: SectionKey[] = [...SECTION_ORDER]
 
   return (
     <div className="min-h-screen bg-slate-950 text-white">

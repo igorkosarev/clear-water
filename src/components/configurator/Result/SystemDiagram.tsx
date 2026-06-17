@@ -1,22 +1,27 @@
 import { SimulationCanvas } from '@/components/simulation/SimulationCanvas'
-import type { RankedRecommendation } from '@/types'
+import type { TierResult } from '@/types'
 import type { FilterType } from '@/components/filter/FilterTypes'
 import modules from '@/data/modules.json'
 
 interface SystemDiagramProps {
-  recommendation: RankedRecommendation
+  tier: TierResult
 }
 
-export function SystemDiagram({ recommendation }: SystemDiagramProps) {
+export function SystemDiagram({ tier }: SystemDiagramProps) {
   const moduleList = modules as Array<{ id: string; type: FilterType }>
-  const filters = recommendation.template.modules
+  const filters = tier.modules
     .map(id => moduleList.find(m => m.id === id)?.type)
     .filter((t): t is FilterType => !!t)
+
+  const inputContaminants = [
+    ...tier.removedContaminants,
+    ...tier.remainingContaminants,
+  ]
 
   return (
     <SimulationCanvas
       filters={filters}
-      inputContaminants={recommendation.template.targetContaminants}
+      inputContaminants={inputContaminants.length > 0 ? inputContaminants : []}
     />
   )
 }

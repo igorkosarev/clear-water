@@ -1,80 +1,132 @@
-import type { WaterInput, SimulationResult, RankedRecommendation, SystemTemplate, ModuleId } from '@/types'
-import systemTemplates from '@/data/system-templates.json'
-import modules from '@/data/modules.json'
-
-type RawTemplate = {
-  id: string
-  nameKey: string
-  descriptionKey: string
-  modules: string[]
-  targetContaminants: string[]
-  budgetTier: string
-  suitableFor: string[]
-}
+import type {
+  WaterInput,
+  GreedySimulationResult,
+  TierResult,
+  BudgetTier,
+  ContaminantId,
+  ModuleId,
+  OptimizationPreference,
+} from '@/types'
+import modulesData from '@/data/modules.json'
 
 type RawModule = {
   id: string
-  costUSD: number
+  type: string
   removes: string[]
+  costUSD: number
   minPressureBar: number
 }
 
-export function runSimulation(input: WaterInput): SimulationResult {
-  const templates = systemTemplates as RawTemplate[]
-  const allModules = modules as RawModule[]
+const BUDGET_LIMITS: Record<BudgetTier, number> = {
+  low: 50,
+  medium: 200,
+  high: 1000,
+}
 
-  const getTemplateCost = (moduleIds: string[]): number =>
-    moduleIds.reduce((sum, id) => {
-      const mod = allModules.find(m => m.id === id)
-      return sum + (mod?.costUSD ?? 0)
-    }, 0)
+// Logical flow order: contaminants flow through filters in this sequence
+const FLOW_ORDER: Record<string, number> = {
+  booster_pump:      0,
+  sediment:          1,
+  sediment_filtration: 1,
+  activated_carbon:  2,
+  biosand:           3,
+  ceramic:           3,
+  slow_sand:         4,
+  ro:                5,
+  hollow_fiber:      5,
+  uv:                6,
+  chlorination:      7,
+  boiling:           8,
+  ion_exchange:      9,
+  water_softening:   10,
+  distillation:      11,
+}
 
-  const scoreTemplate = (template: RawTemplate): number => {
-    const budgetMatch = template.budgetTier === input.budget ? 2 : 0
-    const sourceMatch = template.suitableFor.includes(input.source) ? 2 : 0
-    const contaminantsCovered = input.contaminants.filter(c =>
-      template.targetContaminants.includes(c)
-    ).length
-    const coverageScore = input.contaminants.length > 0
-      ? (contaminantsCovered / input.contaminants.length) * 4
-      : 0
-    return budgetMatch + sourceMatch + coverageScore
-  }
+function sortByFlowOrder(mods: RawModule[]): RawModule[] {
+  return [...mods].sort((a, b) => {
+    const oa = FLOW_ORDER[a.type] ?? 99
+    const ob = FLOW_ORDER[b.type] ?? 99
+    return oa - ob
+  })
+}
 
-  const boosterPump = allModules.find(m => m.id === 'booster_pump')
+function greedyBuild(
+  contaminants: ContaminantId[],
+  allModules: RawModule[],
+  budgetUSD: number,
+  preference: OptimizationPreference,
+  inletPressureBar: number,
+  budget: BudgetTier,
+): TierResult {
+  let remaining = [...contaminants]
+  const selected: RawModule[] = []
+  let totalCost = 0
 
-  const ranked: RankedRecommendation[] = templates
-    .map(template => {
-      const allRemoved = template.modules.flatMap(id =>
-        allModules.find(m => m.id === id)?.removes ?? []
-      )
-      const uniqueRemoved = [...new Set(allRemoved)]
-      const removedContaminants = input.contaminants.filter(c => uniqueRemoved.includes(c))
-      const remainingContaminants = input.contaminants.filter(c => !uniqueRemoved.includes(c))
+  // Exclude booster pump from greedy candidates — handled as post-processing
+  const candidates = allModules.filter(m => m.id !== 'booster_pump')
 
-      const needsPump = boosterPump !== undefined && template.modules.some(id => {
-        const mod = allModules.find(m => m.id === id)
-        return mod !== undefined && mod.minPressureBar > input.inletPressureBar
+  while (remaining.length > 0) {
+    const affordable = candidates.filter(
+      m => !selected.some(s => s.id === m.id) && totalCost + m.costUSD <= budgetUSD,
+    )
+
+    const scored = affordable
+      .map(m => ({
+        module: m,
+        overlap: m.removes.filter(c => remaining.includes(c)).length,
+      }))
+      .filter(x => x.overlap > 0)
+      .sort((a, b) => {
+        if (b.overlap !== a.overlap) return b.overlap - a.overlap
+        if (preference === 'cost') return a.module.costUSD - b.module.costUSD
+        return b.module.removes.length - a.module.removes.length
       })
 
-      const moduleIds: ModuleId[] = needsPump && boosterPump
-        ? ['booster_pump', ...template.modules]
-        : [...template.modules]
+    if (scored.length === 0) break
 
-      const patchedTemplate: SystemTemplate = {
-        ...(template as unknown as SystemTemplate),
-        modules: moduleIds,
-      }
+    const best = scored[0]
+    selected.push(best.module)
+    totalCost += best.module.costUSD
+    remaining = remaining.filter(c => !best.module.removes.includes(c))
+  }
 
-      return {
-        template: patchedTemplate,
-        score: scoreTemplate(template),
-        removedContaminants,
-        remainingContaminants,
-        estimatedCostUSD: getTemplateCost(moduleIds),
-      }
-    })
-    .sort((a, b) => b.score - a.score)
+  // Add booster pump when source pressure is insufficient for the built system
+  const needsPump = selected.some(m => m.minPressureBar > inletPressureBar)
+  if (needsPump) {
+    const pump = allModules.find(m => m.id === 'booster_pump')
+    if (pump) {
+      selected.unshift(pump)
+      totalCost += pump.costUSD
+    }
+  }
 
-  return { recommendations: ranked }
+  const sorted = sortByFlowOrder(selected)
+  const removedContaminants = contaminants.filter(c => !remaining.includes(c))
+
+  return {
+    budget,
+    budgetLimitUSD: budgetUSD,
+    modules: sorted.map(m => m.id) as ModuleId[],
+    removedContaminants,
+    remainingContaminants: remaining,
+    estimatedCostUSD: totalCost,
+    hasPump: needsPump,
+  }
+}
+
+export function runSimulation(input: WaterInput): GreedySimulationResult {
+  const allModules = modulesData as RawModule[]
+
+  const tiers = (['low', 'medium', 'high'] as BudgetTier[]).map(budget =>
+    greedyBuild(
+      input.contaminants,
+      allModules,
+      BUDGET_LIMITS[budget],
+      input.preference,
+      input.inletPressureBar,
+      budget,
+    ),
+  )
+
+  return { tiers, primaryBudget: input.budget }
 }

@@ -63,7 +63,14 @@
       },
       "problems": {
         "title": "What problems do you notice?",
-        "description": "Select all that apply. Not sure? Select all."
+        "description": "Select all that apply. Not sure? Select all.",
+        "symptomsTitle": "What do you notice about your water?",
+        "symptomsDescription": "Select all that apply.",
+        "refineTitle": "Confirm the contaminants",
+        "refineDescription": "Pre-selected based on your symptoms. Add or remove as needed.",
+        "popular": "Common for {{source}}",
+        "searchPlaceholder": "Search all contaminants...",
+        "selectedCount": "{{count}} contaminants selected"
       },
       "use": {
         "title": "What will the water be used for?"
@@ -111,22 +118,66 @@
       "high": {
         "label": "Higher ($200+)",
         "description": "Best available technology"
+      },
+      "preference": {
+        "label": "Optimise for",
+        "cost": "Lower cost",
+        "cost_description": "Prefer cheaper modules when coverage is equal",
+        "coverage": "More coverage",
+        "coverage_description": "Prefer modules with the broadest removal range"
       }
     },
     "learnMore": {
       "title": "Want to learn more?",
       "multiStage": "How multi-stage treatment works",
       "howToChoose": "How to choose a system"
+    },
+    "intro": {
+      "title": "Find Your Water Solution",
+      "description": "Answer a few questions about your water source and problems — we'll recommend the right filtration system for you.",
+      "cta": "Start"
+    },
+    "symptoms": {
+      "turbid": "Cloudy or has sediment",
+      "odor": "Smells or tastes bad",
+      "rust": "Rust / brown or black colour",
+      "unsafe": "Unsafe to drink (illness risk)",
+      "chemical": "Chemical / industrial pollution",
+      "hardness": "Hard water / limescale",
+      "radiological": "Radiological risk",
+      "unknown": "I don't know — show everything"
     }
   },
   "result": {
     "title": "Your Recommended System",
-    "subtitle": "Based on your water source and needs, here is the best solution.",
+    "subtitle": "Based on your answers, here is the best system for you.",
     "bom": {
       "title": "Bill of Materials",
       "component": "Component",
       "cost": "Cost (USD)",
-      "total": "Total"
+      "total": "Total",
+      "difficulty": "DIY",
+      "difficulty_easy": "Easy",
+      "difficulty_medium": "Medium",
+      "difficulty_hard": "Hard"
+    },
+    "coverage": "Removes {{removed}} of {{total}}",
+    "coverageAll": "Removes all {{total}}",
+    "pumpWarning": "A booster pump has been added to meet the pressure requirements of this system.",
+    "restart": "Start over",
+    "alternatives": {
+      "title": "Other options",
+      "select": "Choose this system"
+    },
+    "tierLabel": {
+      "low": "Budget System",
+      "medium": "Standard System",
+      "high": "Advanced System"
+    },
+    "tierCost": "Up to ${{limit}}",
+    "noModules": "No modules fit within this budget",
+    "remaining": {
+      "label": "Still present in water"
     }
   },
   "learn": {

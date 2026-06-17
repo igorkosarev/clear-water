@@ -3,6 +3,7 @@ export type ModuleId = string
 export type SystemTemplateId = string
 
 export type BudgetTier = 'low' | 'medium' | 'high'
+export type OptimizationPreference = 'cost' | 'coverage'
 
 export type WaterSourceType =
   | 'well'
@@ -87,18 +88,22 @@ export interface WaterInput {
   use: WaterUseType
   budget: BudgetTier
   inletPressureBar: number
+  preference: OptimizationPreference
 }
 
-export interface SimulationResult {
-  recommendations: RankedRecommendation[]
-}
-
-export interface RankedRecommendation {
-  template: SystemTemplate
-  score: number
+export interface TierResult {
+  budget: BudgetTier
+  budgetLimitUSD: number
+  modules: ModuleId[]
   removedContaminants: ContaminantId[]
   remainingContaminants: ContaminantId[]
   estimatedCostUSD: number
+  hasPump: boolean
+}
+
+export interface GreedySimulationResult {
+  tiers: TierResult[]
+  primaryBudget: BudgetTier
 }
 
 export type FilterType =

@@ -274,6 +274,7 @@
     "title": "Water Treatment Systems",
     "subtitle": "Browse pre-built systems for common water challenges.",
     "back": "Back to Systems",
+    "removes": "Removes",
     "basic_boil_ceramic": {
       "name": "Basic Ceramic System",
       "description": "A simple two-stage system using a sediment pre-filter and ceramic candle. Ideal for well and surface water."

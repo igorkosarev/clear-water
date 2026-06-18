@@ -22,12 +22,14 @@ export function ResultPanel({ result, onRestart }: ResultPanelProps) {
 
   const moduleKey = (modules: string[]) => [...modules].sort().join(',')
   const seenKeys = new Set([moduleKey(primary?.modules ?? [])])
-  const uniqueAlternatives = alternatives.filter(alt => {
-    const key = moduleKey(alt.modules)
-    if (seenKeys.has(key)) return false
-    seenKeys.add(key)
-    return true
-  })
+  const uniqueAlternatives = alternatives
+    .filter(alt => alt.modules.length > 0)
+    .filter(alt => {
+      const key = moduleKey(alt.modules)
+      if (seenKeys.has(key)) return false
+      seenKeys.add(key)
+      return true
+    })
 
   if (!primary) return null
 

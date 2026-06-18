@@ -12,7 +12,6 @@ interface ResultPanelProps {
   onRestart: () => void
 }
 
-const TIER_ORDER: BudgetTier[] = ['low', 'medium', 'high']
 
 export function ResultPanel({ result, onRestart }: ResultPanelProps) {
   const { t } = useTranslation()
@@ -21,10 +20,14 @@ export function ResultPanel({ result, onRestart }: ResultPanelProps) {
   const primary = result.tiers.find(t => t.budget === activeBudget) ?? result.tiers[0]
   const alternatives = result.tiers.filter(t => t.budget !== activeBudget)
 
-  const uniqueAlternatives = alternatives.filter(alt =>
-    !(alt.modules.length === primary?.modules.length &&
-      alt.modules.every(id => primary?.modules.includes(id)))
-  )
+  const moduleKey = (modules: string[]) => [...modules].sort().join(',')
+  const seenKeys = new Set([moduleKey(primary?.modules ?? [])])
+  const uniqueAlternatives = alternatives.filter(alt => {
+    const key = moduleKey(alt.modules)
+    if (seenKeys.has(key)) return false
+    seenKeys.add(key)
+    return true
+  })
 
   if (!primary) return null
 
@@ -121,17 +124,12 @@ export function ResultPanel({ result, onRestart }: ResultPanelProps) {
             {t('result.alternatives.title')}
           </h3>
           <div className="space-y-3">
-            {TIER_ORDER.filter(b => b !== activeBudget).map(budget => {
-              const alt = result.tiers.find(t => t.budget === budget)
-              if (!alt) return null
-              const isDuplicate = alt.modules.length === primary.modules.length &&
-                alt.modules.every(id => primary.modules.includes(id))
-              if (isDuplicate) return null
-              return <AltCard key={budget} alt={alt} onSelect={() => {
-                setActiveBudget(budget)
+            {uniqueAlternatives.map(alt => (
+              <AltCard key={alt.budget} alt={alt} onSelect={() => {
+                setActiveBudget(alt.budget)
                 window.scrollTo({ top: 0, behavior: 'smooth' })
               }} />
-            })}
+            ))}
           </div>
         </div>
       )}

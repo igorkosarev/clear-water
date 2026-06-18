@@ -21,6 +21,11 @@ export function ResultPanel({ result, onRestart }: ResultPanelProps) {
   const primary = result.tiers.find(t => t.budget === activeBudget) ?? result.tiers[0]
   const alternatives = result.tiers.filter(t => t.budget !== activeBudget)
 
+  const uniqueAlternatives = alternatives.filter(alt =>
+    !(alt.modules.length === primary?.modules.length &&
+      alt.modules.every(id => primary?.modules.includes(id)))
+  )
+
   if (!primary) return null
 
   const total = primary.removedContaminants.length + primary.remainingContaminants.length
@@ -110,7 +115,7 @@ export function ResultPanel({ result, onRestart }: ResultPanelProps) {
         )}
       </motion.div>
 
-      {alternatives.length > 0 && (
+      {uniqueAlternatives.length > 0 && (
         <div>
           <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">
             {t('result.alternatives.title')}
@@ -119,6 +124,9 @@ export function ResultPanel({ result, onRestart }: ResultPanelProps) {
             {TIER_ORDER.filter(b => b !== activeBudget).map(budget => {
               const alt = result.tiers.find(t => t.budget === budget)
               if (!alt) return null
+              const isDuplicate = alt.modules.length === primary.modules.length &&
+                alt.modules.every(id => primary.modules.includes(id))
+              if (isDuplicate) return null
               return <AltCard key={budget} alt={alt} onSelect={() => {
                 setActiveBudget(budget)
                 window.scrollTo({ top: 0, behavior: 'smooth' })

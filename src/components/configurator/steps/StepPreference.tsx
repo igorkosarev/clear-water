@@ -30,7 +30,7 @@ export function StepPreference({ data, update, onBack, onNext }: StepPreferenceP
   return (
     <div className="space-y-5">
       <div>
-        <h2 className="text-2xl font-bold text-white">{t('configurator.steps.preference.title')}</h2>
+        <h2 className="text-xl sm:text-2xl font-bold text-white">{t('configurator.steps.preference.title')}</h2>
         <p className="text-sm text-slate-400 mt-1">{t('configurator.steps.preference.description')}</p>
       </div>
 

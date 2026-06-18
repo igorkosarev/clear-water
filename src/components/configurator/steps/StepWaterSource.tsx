@@ -32,7 +32,7 @@ export function StepWaterSource({ data, update, onNext, onBack }: StepProps) {
   return (
     <div className="space-y-5">
       <div>
-        <h2 className="text-2xl font-bold text-white">{t('configurator.steps.source.title')}</h2>
+        <h2 className="text-xl sm:text-2xl font-bold text-white">{t('configurator.steps.source.title')}</h2>
       </div>
       <div className="grid grid-cols-2 gap-2.5">
         {SOURCES.map(({ id, Icon }) => {
@@ -42,7 +42,7 @@ export function StepWaterSource({ data, update, onNext, onBack }: StepProps) {
               key={id}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
-              className={`relative p-4 rounded-xl border text-left flex flex-col gap-2.5 transition-colors ${
+              className={`relative p-3 sm:p-4 rounded-xl border text-left flex flex-col gap-2 sm:gap-2.5 transition-colors ${
                 selected
                   ? 'border-sky-500 bg-sky-500/10 text-white'
                   : 'border-slate-700/60 bg-slate-800/40 text-slate-300 hover:border-slate-600 hover:bg-slate-800/70'

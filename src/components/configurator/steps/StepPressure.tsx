@@ -110,7 +110,7 @@ export function StepPressure({ data, update, onBack, onNext, previewModules }: S
 
   return (
     <div className="space-y-4">
-      <h2 className="text-2xl font-bold text-white">{t('configurator.steps.pressure.title')}</h2>
+      <h2 className="text-xl sm:text-2xl font-bold text-white">{t('configurator.steps.pressure.title')}</h2>
       <p className="text-sm text-slate-400">{t('configurator.steps.pressure.description')}</p>
 
       {noRequirements ? (

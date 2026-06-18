@@ -1,5 +1,5 @@
 import { useState, Fragment } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { Check } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { StepWaterSource } from './steps/StepWaterSource'
@@ -90,7 +90,7 @@ export function Wizard({ onComplete, onBack }: WizardProps) {
   const stepProps = { data, update, onNext: next, onBack: back }
 
   return (
-    <div className="max-w-lg mx-auto px-4 py-8">
+    <div className="max-w-lg mx-auto px-4 py-5 sm:py-8">
 
       {/* ── Progress ── */}
       <div className="mb-8">
@@ -109,7 +109,7 @@ export function Wizard({ onComplete, onBack }: WizardProps) {
           {STEPS.map((_, i) => (
             <Fragment key={i}>
               <div
-                className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 transition-all duration-300 ${
+                className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 transition-all duration-300 ${
                   i < step
                     ? 'bg-sky-500 text-white'
                     : i === step
@@ -117,19 +117,12 @@ export function Wizard({ onComplete, onBack }: WizardProps) {
                       : 'bg-slate-800 text-slate-600 border border-slate-700/60'
                 }`}
               >
-                {i < step ? <Check size={12} strokeWidth={3} /> : i + 1}
+                {i < step ? <Check size={11} strokeWidth={3} /> : i + 1}
               </div>
               {i < STEPS.length - 1 && (
-                <div className="flex-1 h-px mx-1.5 transition-colors duration-300 overflow-hidden rounded-full">
-                  <motion.div
-                    className="h-full bg-sky-500"
-                    initial={{ width: i < step ? '100%' : '0%' }}
-                    animate={{ width: i < step ? '100%' : '0%' }}
-                    transition={{ duration: 0.3 }}
-                    style={{ backgroundColor: i < step ? '#38bdf8' : '#1e293b' }}
-                  />
-                  <div className={`h-full w-full -mt-full ${i < step ? 'bg-sky-500' : 'bg-slate-800'}`} />
-                </div>
+                <div className={`flex-1 h-px mx-1 sm:mx-1.5 rounded-full transition-colors duration-300 ${
+                  i < step ? 'bg-sky-500' : 'bg-slate-800'
+                }`} />
               )}
             </Fragment>
           ))}

@@ -17,7 +17,7 @@ export function NavButtons({ onBack, onNext, canNext = true, nextLabel, isFinal 
     <div className="flex gap-3 pt-2">
       <button
         onClick={onBack}
-        className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-slate-700/60 text-slate-400 hover:text-white hover:border-slate-500 text-sm font-medium transition-colors"
+        className="flex items-center justify-center gap-1 min-w-[88px] px-4 py-3 rounded-xl border border-slate-700/60 text-slate-400 hover:text-white hover:border-slate-500 text-sm font-medium transition-colors"
       >
         <ChevronLeft size={15} strokeWidth={2} />
         {t('common.back')}
@@ -25,7 +25,7 @@ export function NavButtons({ onBack, onNext, canNext = true, nextLabel, isFinal 
       <button
         onClick={onNext}
         disabled={!canNext}
-        className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all disabled:opacity-40 disabled:cursor-not-allowed ${
+        className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-semibold transition-all disabled:opacity-40 disabled:cursor-not-allowed ${
           isFinal
             ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-500/20'
             : 'bg-sky-600 hover:bg-sky-500 text-white'

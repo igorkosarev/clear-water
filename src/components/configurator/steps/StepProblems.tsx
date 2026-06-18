@@ -136,7 +136,7 @@ export function StepProblems({ data, update, onNext, onBack }: StepProps) {
     return (
       <div className="space-y-5">
         <div>
-          <h2 className="text-2xl font-bold text-white">{t('configurator.steps.problems.symptomsTitle')}</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-white">{t('configurator.steps.problems.symptomsTitle')}</h2>
           <p className="text-slate-400 text-sm mt-1">{t('configurator.steps.problems.symptomsDescription')}</p>
         </div>
         <div className="grid grid-cols-2 gap-2.5">
@@ -148,7 +148,7 @@ export function StepProblems({ data, update, onNext, onBack }: StepProps) {
                 key={s.key}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
-                className={`relative p-3 rounded-xl border text-left flex items-center gap-3 transition-colors ${
+                className={`relative p-3 rounded-xl border text-left flex flex-col gap-2 transition-colors ${
                   active
                     ? 'border-sky-500 bg-sky-500/10 text-white'
                     : 'border-slate-700/60 bg-slate-800/40 text-slate-300 hover:border-slate-600 hover:bg-slate-800/70'
@@ -180,7 +180,7 @@ export function StepProblems({ data, update, onNext, onBack }: StepProps) {
   return (
     <div className="space-y-4">
       <div>
-        <h2 className="text-2xl font-bold text-white">{t('configurator.steps.problems.refineTitle')}</h2>
+        <h2 className="text-xl sm:text-2xl font-bold text-white">{t('configurator.steps.problems.refineTitle')}</h2>
         <p className="text-slate-400 text-sm mt-1">{t('configurator.steps.problems.refineDescription')}</p>
       </div>
 
@@ -205,7 +205,7 @@ export function StepProblems({ data, update, onNext, onBack }: StepProps) {
       </div>
 
       {/* List area */}
-      <div className="rounded-xl border border-slate-800 bg-slate-900 overflow-hidden max-h-72 overflow-y-auto">
+      <div className="rounded-xl border border-slate-800 bg-slate-900 overflow-hidden max-h-[42vh] sm:max-h-72 overflow-y-auto">
         {isSearching ? (
           searchResults.length > 0 ? (
             <div className="divide-y divide-slate-800/60">

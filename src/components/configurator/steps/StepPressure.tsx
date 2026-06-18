@@ -14,7 +14,7 @@ interface StepPressureProps {
   data: Partial<Omit<WaterInput, 'country'>>
   update: (patch: Partial<WaterInput>) => void
   onBack: () => void
-  onFinish: () => void
+  onNext: () => void
   previewModules: PreviewModule[]
 }
 
@@ -88,7 +88,7 @@ function getDefaultIndex(source: WaterSourceType | undefined, thresholds: number
   return thresholds.length
 }
 
-export function StepPressure({ data, update, onBack, onFinish, previewModules }: StepPressureProps) {
+export function StepPressure({ data, update, onBack, onNext, previewModules }: StepPressureProps) {
   const { t } = useTranslation()
   const { options, thresholds } = buildOptions(previewModules)
   const defaultIndex = getDefaultIndex(data.source, thresholds)
@@ -155,10 +155,10 @@ export function StepPressure({ data, update, onBack, onFinish, previewModules }:
       <div className="flex gap-3 pt-2">
         <Button variant="dark-secondary" onClick={onBack} className="flex-1">{t('common.back')}</Button>
         <button
-          onClick={onFinish}
+          onClick={onNext}
           className="flex-1 inline-flex items-center justify-center font-semibold rounded-lg transition-colors px-4 py-2 text-sm bg-sky-600 hover:bg-sky-500 text-white"
         >
-          {t('configurator.getResults')}
+          {t('common.next')}
         </button>
       </div>
     </div>

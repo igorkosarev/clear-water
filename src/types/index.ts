@@ -87,7 +87,6 @@ export interface WaterInput {
   source: WaterSourceType
   contaminants: ContaminantId[]
   use: WaterUseType
-  budget: BudgetTier
   inletPressureBar: number
   preference: OptimizationPreference
 }

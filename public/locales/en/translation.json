@@ -82,6 +82,10 @@
         "title": "What is your inlet pressure?",
         "description": "Your recommended system has pressure requirements. Select the range that matches your water supply.",
         "noRequirements": "Good news — your recommended system has no special pressure requirements. It works with gravity or any flow."
+      },
+      "preference": {
+        "title": "One last thing",
+        "description": "How should we prioritise your system?"
       }
     },
     "pressure": {

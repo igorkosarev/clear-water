@@ -3,15 +3,16 @@ import { useTranslation } from 'react-i18next'
 import { StepWaterSource } from './steps/StepWaterSource'
 import { StepProblems } from './steps/StepProblems'
 import { StepUse } from './steps/StepUse'
-import { StepBudget } from './steps/StepBudget'
 import { StepPressure } from './steps/StepPressure'
 import type { PreviewModule } from './steps/StepPressure'
+import { StepPreference } from './steps/StepPreference'
 import { runSimulation } from '@/engine/simulation'
 import { useCountry } from '@/context/CountryContext'
 import modulesData from '@/data/modules.json'
 import type { WaterInput } from '@/types'
 
-const STEPS = ['source', 'problems', 'use', 'budget', 'pressure'] as const
+// Source → Problems → Use → Pressure → Preference
+const STEPS = ['source', 'problems', 'use', 'pressure', 'preference'] as const
 
 interface WizardProps {
   onComplete: (input: WaterInput) => void
@@ -33,18 +34,19 @@ export function Wizard({ onComplete, onBack }: WizardProps) {
     setStep(s => Math.max(s - 1, 0))
   }
 
-  const advanceFromBudget = () => {
-    if (!data.source || !data.contaminants || !data.use || !data.budget) return
+  // Compute pressure-requirement preview when advancing from Use → Pressure.
+  // Run all tiers with unlimited pressure to get the highest-coverage module list.
+  const advanceFromUse = () => {
+    if (!data.source || !data.contaminants || !data.use) return
     const result = runSimulation({
       country: country ?? '',
       source: data.source,
       contaminants: data.contaminants,
       use: data.use,
-      budget: data.budget,
-      inletPressureBar: 100, // assume ample pressure to get the target module list
+      inletPressureBar: 100,
       preference: data.preference ?? 'cost',
     })
-    const primaryTier = result.tiers.find(t => t.budget === data.budget) ?? result.tiers[0]
+    const primaryTier = result.tiers.find(t => t.budget === result.primaryBudget) ?? result.tiers[0]
     const topModuleIds = primaryTier?.modules.filter(id => id !== 'booster_pump') ?? []
     const mods: PreviewModule[] = topModuleIds
       .map(id => {
@@ -56,6 +58,24 @@ export function Wizard({ onComplete, onBack }: WizardProps) {
       .filter((m): m is PreviewModule => m !== null)
     setPreviewModules(mods)
     next()
+  }
+
+  const finish = () => {
+    if (
+      data.source &&
+      data.contaminants &&
+      data.use &&
+      data.inletPressureBar !== undefined
+    ) {
+      onComplete({
+        country: country ?? '',
+        source: data.source,
+        contaminants: data.contaminants,
+        use: data.use,
+        inletPressureBar: data.inletPressureBar,
+        preference: data.preference ?? 'cost',
+      })
+    }
   }
 
   const stepProps = { data, update, onNext: next, onBack: back }
@@ -77,33 +97,22 @@ export function Wizard({ onComplete, onBack }: WizardProps) {
 
       {step === 0 && <StepWaterSource {...stepProps} />}
       {step === 1 && <StepProblems {...stepProps} />}
-      {step === 2 && <StepUse {...stepProps} />}
-      {step === 3 && <StepBudget {...stepProps} onNext={advanceFromBudget} />}
-      {step === 4 && (
+      {step === 2 && <StepUse {...stepProps} onNext={advanceFromUse} />}
+      {step === 3 && (
         <StepPressure
           data={data}
           update={update}
           onBack={back}
+          onNext={next}
           previewModules={previewModules}
-          onFinish={() => {
-            if (
-              data.source &&
-              data.contaminants &&
-              data.use &&
-              data.budget &&
-              data.inletPressureBar !== undefined
-            ) {
-              onComplete({
-                country: country ?? '',
-                source: data.source,
-                contaminants: data.contaminants,
-                use: data.use,
-                budget: data.budget,
-                inletPressureBar: data.inletPressureBar,
-                preference: data.preference ?? 'cost',
-              })
-            }
-          }}
+        />
+      )}
+      {step === 4 && (
+        <StepPreference
+          data={data}
+          update={update}
+          onBack={back}
+          onNext={finish}
         />
       )}
     </div>

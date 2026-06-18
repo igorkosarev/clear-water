@@ -8,6 +8,15 @@ import type {
   OptimizationPreference,
   FilterType,
 } from '@/types'
+
+function pickPrimaryBudget(tiers: TierResult[]): BudgetTier {
+  const best = [...tiers].sort((a, b) => {
+    if (b.removedContaminants.length !== a.removedContaminants.length)
+      return b.removedContaminants.length - a.removedContaminants.length
+    return a.estimatedCostUSD - b.estimatedCostUSD
+  })[0]
+  return best?.budget ?? 'medium'
+}
 import modulesData from '@/data/modules.json'
 
 type RawModule = {
@@ -216,5 +225,5 @@ export function runSimulation(input: WaterInput): GreedySimulationResult {
     ),
   )
 
-  return { tiers, primaryBudget: input.budget }
+  return { tiers, primaryBudget: pickPrimaryBudget(tiers) }
 }

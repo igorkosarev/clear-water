@@ -139,7 +139,22 @@
     "intro": {
       "title": "Find Your Water Solution",
       "description": "Answer a few questions about your water source and problems — we'll recommend the right filtration system for you.",
-      "cta": "Start"
+      "cta": "Start",
+      "stepsLabel": "5 quick questions"
+    },
+    "progress": {
+      "source":     "Water source",
+      "problems":   "Your problems",
+      "use":        "Intended use",
+      "pressure":   "Inlet pressure",
+      "preference": "Optimise for"
+    },
+    "progressHint": {
+      "source":     "Tap, well, river…",
+      "problems":   "Rust, odour, bacteria…",
+      "use":        "Drinking, irrigation…",
+      "pressure":   "Pressure check",
+      "preference": "Cost vs. coverage"
     },
     "symptoms": {
       "turbid": "Cloudy or has sediment",

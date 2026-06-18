@@ -11,7 +11,7 @@
   },
   "well": {
     "inferredContaminants": [],
-    "riskFactors": ["nitrates", "arsenic", "iron", "manganese", "hardness", "bacteria"],
+    "riskFactors": ["nitrates", "arsenic", "iron", "manganese", "hardness", "bacteria", "salinity"],
     "advisories": ["water_testing"]
   },
   "spring": {
@@ -20,13 +20,13 @@
     "advisories": []
   },
   "rain": {
-    "inferredContaminants": ["bacteria"],
+    "inferredContaminants": ["bacteria", "sediment"],
     "riskFactors": ["turbidity", "pesticides"],
     "advisories": []
   },
   "tap": {
     "inferredContaminants": ["chlorine"],
-    "riskFactors": ["disinfection_byproducts", "lead"],
+    "riskFactors": ["disinfection_byproducts", "lead", "chloramines"],
     "advisories": []
   }
 }

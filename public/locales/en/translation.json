@@ -86,6 +86,21 @@
       "preference": {
         "title": "One last thing",
         "description": "How should we prioritise your system?"
+      },
+      "testing": {
+        "title": "Has your water been tested?",
+        "description": "This helps us calibrate how confident we are in the recommendation."
+      },
+      "scope": {
+        "title": "What type of installation?",
+        "description": "Select the setup that fits your situation. You can skip this step.",
+        "skip": "Skip — no preference"
+      },
+      "advanced": {
+        "title": "Select contaminants",
+        "description": "Choose the contaminants present in your water and indicate whether each is confirmed by testing.",
+        "searchPlaceholder": "Search contaminants...",
+        "selectedCount": "{{count}} contaminant(s) selected"
       }
     },
     "pressure": {
@@ -108,7 +123,10 @@
       "drinking": "Drinking",
       "cooking": "Cooking",
       "irrigation": "Irrigation",
-      "livestock": "Livestock"
+      "livestock": "Livestock",
+      "whole_house": "Whole House",
+      "shower_bathing": "Shower / Bathing",
+      "emergency_survival": "Emergency"
     },
     "budget": {
       "low": {
@@ -140,20 +158,22 @@
       "title": "Find Your Water Solution",
       "description": "Answer a few questions about your water source and problems — we'll recommend the right filtration system for you.",
       "cta": "Start",
-      "stepsLabel": "5 quick questions"
+      "stepsLabel": "7 quick questions"
     },
     "progress": {
-      "source":     "Water source",
-      "problems":   "Your problems",
-      "use":        "Intended use",
-      "pressure":   "Inlet pressure",
-      "preference": "Optimise for"
+      "source": "Water source",
+      "problems": "Your problems",
+      "use": "Intended use",
+      "pressure": "Inlet pressure",
+      "preference": "Optimise for",
+      "testing": "Water testing",
+      "scope": "Installation type"
     },
     "progressHint": {
-      "source":     "Tap, well, river…",
-      "problems":   "Rust, odour, bacteria…",
-      "use":        "Drinking, irrigation…",
-      "pressure":   "Pressure check",
+      "source": "Tap, well, river…",
+      "problems": "Rust, odour, bacteria…",
+      "use": "Drinking, irrigation…",
+      "pressure": "Pressure check",
       "preference": "Cost vs. coverage"
     },
     "symptoms": {
@@ -165,6 +185,39 @@
       "hardness": "Hard water / limescale",
       "radiological": "Radiological risk",
       "unknown": "I don't know — show everything"
+    },
+    "testing": {
+      "laboratory": {
+        "label": "Laboratory analysis",
+        "description": "Official lab results available"
+      },
+      "home_kit": {
+        "label": "Home test kit",
+        "description": "Used a basic test strip or kit"
+      },
+      "none": {
+        "label": "No testing done",
+        "description": "Going by symptoms and source"
+      },
+      "unknown": {
+        "label": "Not sure",
+        "description": "I don't know if tests were done"
+      }
+    },
+    "scope": {
+      "portable": "Portable",
+      "countertop": "Countertop",
+      "under_sink": "Under Sink",
+      "whole_house": "Whole House",
+      "emergency": "Emergency Kit"
+    },
+    "advancedMode": "Advanced: select contaminants directly",
+    "simpleMode": "Back to simple mode",
+    "categories": {
+      "biological": "Biological",
+      "chemical": "Chemical",
+      "physical": "Physical",
+      "radiological": "Radiological"
     }
   },
   "result": {
@@ -240,6 +293,12 @@
         "booster_pump": "Booster Pump",
         "sediment_filtration": "Sediment Filtration"
       }
+    },
+    "fallback": {
+      "limitedData": "Limited data — recommendations may not reflect your actual water quality.",
+      "incompleteAddressing": "Some contaminants cannot be addressed within the selected budget and scope.",
+      "drinkingWaterWarning": "Insufficient data for drinking water recommendation.",
+      "testBeforeInstall": "Have your water tested before installation to confirm actual contaminant levels."
     }
   },
   "learn": {

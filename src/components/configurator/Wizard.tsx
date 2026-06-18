@@ -1,10 +1,13 @@
 import { useState, useRef, Fragment } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Check } from 'lucide-react'
+import { Check, Microscope } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { StepWaterSource } from './steps/StepWaterSource'
+import { StepTestingStatus } from './steps/StepTestingStatus'
 import { StepProblems } from './steps/StepProblems'
+import { StepAdvancedContaminants } from './steps/StepAdvancedContaminants'
 import { StepUse } from './steps/StepUse'
+import { StepScope } from './steps/StepScope'
 import { StepPressure } from './steps/StepPressure'
 import type { PreviewModule } from './steps/StepPressure'
 import { StepPreference } from './steps/StepPreference'
@@ -13,11 +16,14 @@ import { useCountry } from '@/context/CountryContext'
 import modulesData from '@/data/modules.json'
 import type { WaterInput } from '@/types'
 
-const STEPS = ['source', 'problems', 'use', 'pressure', 'preference'] as const
+// 0:source  1:testing  2:problems/advanced  3:use  4:scope  5:pressure  6:preference
+const STEPS = ['source', 'testing', 'problems', 'use', 'scope', 'pressure', 'preference'] as const
 const STEP_KEYS = [
   'configurator.progress.source',
+  'configurator.progress.testing',
   'configurator.progress.problems',
   'configurator.progress.use',
+  'configurator.progress.scope',
   'configurator.progress.pressure',
   'configurator.progress.preference',
 ]
@@ -38,6 +44,7 @@ export function Wizard({ onComplete, onBack }: WizardProps) {
   const { country } = useCountry()
   const [step, setStep] = useState(0)
   const [direction, setDirection] = useState(1)
+  const [wizardMode, setWizardMode] = useState<'simple' | 'advanced'>('simple')
   const [data, setData] = useState<Partial<WaterInput>>({ preference: 'cost' })
   const [previewModules, setPreviewModules] = useState<PreviewModule[]>([])
   const dataRef = useRef(data)
@@ -52,14 +59,29 @@ export function Wizard({ onComplete, onBack }: WizardProps) {
     setStep(s => Math.max(s - 1, 0))
   }
 
+  const switchMode = (mode: 'simple' | 'advanced') => {
+    setWizardMode(mode)
+    if (mode === 'simple') {
+      // Clear advanced-mode entries when switching back
+      update({ contaminantEntries: undefined })
+    } else {
+      // Clear simple-mode contaminants when switching to advanced
+      update({ contaminants: [] })
+    }
+  }
+
   const advanceFromUse = () => {
     const d = dataRef.current
-    if (!d.source || !d.contaminants || !d.use) return
+    if (!d.source || !d.use) return
+    const contaminants = d.contaminants ?? []
     const result = runSimulation({
       country: country ?? '',
       source: d.source,
-      contaminants: d.contaminants,
+      contaminants,
+      contaminantEntries: d.contaminantEntries,
       use: d.use,
+      testingStatus: d.testingStatus,
+      scope: d.scope,
       inletPressureBar: 100,
       preference: d.preference ?? 'cost',
     })
@@ -78,16 +100,25 @@ export function Wizard({ onComplete, onBack }: WizardProps) {
   }
 
   const finish = () => {
-    if (data.source && data.contaminants && data.use && data.inletPressureBar !== undefined) {
-      onComplete({
-        country: country ?? '',
-        source: data.source,
-        contaminants: data.contaminants,
-        use: data.use,
-        inletPressureBar: data.inletPressureBar,
-        preference: data.preference ?? 'cost',
-      })
-    }
+    const d = dataRef.current
+    if (!d.source || !d.use || d.inletPressureBar === undefined) return
+
+    // Advanced mode: contaminants from entries; Simple mode: contaminants from wizard
+    const contaminants = d.contaminantEntries
+      ? d.contaminantEntries.map(e => e.id)
+      : (d.contaminants ?? [])
+
+    onComplete({
+      country: country ?? '',
+      source: d.source,
+      contaminants,
+      contaminantEntries: d.contaminantEntries,
+      use: d.use,
+      testingStatus: d.testingStatus,
+      scope: d.scope,
+      inletPressureBar: d.inletPressureBar,
+      preference: d.preference ?? 'cost',
+    })
   }
 
   const stepProps = { data, update, onNext: next, onBack: back }
@@ -97,7 +128,6 @@ export function Wizard({ onComplete, onBack }: WizardProps) {
 
       {/* ── Progress ── */}
       <div className="mb-8">
-        {/* Step label */}
         <div className="flex items-center justify-between mb-4">
           <span className="text-xs font-semibold text-slate-500 uppercase tracking-widest">
             {t('configurator.step', { current: step + 1, total: STEPS.length })}
@@ -107,7 +137,6 @@ export function Wizard({ onComplete, onBack }: WizardProps) {
           </span>
         </div>
 
-        {/* Step dots */}
         <div className="flex items-center">
           {STEPS.map((_, i) => (
             <Fragment key={i}>
@@ -135,7 +164,7 @@ export function Wizard({ onComplete, onBack }: WizardProps) {
       {/* ── Step content ── */}
       <AnimatePresence mode="wait" custom={direction}>
         <motion.div
-          key={step}
+          key={`${step}-${wizardMode}`}
           custom={direction}
           variants={slideVariants}
           initial="enter"
@@ -143,9 +172,39 @@ export function Wizard({ onComplete, onBack }: WizardProps) {
           exit="exit"
         >
           {step === 0 && <StepWaterSource {...stepProps} />}
-          {step === 1 && <StepProblems {...stepProps} />}
-          {step === 2 && <StepUse {...stepProps} onNext={advanceFromUse} />}
-          {step === 3 && (
+          {step === 1 && <StepTestingStatus {...stepProps} />}
+          {step === 2 && wizardMode === 'simple' && (
+            <div className="space-y-4">
+              {/* Advanced mode toggle */}
+              <div className="flex justify-end">
+                <button
+                  onClick={() => switchMode('advanced')}
+                  className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-sky-400 transition-colors px-2 py-1 rounded-lg border border-slate-800 hover:border-sky-500/40"
+                >
+                  <Microscope size={12} />
+                  {t('configurator.advancedMode')}
+                </button>
+              </div>
+              <StepProblems data={data} update={update} onNext={next} onBack={back} />
+            </div>
+          )}
+          {step === 2 && wizardMode === 'advanced' && (
+            <div className="space-y-4">
+              {/* Simple mode toggle */}
+              <div className="flex justify-end">
+                <button
+                  onClick={() => switchMode('simple')}
+                  className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-sky-400 transition-colors px-2 py-1 rounded-lg border border-slate-800 hover:border-sky-500/40"
+                >
+                  {t('configurator.simpleMode')}
+                </button>
+              </div>
+              <StepAdvancedContaminants data={data} update={update} onNext={next} onBack={back} />
+            </div>
+          )}
+          {step === 3 && <StepUse {...stepProps} onNext={advanceFromUse} />}
+          {step === 4 && <StepScope {...stepProps} onNext={next} />}
+          {step === 5 && (
             <StepPressure
               data={data}
               update={update}
@@ -154,7 +213,7 @@ export function Wizard({ onComplete, onBack }: WizardProps) {
               previewModules={previewModules}
             />
           )}
-          {step === 4 && (
+          {step === 6 && (
             <StepPreference
               data={data}
               update={update}

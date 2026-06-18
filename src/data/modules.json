@@ -8,7 +8,8 @@
     "costUSD": 8,
     "diyDifficulty": "easy",
     "materials": ["polypropylene cartridge", "housing"],
-    "minPressureBar": 0.2
+    "minPressureBar": 0.2,
+    "scopeTags": ["countertop", "under_sink", "whole_house"]
   },
   {
     "id": "activated_carbon_block",
@@ -19,7 +20,8 @@
     "costUSD": 15,
     "diyDifficulty": "easy",
     "materials": ["carbon block cartridge", "housing"],
-    "minPressureBar": 0.2
+    "minPressureBar": 0.2,
+    "scopeTags": ["countertop", "under_sink", "whole_house"]
   },
   {
     "id": "ceramic_candle",
@@ -30,7 +32,8 @@
     "costUSD": 20,
     "diyDifficulty": "easy",
     "materials": ["ceramic candle", "bucket", "spigot"],
-    "minPressureBar": 0.0
+    "minPressureBar": 0.0,
+    "scopeTags": ["portable", "countertop", "emergency"]
   },
   {
     "id": "biosand_diy",
@@ -41,7 +44,8 @@
     "costUSD": 35,
     "diyDifficulty": "medium",
     "materials": ["concrete or plastic container", "sand", "gravel", "pipe"],
-    "minPressureBar": 0.0
+    "minPressureBar": 0.0,
+    "scopeTags": ["portable", "emergency"]
   },
   {
     "id": "uv_lamp_6w",
@@ -52,7 +56,8 @@
     "costUSD": 45,
     "diyDifficulty": "medium",
     "materials": ["UV lamp", "quartz sleeve", "stainless steel chamber", "power supply"],
-    "minPressureBar": 0.3
+    "minPressureBar": 0.3,
+    "scopeTags": ["countertop", "under_sink", "whole_house"]
   },
   {
     "id": "ro_membrane_75gpd",
@@ -71,7 +76,8 @@
     "costUSD": 120,
     "diyDifficulty": "hard",
     "materials": ["RO membrane", "pressure vessel", "check valves", "storage tank"],
-    "minPressureBar": 3.5
+    "minPressureBar": 3.5,
+    "scopeTags": ["under_sink"]
   },
   {
     "id": "slow_sand_diy",
@@ -82,7 +88,8 @@
     "costUSD": 50,
     "diyDifficulty": "medium",
     "materials": ["large container", "fine sand", "gravel", "drainage pipe"],
-    "minPressureBar": 0.0
+    "minPressureBar": 0.0,
+    "scopeTags": ["portable", "emergency"]
   },
   {
     "id": "chlorine_tablet",
@@ -93,7 +100,8 @@
     "costUSD": 5,
     "diyDifficulty": "easy",
     "materials": ["sodium dichloroisocyanurate tablets"],
-    "minPressureBar": 0.0
+    "minPressureBar": 0.0,
+    "scopeTags": ["portable", "emergency"]
   },
   {
     "id": "booster_pump",

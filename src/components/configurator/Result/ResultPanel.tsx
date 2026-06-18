@@ -6,6 +6,7 @@ import { SystemDiagram } from './SystemDiagram'
 import { BOMTable } from './BOMTable'
 import { RemainingBadges } from './RemainingBadges'
 import { RecommendationExplainer } from './RecommendationExplainer'
+import { FallbackBanner } from './FallbackBanner'
 import type { GreedySimulationResult, TierResult, BudgetTier, WaterInput } from '@/types'
 import modulesData from '@/data/modules.json'
 
@@ -169,6 +170,20 @@ export function ResultPanel({ result, input, onRestart }: ResultPanelProps) {
       >
         <h2 className="text-2xl font-bold text-white mb-1">{t('result.title')}</h2>
         <p className="text-slate-400 text-sm">{t('result.subtitle')}</p>
+      </motion.div>
+
+      {/* Fallback banner */}
+      <motion.div
+        key={`fallback-${activeBudget}`}
+        initial={{ opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        <FallbackBanner
+          confidence={primary.confidence}
+          use={input.use}
+          advisories={result.advisories}
+        />
       </motion.div>
 
       {/* Primary card */}

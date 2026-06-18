@@ -13,7 +13,33 @@ export type WaterSourceType =
   | 'pond'
   | 'spring'
 
-export type WaterUseType = 'drinking' | 'cooking' | 'irrigation' | 'livestock'
+export type WaterUseType =
+  | 'drinking'
+  | 'cooking'
+  | 'whole_house'
+  | 'shower_bathing'
+  | 'emergency_survival'
+  | 'irrigation'
+  | 'livestock'
+
+// ─── Water testing status (REQ-26) ───────────────────────────────────────────
+
+export type TestingStatus = 'none' | 'home_kit' | 'laboratory' | 'unknown'
+
+// ─── Contaminant certainty (REQ-27) ──────────────────────────────────────────
+
+export type ContaminantStatus = 'confirmed' | 'suspected' | 'inferred'
+export type ContaminantSeverity = 'low' | 'medium' | 'high' | 'unknown'
+
+export interface ContaminantEntry {
+  id: ContaminantId
+  status: ContaminantStatus
+  severity?: ContaminantSeverity
+}
+
+// ─── Treatment scope (REQ-30) ─────────────────────────────────────────────────
+
+export type TreatmentScope = 'portable' | 'countertop' | 'under_sink' | 'whole_house' | 'emergency'
 
 export interface Contaminant {
   id: ContaminantId
@@ -55,6 +81,7 @@ export interface Module {
   diyDifficulty: 'easy' | 'medium' | 'hard'
   materials: string[]
   minPressureBar: number
+  scopeTags?: TreatmentScope[]
 }
 
 export interface SystemTemplate {
@@ -86,7 +113,10 @@ export interface WaterInput {
   country: string
   source: WaterSourceType
   contaminants: ContaminantId[]
+  contaminantEntries?: ContaminantEntry[]
   use: WaterUseType
+  testingStatus?: TestingStatus
+  scope?: TreatmentScope
   inletPressureBar: number
   preference: OptimizationPreference
 }

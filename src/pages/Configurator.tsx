@@ -35,8 +35,10 @@ const HERO_PARTICLES = [
 
 const STEPS = [
   { Icon: Waves,       color: '#38bdf8', key: 'source'     },
+  { Icon: ShieldAlert, color: '#f43f5e', key: 'testing'    },
   { Icon: ShieldAlert, color: '#f43f5e', key: 'problems'   },
   { Icon: Utensils,    color: '#a78bfa', key: 'use'        },
+  { Icon: Gauge,       color: '#fb923c', key: 'scope'      },
   { Icon: Gauge,       color: '#fb923c', key: 'pressure'   },
   { Icon: DollarSign,  color: '#10b981', key: 'preference' },
 ]

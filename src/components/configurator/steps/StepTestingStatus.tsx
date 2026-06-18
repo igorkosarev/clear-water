@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { Droplet, Utensils, Sprout, PawPrint, Home, ShowerHead, Zap, Check } from 'lucide-react'
+import { FlaskConical, TestTube, HelpCircle, X, Check } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
-import type { WaterInput, WaterUseType } from '@/types'
+import type { WaterInput, TestingStatus } from '@/types'
 import { NavButtons } from './NavButtons'
 
 interface StepProps {
@@ -12,32 +12,35 @@ interface StepProps {
   onBack: () => void
 }
 
-const USES: { id: WaterUseType; Icon: LucideIcon; color: string }[] = [
-  { id: 'drinking',          Icon: Droplet,    color: '#38bdf8' },
-  { id: 'cooking',           Icon: Utensils,   color: '#a78bfa' },
-  { id: 'whole_house',       Icon: Home,       color: '#f59e0b' },
-  { id: 'shower_bathing',    Icon: ShowerHead, color: '#10b981' },
-  { id: 'emergency_survival',Icon: Zap,        color: '#f43f5e' },
-  { id: 'irrigation',        Icon: Sprout,     color: '#84cc16' },
-  { id: 'livestock',         Icon: PawPrint,   color: '#94a3b8' },
+const OPTIONS: { id: TestingStatus; Icon: LucideIcon; color: string }[] = [
+  { id: 'laboratory', Icon: FlaskConical, color: '#10b981' },
+  { id: 'home_kit',   Icon: TestTube,    color: '#38bdf8' },
+  { id: 'none',       Icon: X,           color: '#f59e0b' },
+  { id: 'unknown',    Icon: HelpCircle,  color: '#64748b' },
 ]
 
-export function StepUse({ data, update, onNext, onBack }: StepProps) {
+export function StepTestingStatus({ data, update, onNext, onBack }: StepProps) {
   const { t } = useTranslation()
 
-  const handleSelect = (id: WaterUseType) => {
-    update({ use: id })
+  const handleSelect = (id: TestingStatus) => {
+    update({ testingStatus: id })
     setTimeout(onNext, 180)
   }
 
   return (
     <div className="space-y-5">
       <div>
-        <h2 className="text-xl sm:text-2xl font-bold text-white">{t('configurator.steps.use.title')}</h2>
+        <h2 className="text-xl sm:text-2xl font-bold text-white">
+          {t('configurator.steps.testing.title')}
+        </h2>
+        <p className="text-slate-400 text-sm mt-1">
+          {t('configurator.steps.testing.description')}
+        </p>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
-        {USES.map(({ id, Icon, color }) => {
-          const selected = data.use === id
+
+      <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
+        {OPTIONS.map(({ id, Icon, color }) => {
+          const selected = data.testingStatus === id
           return (
             <motion.button
               key={id}
@@ -66,12 +69,20 @@ export function StepUse({ data, update, onNext, onBack }: StepProps) {
                   strokeWidth={1.5}
                 />
               </div>
-              <span className="font-medium text-sm sm:text-base">{t(`configurator.uses.${id}`)}</span>
+              <div>
+                <span className="font-medium text-sm sm:text-base block pr-4">
+                  {t(`configurator.testing.${id}.label`)}
+                </span>
+                <span className="text-xs text-slate-500 leading-snug block mt-0.5">
+                  {t(`configurator.testing.${id}.description`)}
+                </span>
+              </div>
             </motion.button>
           )
         })}
       </div>
-      <NavButtons onBack={onBack} onNext={onNext} canNext={!!data.use} />
+
+      <NavButtons onBack={onBack} onNext={onNext} canNext={!!data.testingStatus} />
     </div>
   )
 }

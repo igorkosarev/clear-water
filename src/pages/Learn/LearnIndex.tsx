@@ -172,8 +172,8 @@ export default function LearnIndex() {
           }}
         />
 
-        <div className="relative z-10 max-w-5xl mx-auto px-6 py-16">
-          <div className="grid md:grid-cols-3 gap-6">
+        <div className="relative z-10 max-w-5xl mx-auto px-6 py-10 md:py-16">
+          <div className="grid md:grid-cols-3 gap-4 md:gap-6">
             {CARDS.map((card, i) => (
               <motion.div
                 key={card.to}
@@ -247,9 +247,9 @@ export default function LearnIndex() {
                     ))}
 
                     {/* Card content */}
-                    <div className="relative z-10 p-6 flex flex-col h-full min-h-[260px]">
+                    <div className="relative z-10 p-5 md:p-6 flex flex-col h-full md:min-h-[260px]">
                       {/* Icon + stat row */}
-                      <div className="flex items-start justify-between mb-5">
+                      <div className="flex items-start justify-between mb-4 md:mb-5">
                         <div
                           className="flex items-center justify-center w-12 h-12 rounded-xl"
                           style={{ backgroundColor: `${card.color}22`, color: card.color }}
@@ -281,7 +281,7 @@ export default function LearnIndex() {
 
                       {/* CTA */}
                       <div
-                        className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
+                        className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
                         style={{ color: card.color }}
                       >
                         {t('common.learnMore', { defaultValue: 'Explore' })}

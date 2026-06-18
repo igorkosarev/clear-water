@@ -157,7 +157,7 @@ export function ResultPanel({ result, onRestart }: ResultPanelProps) {
       : t('result.coverage', { removed, total })
 
   return (
-    <div className="max-w-xl mx-auto px-4 py-10 space-y-8">
+    <div className="max-w-xl mx-auto px-4 py-6 sm:py-10 space-y-8">
 
       {/* Header */}
       <motion.div

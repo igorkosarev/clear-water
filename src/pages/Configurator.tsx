@@ -1,7 +1,7 @@
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  Droplets, Waves, ShieldAlert, Utensils, Gauge, DollarSign, ArrowRight, ChevronRight,
+  Droplets, Waves, ShieldAlert, Utensils, Gauge, DollarSign, ArrowRight,
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Wizard } from '@/components/configurator/Wizard'
@@ -144,7 +144,7 @@ export default function Configurator() {
 
             {/* Steps strip */}
             <section className="border-t border-slate-800/60 bg-slate-900/40">
-              <div className="max-w-3xl mx-auto px-6 py-12">
+              <div className="max-w-4xl mx-auto px-6 py-12">
                 <motion.p
                   className="text-xs font-semibold text-slate-500 uppercase tracking-widest text-center mb-8"
                   initial={{ opacity: 0 }}
@@ -155,55 +155,70 @@ export default function Configurator() {
                   {t('configurator.intro.stepsLabel')}
                 </motion.p>
 
-                <div className="flex flex-col sm:flex-row sm:items-stretch gap-3 sm:gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-5 gap-3">
                   {STEPS.map(({ Icon, color, key }, i) => (
-                    <Fragment key={key}>
-                      <motion.div
-                        className="flex sm:flex-col items-center sm:items-center gap-4 sm:gap-3 flex-1 sm:text-center"
-                        initial={{ opacity: 0, y: 12 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.45, delay: i * 0.08 }}
-                      >
-                        {/* Icon + number */}
-                        <div className="relative flex-shrink-0">
-                          <div
-                            className="w-12 h-12 rounded-2xl flex items-center justify-center"
-                            style={{ backgroundColor: `${color}1a`, boxShadow: `0 0 0 1px ${color}30` }}
-                          >
-                            <Icon size={21} strokeWidth={1.5} style={{ color }} />
-                          </div>
-                          <span
-                            className="absolute -top-1.5 -right-1.5 w-4.5 h-4.5 rounded-full text-[9px] font-bold flex items-center justify-center leading-none"
-                            style={{ backgroundColor: `${color}22`, color, border: `1px solid ${color}44`, width: 18, height: 18 }}
-                          >
-                            {i + 1}
-                          </span>
-                        </div>
+                    <motion.div
+                      key={key}
+                      className="group relative rounded-2xl overflow-hidden border border-slate-700/50"
+                      initial={{ opacity: 0, y: 12 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.45, delay: i * 0.08 }}
+                      whileHover={{ scale: 1.02, borderColor: `${color}55`, transition: { duration: 0.22 } }}
+                    >
+                      {/* Base */}
+                      <div className="absolute inset-0 bg-slate-900" />
 
-                        {/* Labels */}
-                        <div className="sm:px-1">
-                          <div className="text-sm font-semibold text-slate-200 leading-snug">
-                            {t(`configurator.progress.${key}`)}
-                          </div>
-                          <div className="text-xs text-slate-500 mt-0.5 leading-snug">
-                            {t(`configurator.progressHint.${key}`)}
-                          </div>
-                        </div>
+                      {/* Animated color wash */}
+                      <motion.div
+                        className="absolute inset-0 pointer-events-none"
+                        animate={{ opacity: [0.6, 1, 0.6] }}
+                        transition={{ duration: 5 + i * 1.2, repeat: Infinity, ease: 'easeInOut' as const }}
+                        style={{
+                          background: `radial-gradient(ellipse at 70% 25%, ${color}28 0%, ${color}0c 45%, transparent 70%)`,
+                        }}
+                      />
+
+                      {/* Hover glow */}
+                      <div
+                        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        style={{ background: `radial-gradient(ellipse at 50% 50%, ${color}14 0%, transparent 60%)` }}
+                      />
+
+                      {/* Watermark icon */}
+                      <motion.div
+                        className="absolute right-[-6px] top-[-6px] pointer-events-none"
+                        style={{ color, opacity: 0.06 }}
+                        animate={{ scale: [1, 1.07, 1] }}
+                        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' as const }}
+                      >
+                        <Icon size={80} strokeWidth={0.7} />
                       </motion.div>
 
-                      {/* Connector */}
-                      {i < STEPS.length - 1 && (
-                        <>
-                          <div className="flex sm:hidden items-center pl-[22px] py-0.5">
-                            <div className="w-px h-4 bg-gradient-to-b from-slate-700 to-transparent" />
+                      {/* Content */}
+                      <div className="relative z-10 p-4 sm:p-3 flex flex-col gap-3">
+                        <div className="flex items-start justify-between">
+                          <div
+                            className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                            style={{ backgroundColor: `${color}22`, color }}
+                          >
+                            <Icon size={18} strokeWidth={1.5} />
                           </div>
-                          <div className="hidden sm:flex items-center flex-shrink-0 pb-6">
-                            <ChevronRight size={13} className="text-slate-700" />
+                          <div
+                            className="text-2xl font-bold leading-none"
+                            style={{ color }}
+                          >
+                            {i + 1}
                           </div>
-                        </>
-                      )}
-                    </Fragment>
+                        </div>
+                        <div className="text-sm font-semibold text-white leading-snug">
+                          {t(`configurator.progress.${key}`)}
+                        </div>
+                        <div className="text-xs text-slate-400 leading-relaxed">
+                          {t(`configurator.progressHint.${key}`)}
+                        </div>
+                      </div>
+                    </motion.div>
                   ))}
                 </div>
               </div>
@@ -215,6 +230,7 @@ export default function Configurator() {
         {phase === 'wizard' && (
           <motion.div
             key="wizard"
+            className="min-h-screen flex flex-col justify-center py-6"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, transition: { duration: 0.2 } }}

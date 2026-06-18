@@ -34,7 +34,7 @@ export function BOMTable({ tier }: BOMTableProps) {
             <tr>
               <th className="text-left px-4 py-3">{t('result.bom.component')}</th>
               <th className="text-center px-3 py-3">{t('result.bom.difficulty')}</th>
-              <th className="text-right px-4 py-3">{t('result.bom.cost')}</th>
+              <th className="text-right px-4 py-3 whitespace-nowrap">{t('result.bom.cost')}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-800">

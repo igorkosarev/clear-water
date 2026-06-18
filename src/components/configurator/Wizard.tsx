@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react'
+import { useState, useRef, Fragment } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Check } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
@@ -40,6 +40,8 @@ export function Wizard({ onComplete, onBack }: WizardProps) {
   const [direction, setDirection] = useState(1)
   const [data, setData] = useState<Partial<WaterInput>>({ preference: 'cost' })
   const [previewModules, setPreviewModules] = useState<PreviewModule[]>([])
+  const dataRef = useRef(data)
+  dataRef.current = data
 
   const update = (patch: Partial<WaterInput>) => setData(prev => ({ ...prev, ...patch }))
 
@@ -51,14 +53,15 @@ export function Wizard({ onComplete, onBack }: WizardProps) {
   }
 
   const advanceFromUse = () => {
-    if (!data.source || !data.contaminants || !data.use) return
+    const d = dataRef.current
+    if (!d.source || !d.contaminants || !d.use) return
     const result = runSimulation({
       country: country ?? '',
-      source: data.source,
-      contaminants: data.contaminants,
-      use: data.use,
+      source: d.source,
+      contaminants: d.contaminants,
+      use: d.use,
       inletPressureBar: 100,
-      preference: data.preference ?? 'cost',
+      preference: d.preference ?? 'cost',
     })
     const primaryTier = result.tiers.find(tier => tier.budget === result.primaryBudget) ?? result.tiers[0]
     const topModuleIds = primaryTier?.modules.filter(id => id !== 'booster_pump') ?? []
@@ -90,7 +93,7 @@ export function Wizard({ onComplete, onBack }: WizardProps) {
   const stepProps = { data, update, onNext: next, onBack: back }
 
   return (
-    <div className="max-w-lg mx-auto px-4 py-5 sm:py-8">
+    <div className="max-w-lg sm:max-w-2xl mx-auto px-4 sm:px-8">
 
       {/* ── Progress ── */}
       <div className="mb-8">

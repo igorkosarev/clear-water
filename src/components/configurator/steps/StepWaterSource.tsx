@@ -34,7 +34,7 @@ export function StepWaterSource({ data, update, onNext, onBack }: StepProps) {
       <div>
         <h2 className="text-xl sm:text-2xl font-bold text-white">{t('configurator.steps.source.title')}</h2>
       </div>
-      <div className="grid grid-cols-2 gap-2.5">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
         {SOURCES.map(({ id, Icon }) => {
           const selected = data.source === id
           return (
@@ -42,7 +42,7 @@ export function StepWaterSource({ data, update, onNext, onBack }: StepProps) {
               key={id}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
-              className={`relative p-3 sm:p-4 rounded-xl border text-left flex flex-col gap-2 sm:gap-2.5 transition-colors ${
+              className={`relative p-3 sm:p-5 rounded-xl border text-left flex flex-col gap-2 sm:gap-3 transition-colors ${
                 selected
                   ? 'border-sky-500 bg-sky-500/10 text-white'
                   : 'border-slate-700/60 bg-slate-800/40 text-slate-300 hover:border-slate-600 hover:bg-slate-800/70'
@@ -54,12 +54,12 @@ export function StepWaterSource({ data, update, onNext, onBack }: StepProps) {
                   <Check size={9} strokeWidth={3} className="text-white" />
                 </div>
               )}
-              <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${
+              <div className={`w-9 h-9 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center ${
                 selected ? 'bg-sky-500/20' : 'bg-slate-700/50'
               }`}>
                 <Icon size={18} className={selected ? 'text-sky-400' : 'text-slate-400'} strokeWidth={1.5} />
               </div>
-              <span className="font-medium text-sm pr-4">{t(`configurator.sources.${id}`)}</span>
+              <span className="font-medium text-sm sm:text-base pr-4">{t(`configurator.sources.${id}`)}</span>
             </motion.button>
           )
         })}

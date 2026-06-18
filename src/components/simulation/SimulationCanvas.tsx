@@ -393,13 +393,14 @@ function drawFilterPlate(ctx: CanvasRenderingContext2D, row: Row, removed: Conta
   if (ft === 'booster_pump') return
   const cfg = FILTER_TYPE_CONFIG[ft]
   const r = 32
-  const padL = 16, badge = 26, gap = 11, padR = 16
+  const padL = 12, badge = 26, gap = 8, padR = 8
   const midY = y + h / 2
 
   // ── Left nameplate: icon + name only ──────────────────────────────────────
   ctx.font = '600 13px system-ui'
   const nameW = ctx.measureText(cfg.label).width
-  const plateW = Math.max(112, Math.min(padL + badge + gap + nameW + padR, w * 0.55))
+  // Reserve 52px minimum for the right dots panel (34px dots + 18px gap)
+  const plateW = Math.max(108, Math.min(padL + badge + gap + nameW + padR, w - 52))
 
   // Opaque panel + colour tint (hides any particle that flows behind it)
   ctx.save()
@@ -446,12 +447,20 @@ function drawFilterPlate(ctx: CanvasRenderingContext2D, row: Row, removed: Conta
   ctx.fillText(SYMBOLS[ft] ?? '◆', bx + badge / 2, by + badge / 2 + 0.5)
   ctx.restore()
 
-  // Filter name
+  // Filter name (truncated with ellipsis if it doesn't fit the plate)
   ctx.save()
   ctx.fillStyle = '#eef4fb'
   ctx.font = '600 13px system-ui'
   ctx.textAlign = 'left'; ctx.textBaseline = 'middle'
-  ctx.fillText(cfg.label, x + padL + badge + gap, midY)
+  const availTextW = plateW - padL - badge - gap - padR
+  let displayLabel = cfg.label
+  if (nameW > availTextW) {
+    while (displayLabel.length > 0 && ctx.measureText(displayLabel + '…').width > availTextW) {
+      displayLabel = displayLabel.slice(0, -1)
+    }
+    displayLabel += '…'
+  }
+  ctx.fillText(displayLabel, x + padL + badge + gap, midY)
   ctx.restore()
 
   // ── Right frosted label: what this stage removes (its own dedicated zone) ──
@@ -467,9 +476,12 @@ function drawFilterPlate(ctx: CanvasRenderingContext2D, row: Row, removed: Conta
   const labelW = (cols - 1) * step + 2 * dotR + 2 * lpx
   const labelH = (rows - 1) * step + 2 * dotR + 2 * lpy
 
-  // Anchor in the last third, right-aligned, clear of the nameplate seam
-  const inset = 16
-  const lx2 = Math.max(x + plateW + 18, x + w - inset - labelW)
+  // Anchor after the nameplate seam, right-aligned, capped to canvas edge
+  const inset = 8
+  const lx2 = Math.min(
+    Math.max(x + plateW + 14, x + w - inset - labelW),
+    x + w - labelW,  // never overflow the canvas right edge
+  )
   const ly2 = midY - labelH / 2
 
   // Frosted glass panel — translucent so the flowing particles stay softly

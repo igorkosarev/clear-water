@@ -1,5 +1,6 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import { ContaminantDetailModal } from '@/components/configurator/Result/ContaminantDetailModal'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { ChevronLeft, Zap, AlertTriangle, Target, Link2 } from 'lucide-react'
@@ -178,6 +179,7 @@ const contaminants = contaminantsData as Contaminant[]
 export default function MethodDetail() {
   const { id } = useParams<{ id: string }>()
   const { t } = useTranslation()
+  const [activeContaminant, setActiveContaminant] = useState<Contaminant | null>(null)
 
   const method = methods.find(m => m.id === id)
   const removedContaminants = method
@@ -347,15 +349,15 @@ export default function MethodDetail() {
                     {removedContaminants.map(c => {
                       const CIcon = CONTAMINANT_ICONS[c.id]
                       return (
-                        <Link
+                        <button
                           key={c.id}
-                          to={`/learn/contaminants/${c.id}`}
+                          onClick={() => setActiveContaminant(c)}
                           className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium transition-all hover:brightness-125"
                           style={{ backgroundColor: `${c.color}22`, color: c.color, border: `1px solid ${c.color}44` }}
                         >
                           {CIcon && <CIcon size={12} strokeWidth={2} />}
                           {t(c.nameKey)}
-                        </Link>
+                        </button>
                       )
                     })}
                   </div>
@@ -379,6 +381,11 @@ export default function MethodDetail() {
           </div>
         </div>
       </section>
+
+      <ContaminantDetailModal
+        contaminant={activeContaminant}
+        onClose={() => setActiveContaminant(null)}
+      />
     </div>
   )
 }

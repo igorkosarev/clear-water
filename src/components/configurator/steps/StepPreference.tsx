@@ -34,7 +34,7 @@ export function StepPreference({ data, update, onBack, onNext }: StepPreferenceP
         <p className="text-sm text-slate-400 mt-1">{t('configurator.steps.preference.description')}</p>
       </div>
 
-      <div className="grid grid-cols-1 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {OPTIONS.map(({ id, Icon, color }) => {
           const selected = preference === id
           return (

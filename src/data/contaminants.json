@@ -8,7 +8,11 @@
     "detectionKey": "contaminants.bacteria.detection",
     "category": "biological",
     "icon": "🦠",
-    "color": "#f43f5e"
+    "color": "#f43f5e",
+    "sizeRange": {
+      "min": 0.5,
+      "max": 10
+    }
   },
   {
     "id": "viruses",
@@ -19,7 +23,11 @@
     "detectionKey": "contaminants.viruses.detection",
     "category": "biological",
     "icon": "🔬",
-    "color": "#f97316"
+    "color": "#f97316",
+    "sizeRange": {
+      "min": 0.02,
+      "max": 0.3
+    }
   },
   {
     "id": "protozoa",
@@ -30,7 +38,11 @@
     "detectionKey": "contaminants.protozoa.detection",
     "category": "biological",
     "icon": "🪱",
-    "color": "#14b8a6"
+    "color": "#14b8a6",
+    "sizeRange": {
+      "min": 1,
+      "max": 100
+    }
   },
   {
     "id": "helminths",
@@ -41,7 +53,11 @@
     "detectionKey": "contaminants.helminths.detection",
     "category": "biological",
     "icon": "🪱",
-    "color": "#818cf8"
+    "color": "#818cf8",
+    "sizeRange": {
+      "min": 100,
+      "max": 10000
+    }
   },
   {
     "id": "cyanobacteria",
@@ -52,7 +68,11 @@
     "detectionKey": "contaminants.cyanobacteria.detection",
     "category": "biological",
     "icon": "🌿",
-    "color": "#16a34a"
+    "color": "#16a34a",
+    "sizeRange": {
+      "min": 0.5,
+      "max": 10
+    }
   },
   {
     "id": "cyanotoxins",
@@ -85,7 +105,11 @@
     "detectionKey": "contaminants.turbidity.detection",
     "category": "physical",
     "icon": "💧",
-    "color": "#a16207"
+    "color": "#a16207",
+    "sizeRange": {
+      "min": 0.001,
+      "max": 100
+    }
   },
   {
     "id": "sediment",
@@ -96,7 +120,11 @@
     "detectionKey": "contaminants.sediment.detection",
     "category": "physical",
     "icon": "🪨",
-    "color": "#92400e"
+    "color": "#92400e",
+    "sizeRange": {
+      "min": 1,
+      "max": 1000
+    }
   },
   {
     "id": "microplastics",
@@ -107,7 +135,11 @@
     "detectionKey": "contaminants.microplastics.detection",
     "category": "physical",
     "icon": "🔩",
-    "color": "#7c3aed"
+    "color": "#7c3aed",
+    "sizeRange": {
+      "min": 1,
+      "max": 5000
+    }
   },
   {
     "id": "lead",
@@ -118,7 +150,11 @@
     "detectionKey": "contaminants.lead.detection",
     "category": "chemical",
     "icon": "⚙️",
-    "color": "#9ca3af"
+    "color": "#9ca3af",
+    "sizeRange": {
+      "min": 0.0001,
+      "max": 0.001
+    }
   },
   {
     "id": "arsenic",
@@ -129,7 +165,11 @@
     "detectionKey": "contaminants.arsenic.detection",
     "category": "chemical",
     "icon": "⚗️",
-    "color": "#78716c"
+    "color": "#78716c",
+    "sizeRange": {
+      "min": 0.0001,
+      "max": 0.001
+    }
   },
   {
     "id": "mercury",
@@ -140,7 +180,11 @@
     "detectionKey": "contaminants.mercury.detection",
     "category": "chemical",
     "icon": "🌡️",
-    "color": "#cbd5e1"
+    "color": "#cbd5e1",
+    "sizeRange": {
+      "min": 0.0001,
+      "max": 0.001
+    }
   },
   {
     "id": "cadmium",
@@ -195,7 +239,11 @@
     "detectionKey": "contaminants.nitrates.detection",
     "category": "chemical",
     "icon": "🌿",
-    "color": "#22c55e"
+    "color": "#22c55e",
+    "sizeRange": {
+      "min": 0.0001,
+      "max": 0.001
+    }
   },
   {
     "id": "nitrites",
@@ -217,7 +265,11 @@
     "detectionKey": "contaminants.fluoride.detection",
     "category": "chemical",
     "icon": "🦷",
-    "color": "#8b5cf6"
+    "color": "#8b5cf6",
+    "sizeRange": {
+      "min": 0.0001,
+      "max": 0.001
+    }
   },
   {
     "id": "pesticides",
@@ -250,7 +302,11 @@
     "detectionKey": "contaminants.pfas.detection",
     "category": "chemical",
     "icon": "♾️",
-    "color": "#ec4899"
+    "color": "#ec4899",
+    "sizeRange": {
+      "min": 0.001,
+      "max": 0.01
+    }
   },
   {
     "id": "vocs",
@@ -547,6 +603,10 @@
     "detectionKey": "contaminants.asbestos.detection",
     "category": "physical",
     "icon": "🧵",
-    "color": "#9ca3af"
+    "color": "#9ca3af",
+    "sizeRange": {
+      "min": 0.1,
+      "max": 10
+    }
   }
 ]

@@ -6,6 +6,7 @@ import type {
   ContaminantId,
   ModuleId,
   OptimizationPreference,
+  FilterType,
 } from '@/types'
 import modulesData from '@/data/modules.json'
 
@@ -23,31 +24,113 @@ const BUDGET_LIMITS: Record<BudgetTier, number> = {
   high: 1000,
 }
 
-// Logical flow order: contaminants flow through filters in this sequence
-const FLOW_ORDER: Record<string, number> = {
-  booster_pump:      0,
-  sediment:          1,
-  sediment_filtration: 1,
-  activated_carbon:  2,
-  biosand:           3,
-  ceramic:           3,
-  slow_sand:         4,
-  ro:                5,
-  hollow_fiber:      5,
-  uv:                6,
-  chlorination:      7,
-  boiling:           8,
-  ion_exchange:      9,
-  water_softening:   10,
-  distillation:      11,
+// µm pore size — null means non-mechanical (no particle filtration)
+const MICRON_RATING: Record<string, number | null> = {
+  sediment:           5,
+  sediment_filtration: 5,
+  activated_carbon:   1,
+  biosand:            1,
+  ceramic:            0.2,
+  slow_sand:          0.1,
+  hollow_fiber:       0.01,
+  ro:                 0.0001,
+  uv:                 null,
+  chlorination:       null,
+  boiling:            null,
+  ion_exchange:       null,
+  water_softening:    null,
+  distillation:       null,
+  booster_pump:       null,
 }
 
-function sortByFlowOrder(mods: RawModule[]): RawModule[] {
+// Order among non-mechanical filters after mechanical ones
+const NON_MECHANICAL_ORDER: Record<string, number> = {
+  uv:             0,
+  chlorination:   1,
+  boiling:        2,
+  ion_exchange:   3,
+  water_softening: 4,
+  distillation:   5,
+}
+
+// Required/recommended upstream filters per type
+const PREREQUISITES: Record<string, { required: string[]; recommended: string[] }> = {
+  ro:           { required: ['sediment'], recommended: ['sediment', 'activated_carbon'] },
+  hollow_fiber: { required: ['sediment'], recommended: ['sediment'] },
+  uv:           { required: [], recommended: ['sediment', 'activated_carbon'] },
+  chlorination: { required: [], recommended: ['sediment'] },
+  ion_exchange: { required: [], recommended: ['sediment'] },
+  water_softening: { required: [], recommended: ['sediment'] },
+  activated_carbon: { required: [], recommended: ['sediment'] },
+}
+
+function getPrereqs(type: string) {
+  return PREREQUISITES[type] ?? { required: [], recommended: [] }
+}
+
+// Sort: pump first → mechanical descending µm → non-mechanical by NON_MECHANICAL_ORDER
+function sortByPhysicalOrder(mods: RawModule[]): RawModule[] {
   return [...mods].sort((a, b) => {
-    const oa = FLOW_ORDER[a.type] ?? 99
-    const ob = FLOW_ORDER[b.type] ?? 99
-    return oa - ob
+    if (a.type === 'booster_pump') return -1
+    if (b.type === 'booster_pump') return 1
+
+    const ma = MICRON_RATING[a.type] ?? null
+    const mb = MICRON_RATING[b.type] ?? null
+
+    if (ma !== null && mb === null) return -1
+    if (ma === null && mb !== null) return 1
+    if (ma !== null && mb !== null) return mb - ma  // larger pores first
+
+    // Both non-mechanical: use explicit order
+    return (NON_MECHANICAL_ORDER[a.type] ?? 99) - (NON_MECHANICAL_ORDER[b.type] ?? 99)
   })
+}
+
+// Add any missing required prerequisite modules (budget-independent — technical necessity)
+function enforcePrerequisites(
+  selected: RawModule[],
+  allModules: RawModule[],
+): { modules: RawModule[]; extraCost: number } {
+  const modules = [...selected]
+  let extraCost = 0
+  let changed = true
+
+  while (changed) {
+    changed = false
+    const presentTypes = new Set(modules.map(m => m.type))
+
+    for (const mod of [...modules]) {
+      for (const requiredType of getPrereqs(mod.type).required) {
+        if (!presentTypes.has(requiredType)) {
+          const cheapest = allModules
+            .filter(m => m.type === requiredType && !modules.some(s => s.id === m.id))
+            .sort((a, b) => a.costUSD - b.costUSD)[0]
+          if (cheapest) {
+            modules.push(cheapest)
+            extraCost += cheapest.costUSD
+            presentTypes.add(requiredType)
+            changed = true
+          }
+        }
+      }
+    }
+  }
+
+  return { modules, extraCost }
+}
+
+// Collect recommended types that are absent from the final chain
+function computeMissingRecommended(modules: RawModule[]): FilterType[] {
+  const presentTypes = new Set(modules.map(m => m.type))
+  const missing = new Set<string>()
+
+  for (const mod of modules) {
+    for (const recType of getPrereqs(mod.type).recommended) {
+      if (!presentTypes.has(recType)) missing.add(recType)
+    }
+  }
+
+  return [...missing] as FilterType[]
 }
 
 function greedyBuild(
@@ -62,7 +145,6 @@ function greedyBuild(
   const selected: RawModule[] = []
   let totalCost = 0
 
-  // Exclude booster pump from greedy candidates — handled as post-processing
   const candidates = allModules.filter(m => m.id !== 'booster_pump')
 
   while (remaining.length > 0) {
@@ -90,17 +172,22 @@ function greedyBuild(
     remaining = remaining.filter(c => !best.module.removes.includes(c))
   }
 
-  // Add booster pump when source pressure is insufficient for the built system
-  const needsPump = selected.some(m => m.minPressureBar > inletPressureBar)
+  // Enforce physical prerequisites (budget-independent)
+  const { modules: withPrereqs, extraCost } = enforcePrerequisites(selected, allModules)
+  totalCost += extraCost
+
+  // Add booster pump if inlet pressure is insufficient (after prerequisites are known)
+  const needsPump = withPrereqs.some(m => m.minPressureBar > inletPressureBar)
   if (needsPump) {
     const pump = allModules.find(m => m.id === 'booster_pump')
-    if (pump) {
-      selected.unshift(pump)
+    if (pump && !withPrereqs.some(m => m.id === pump.id)) {
+      withPrereqs.push(pump)
       totalCost += pump.costUSD
     }
   }
 
-  const sorted = sortByFlowOrder(selected)
+  const sorted = sortByPhysicalOrder(withPrereqs)
+  const missingRecommended = computeMissingRecommended(sorted)
   const removedContaminants = contaminants.filter(c => !remaining.includes(c))
 
   return {
@@ -111,6 +198,7 @@ function greedyBuild(
     remainingContaminants: remaining,
     estimatedCostUSD: totalCost,
     hasPump: needsPump,
+    missingRecommended,
   }
 }
 

@@ -178,6 +178,26 @@
     "noModules": "No modules fit within this budget",
     "remaining": {
       "label": "Still present in water"
+    },
+    "missingRecommended": {
+      "warning": "For best results, consider adding: {{filters}}",
+      "filterNames": {
+        "sediment": "Sediment Filter",
+        "activated_carbon": "Activated Carbon",
+        "ceramic": "Ceramic Filter",
+        "uv": "UV Disinfection",
+        "ro": "Reverse Osmosis",
+        "biosand": "Biosand Filter",
+        "slow_sand": "Slow Sand Filter",
+        "hollow_fiber": "Hollow Fiber UF",
+        "chlorination": "Chlorination",
+        "boiling": "Boiling",
+        "ion_exchange": "Ion Exchange",
+        "water_softening": "Water Softening",
+        "distillation": "Distillation",
+        "booster_pump": "Booster Pump",
+        "sediment_filtration": "Sediment Filtration"
+      }
     }
   },
   "learn": {

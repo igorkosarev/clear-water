@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AlertTriangle, RotateCcw } from 'lucide-react'
+import { AlertTriangle, Info, RotateCcw } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { SystemDiagram } from './SystemDiagram'
 import { BOMTable } from './BOMTable'
@@ -82,6 +82,19 @@ export function ResultPanel({ result, onRestart }: ResultPanelProps) {
           <div className="flex items-start gap-3 p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl">
             <AlertTriangle size={16} className="text-amber-400 shrink-0 mt-0.5" />
             <p className="text-sm text-amber-300">{t('result.pumpWarning')}</p>
+          </div>
+        )}
+
+        {primary.missingRecommended.length > 0 && (
+          <div className="flex items-start gap-3 p-3 bg-slate-800/60 border border-slate-600/50 rounded-xl">
+            <Info size={16} className="text-slate-400 shrink-0 mt-0.5" />
+            <p className="text-sm text-slate-400">
+              {t('result.missingRecommended.warning', {
+                filters: primary.missingRecommended
+                  .map(ft => t(`result.missingRecommended.filterNames.${ft}`, { defaultValue: ft }))
+                  .join(', '),
+              })}
+            </p>
           </div>
         )}
 

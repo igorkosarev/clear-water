@@ -25,6 +25,7 @@ export interface Contaminant {
   category: 'biological' | 'chemical' | 'physical' | 'radiological'
   icon: string
   color: string
+  sizeRange?: { min: number; max: number }  // µm, optional reference data
 }
 
 export type MechanismGroup = 'thermal' | 'mechanical' | 'disinfection' | 'adsorption_ion'
@@ -99,6 +100,7 @@ export interface TierResult {
   remainingContaminants: ContaminantId[]
   estimatedCostUSD: number
   hasPump: boolean
+  missingRecommended: FilterType[]
 }
 
 export interface GreedySimulationResult {

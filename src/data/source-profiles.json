@@ -1,0 +1,32 @@
+{
+  "river": {
+    "inferredContaminants": ["bacteria", "viruses", "protozoa", "turbidity", "sediment"],
+    "riskFactors": ["cyanobacteria", "cyanotoxins", "pesticides", "herbicides"],
+    "advisories": []
+  },
+  "pond": {
+    "inferredContaminants": ["bacteria", "viruses", "protozoa", "turbidity", "sediment"],
+    "riskFactors": ["cyanobacteria", "cyanotoxins"],
+    "advisories": []
+  },
+  "well": {
+    "inferredContaminants": [],
+    "riskFactors": ["nitrates", "arsenic", "iron", "manganese", "hardness", "bacteria"],
+    "advisories": ["water_testing"]
+  },
+  "spring": {
+    "inferredContaminants": ["bacteria", "protozoa"],
+    "riskFactors": ["turbidity", "iron"],
+    "advisories": []
+  },
+  "rain": {
+    "inferredContaminants": ["bacteria"],
+    "riskFactors": ["turbidity", "pesticides"],
+    "advisories": []
+  },
+  "tap": {
+    "inferredContaminants": ["chlorine"],
+    "riskFactors": ["disinfection_byproducts", "lead"],
+    "advisories": []
+  }
+}

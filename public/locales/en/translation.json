@@ -198,6 +198,29 @@
     "remaining": {
       "label": "Still present in water"
     },
+    "explainer": {
+      "title": "Why this system?",
+      "prereqTag": "pre-filtration",
+      "prerequisiteNote": "Required for proper operation of downstream treatment components",
+      "unaddressed": {
+        "title": "Not addressed",
+        "higherBudget": "Available in a higher-budget system option",
+        "specialized": "Requires specialized treatment beyond standard household systems"
+      },
+      "confidence": {
+        "title": "Confidence",
+        "dataLabel": "Data quality",
+        "recLabel": "System coverage",
+        "level": {
+          "high": "High",
+          "medium": "Medium",
+          "low": "Low"
+        }
+      },
+      "advisory": {
+        "waterTesting": "Consider laboratory water analysis before installation to confirm actual contaminant levels."
+      }
+    },
     "missingRecommended": {
       "warning": "For best results, consider adding: {{filters}}",
       "filterNames": {

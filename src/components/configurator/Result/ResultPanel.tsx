@@ -5,13 +5,15 @@ import { motion } from 'framer-motion'
 import { SystemDiagram } from './SystemDiagram'
 import { BOMTable } from './BOMTable'
 import { RemainingBadges } from './RemainingBadges'
-import type { GreedySimulationResult, TierResult, BudgetTier } from '@/types'
+import { RecommendationExplainer } from './RecommendationExplainer'
+import type { GreedySimulationResult, TierResult, BudgetTier, WaterInput } from '@/types'
 import modulesData from '@/data/modules.json'
 
 // ─── Config ───────────────────────────────────────────────────────────────────
 
 interface ResultPanelProps {
   result: GreedySimulationResult
+  input: WaterInput
   onRestart: () => void
 }
 
@@ -126,7 +128,7 @@ function AltCard({ alt, onSelect }: { alt: TierResult; onSelect: () => void }) {
 
 // ─── ResultPanel ──────────────────────────────────────────────────────────────
 
-export function ResultPanel({ result, onRestart }: ResultPanelProps) {
+export function ResultPanel({ result, input, onRestart }: ResultPanelProps) {
   const { t } = useTranslation()
   const [activeBudget, setActiveBudget] = useState<BudgetTier>(result.primaryBudget)
 
@@ -250,6 +252,16 @@ export function ResultPanel({ result, onRestart }: ResultPanelProps) {
             </div>
           )}
         </div>
+      </motion.div>
+
+      {/* Explainer */}
+      <motion.div
+        key={`explainer-${activeBudget}`}
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.1 }}
+      >
+        <RecommendationExplainer tier={primary} input={input} result={result} />
       </motion.div>
 
       {/* Alternatives */}

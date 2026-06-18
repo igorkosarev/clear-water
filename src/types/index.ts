@@ -91,6 +91,40 @@ export interface WaterInput {
   preference: OptimizationPreference
 }
 
+// ─── Source profiles ──────────────────────────────────────────────────────────
+
+export interface SourceProfile {
+  inferredContaminants: ContaminantId[]
+  riskFactors: ContaminantId[]
+  advisories: string[]
+}
+
+// ─── Reasoning engine ─────────────────────────────────────────────────────────
+
+export type WaterCondition = 'low_turbidity' | 'adequate_pressure'
+
+export type ReasoningAction = 'select' | 'require'
+
+export interface ReasoningStep {
+  action: ReasoningAction
+  moduleId: ModuleId
+  reason: string
+  contaminantsAddressed?: ContaminantId[]
+}
+
+// ─── Confidence scoring ───────────────────────────────────────────────────────
+
+export type ConfidenceLevel = 'high' | 'medium' | 'low'
+
+export interface ConfidenceScore {
+  data: ConfidenceLevel
+  recommendation: ConfidenceLevel
+  dataReasons: string[]
+  recommendationReasons: string[]
+}
+
+// ─── Simulation results ───────────────────────────────────────────────────────
+
 export interface TierResult {
   budget: BudgetTier
   budgetLimitUSD: number
@@ -100,11 +134,16 @@ export interface TierResult {
   estimatedCostUSD: number
   hasPump: boolean
   missingRecommended: FilterType[]
+  reasoningSteps: ReasoningStep[]
+  confidence: ConfidenceScore
 }
 
 export interface GreedySimulationResult {
   tiers: TierResult[]
   primaryBudget: BudgetTier
+  inferredContaminants: ContaminantId[]
+  riskFactors: ContaminantId[]
+  advisories: string[]
 }
 
 export type FilterType =

@@ -47,16 +47,19 @@ export default function Configurator() {
   const { t } = useTranslation()
   const [phase, setPhase] = useState<Phase>('intro')
   const [result, setResult] = useState<GreedySimulationResult | null>(null)
+  const [lastInput, setLastInput] = useState<WaterInput | null>(null)
 
   const handleWizardComplete = (input: WaterInput) => {
     const sim = runSimulation(input)
     setResult(sim)
+    setLastInput(input)
     setPhase('result')
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const handleRestart = () => {
     setResult(null)
+    setLastInput(null)
     setPhase('intro')
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -241,7 +244,7 @@ export default function Configurator() {
         )}
 
         {/* ── Result ── */}
-        {phase === 'result' && result && (
+        {phase === 'result' && result && lastInput && (
           <motion.div
             key="result"
             initial={{ opacity: 0, y: 16 }}
@@ -249,7 +252,7 @@ export default function Configurator() {
             exit={{ opacity: 0, transition: { duration: 0.2 } }}
             transition={{ duration: 0.4 }}
           >
-            <ResultPanel result={result} onRestart={handleRestart} />
+            <ResultPanel result={result} input={lastInput} onRestart={handleRestart} />
           </motion.div>
         )}
 

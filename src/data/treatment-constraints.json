@@ -1,0 +1,27 @@
+{
+  "uv": {
+    "waterConditionRequires": ["low_turbidity"],
+    "moduleRequires": ["sediment"],
+    "incompatibleWith": []
+  },
+  "ro": {
+    "waterConditionRequires": [],
+    "moduleRequires": ["sediment", "activated_carbon"],
+    "incompatibleWith": []
+  },
+  "hollow_fiber": {
+    "waterConditionRequires": [],
+    "moduleRequires": ["sediment"],
+    "incompatibleWith": []
+  },
+  "ion_exchange": {
+    "waterConditionRequires": [],
+    "moduleRequires": ["sediment"],
+    "incompatibleWith": []
+  },
+  "water_softening": {
+    "waterConditionRequires": [],
+    "moduleRequires": ["sediment"],
+    "incompatibleWith": []
+  }
+}

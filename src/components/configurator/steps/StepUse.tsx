@@ -1,6 +1,9 @@
+import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { Button } from '@/components/ui/Button'
+import { Droplet, Utensils, Sprout, PawPrint, Check } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 import type { WaterInput, WaterUseType } from '@/types'
+import { NavButtons } from './NavButtons'
 
 interface StepProps {
   data: Partial<WaterInput>
@@ -9,45 +12,57 @@ interface StepProps {
   onBack: () => void
 }
 
-const USES: { id: WaterUseType; icon: string }[] = [
-  { id: 'drinking',   icon: '🥤' },
-  { id: 'cooking',    icon: '🍳' },
-  { id: 'irrigation', icon: '🌱' },
-  { id: 'livestock',  icon: '🐄' },
+const USES: { id: WaterUseType; Icon: LucideIcon }[] = [
+  { id: 'drinking',   Icon: Droplet  },
+  { id: 'cooking',    Icon: Utensils },
+  { id: 'irrigation', Icon: Sprout   },
+  { id: 'livestock',  Icon: PawPrint },
 ]
 
 export function StepUse({ data, update, onNext, onBack }: StepProps) {
   const { t } = useTranslation()
 
+  const handleSelect = (id: WaterUseType) => {
+    update({ use: id })
+    setTimeout(onNext, 180)
+  }
+
   return (
-    <div className="space-y-4">
-      <h2 className="text-2xl font-bold text-white">{t('configurator.steps.use.title')}</h2>
-      <div className="grid grid-cols-2 gap-2">
-        {USES.map(({ id, icon }) => (
-          <button
-            key={id}
-            className={`p-4 rounded-xl border text-left transition-all ${
-              data.use === id
-                ? 'border-sky-500 bg-sky-500/10 text-white'
-                : 'border-slate-700 bg-slate-800/60 text-slate-300 hover:border-slate-500'
-            }`}
-            onClick={() => update({ use: id })}
-          >
-            <span className="text-2xl mb-1 block">{icon}</span>
-            <span className="font-medium text-sm">{t(`configurator.uses.${id}`)}</span>
-          </button>
-        ))}
+    <div className="space-y-5">
+      <div>
+        <h2 className="text-2xl font-bold text-white">{t('configurator.steps.use.title')}</h2>
       </div>
-      <div className="flex gap-3 pt-2">
-        <Button variant="dark-secondary" onClick={onBack} className="flex-1">{t('common.back')}</Button>
-        <button
-          onClick={onNext}
-          disabled={!data.use}
-          className="flex-1 inline-flex items-center justify-center font-medium rounded-lg transition-colors px-4 py-2 text-sm bg-sky-600 hover:bg-sky-500 text-white disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {t('common.next')}
-        </button>
+      <div className="grid grid-cols-2 gap-2.5">
+        {USES.map(({ id, Icon }) => {
+          const selected = data.use === id
+          return (
+            <motion.button
+              key={id}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
+              className={`relative p-4 rounded-xl border text-left flex flex-col gap-2.5 transition-colors ${
+                selected
+                  ? 'border-sky-500 bg-sky-500/10 text-white'
+                  : 'border-slate-700/60 bg-slate-800/40 text-slate-300 hover:border-slate-600 hover:bg-slate-800/70'
+              }`}
+              onClick={() => handleSelect(id)}
+            >
+              {selected && (
+                <div className="absolute top-2 right-2 w-4 h-4 rounded-full bg-sky-500 flex items-center justify-center">
+                  <Check size={9} strokeWidth={3} className="text-white" />
+                </div>
+              )}
+              <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${
+                selected ? 'bg-sky-500/20' : 'bg-slate-700/50'
+              }`}>
+                <Icon size={18} className={selected ? 'text-sky-400' : 'text-slate-400'} strokeWidth={1.5} />
+              </div>
+              <span className="font-medium text-sm pr-4">{t(`configurator.uses.${id}`)}</span>
+            </motion.button>
+          )
+        })}
       </div>
+      <NavButtons onBack={onBack} onNext={onNext} canNext={!!data.use} />
     </div>
   )
 }

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CheckCircle, AlertTriangle } from 'lucide-react'
-import { Button } from '@/components/ui/Button'
 import type { WaterInput, WaterSourceType } from '@/types'
+import { NavButtons } from './NavButtons'
 
 export interface PreviewModule {
   id: string
@@ -152,15 +152,7 @@ export function StepPressure({ data, update, onBack, onNext, previewModules }: S
         </div>
       )}
 
-      <div className="flex gap-3 pt-2">
-        <Button variant="dark-secondary" onClick={onBack} className="flex-1">{t('common.back')}</Button>
-        <button
-          onClick={onNext}
-          className="flex-1 inline-flex items-center justify-center font-semibold rounded-lg transition-colors px-4 py-2 text-sm bg-sky-600 hover:bg-sky-500 text-white"
-        >
-          {t('common.next')}
-        </button>
-      </div>
+      <NavButtons onBack={onBack} onNext={onNext} />
     </div>
   )
 }

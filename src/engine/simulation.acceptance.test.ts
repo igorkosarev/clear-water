@@ -271,10 +271,15 @@ describe('T7: Private well — iron and hardness, whole-house scope', () => {
     expect(primary(input).confidence.data).toBe('high')
   })
 
-  it('whole-house iron/hardness modules are recommended', () => {
-    const targetModules = ['water_softener', 'iron_manganese_filter', 'oxidation_filter']
+  it('water_softener is recommended for hardness', () => {
     const mods = allModules(input)
-    expect(mods.some(m => targetModules.includes(m))).toBe(true)
+    expect(mods).toContain('water_softener')
+  })
+
+  it('iron_manganese_filter or oxidation_filter is recommended for iron', () => {
+    const ironModules = ['iron_manganese_filter', 'oxidation_filter']
+    const mods = allModules(input)
+    expect(mods.some(m => ironModules.includes(m))).toBe(true)
   })
 
   it('iron and hardness are addressed within whole-house scope', () => {

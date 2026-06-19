@@ -113,7 +113,7 @@
     "diyDifficulty": "medium",
     "materials": ["ion exchange resin tank", "brine tank", "control valve", "salt"],
     "minPressureBar": 0.3,
-    "scopeTags": ["whole_house", "under_sink"]
+    "scopeTags": ["whole_house"]
   },
   {
     "id": "iron_manganese_filter",

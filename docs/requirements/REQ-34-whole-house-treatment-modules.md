@@ -16,7 +16,7 @@
 - **Убирает:** `hardness`, `iron` (частично), `manganese` (частично)
 - **Стоимость:** ~$400 USD
 - **Минимальное давление:** 0.3 bar
-- **Scope:** `whole_house`, `under_sink`
+- **Scope:** `whole_house`
 - **DIY:** medium (требует настройки регенерации)
 - **Ключ имени:** `modules.water_softener.name`
 

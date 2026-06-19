@@ -271,15 +271,13 @@ describe('T7: Private well — iron and hardness, whole-house scope', () => {
     expect(primary(input).confidence.data).toBe('high')
   })
 
-  it('whole-house treatment modules are recommended', () => {
-    // At least one whole_house-scoped module should be selected
-    const wholeHouseModules = ['sediment_5um', 'activated_carbon_block', 'uv_lamp_6w']
+  it('whole-house iron/hardness modules are recommended', () => {
+    const targetModules = ['water_softener', 'iron_manganese_filter', 'oxidation_filter']
     const mods = allModules(input)
-    expect(mods.some(m => wholeHouseModules.includes(m))).toBe(true)
+    expect(mods.some(m => targetModules.includes(m))).toBe(true)
   })
 
   it('iron and hardness are addressed within whole-house scope', () => {
-    // This test is expected to FAIL until a whole_house softener/iron-filter module is added
     const high = tier(input, 'high')
     expect(high.remainingContaminants).not.toContain('iron')
     expect(high.remainingContaminants).not.toContain('hardness')
@@ -315,7 +313,6 @@ describe('T8: Well water — rotten egg smell (hydrogen sulfide)', () => {
   })
 
   it('hydrogen_sulfide is addressed by a treatment module', () => {
-    // This test is expected to FAIL until a module that removes H2S is added
     const high = tier(input, 'high')
     expect(high.removedContaminants).toContain('hydrogen_sulfide')
   })
@@ -449,7 +446,6 @@ describe('T12: Shower / bathing — limescale and hardness', () => {
   })
 
   it('hardness is addressed within whole-house scope', () => {
-    // This test is expected to FAIL until a whole_house softener module is added
     const high = tier(input, 'high')
     expect(high.remainingContaminants).not.toContain('hardness')
   })

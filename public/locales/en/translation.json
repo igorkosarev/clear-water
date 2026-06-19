@@ -258,7 +258,7 @@
       "unaddressed": {
         "title": "Not addressed",
         "higherBudget": "Available in a higher-budget system option",
-        "specialized": "Requires specialized treatment beyond standard household systems"
+        "specialized": "Not addressable within the selected scope and budget — consider a different installation type or consult a water treatment specialist"
       },
       "confidence": {
         "title": "Confidence",
@@ -963,6 +963,18 @@
     "booster_pump": {
       "name": "Booster Pump",
       "description": "Increases inlet water pressure to meet the requirements of high-pressure filters such as reverse osmosis."
+    },
+    "water_softener": {
+      "name": "Water Softener",
+      "description": "Ion exchange unit that reduces water hardness (calcium and magnesium). Requires periodic salt regeneration. Not a reliable solution for significant iron or manganese — use dedicated iron/manganese treatment when those contaminants are present."
+    },
+    "iron_manganese_filter": {
+      "name": "Iron & Manganese Filter",
+      "description": "Oxidising media filter that removes dissolved iron and manganese from well or borehole water."
+    },
+    "oxidation_filter": {
+      "name": "Oxidation Filter (H2S / Iron)",
+      "description": "Removes hydrogen sulfide, iron, and manganese via oxidation and media filtration. Addresses rotten-egg odour."
     }
   },
   "basics": {

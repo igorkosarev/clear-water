@@ -104,6 +104,42 @@
     "scopeTags": ["portable", "emergency"]
   },
   {
+    "id": "water_softener",
+    "nameKey": "modules.water_softener.name",
+    "descriptionKey": "modules.water_softener.description",
+    "type": "ion_exchange",
+    "removes": ["hardness"],
+    "costUSD": 400,
+    "diyDifficulty": "medium",
+    "materials": ["ion exchange resin tank", "brine tank", "control valve", "salt"],
+    "minPressureBar": 0.3,
+    "scopeTags": ["whole_house", "under_sink"]
+  },
+  {
+    "id": "iron_manganese_filter",
+    "nameKey": "modules.iron_manganese_filter.name",
+    "descriptionKey": "modules.iron_manganese_filter.description",
+    "type": "iron_manganese_filter",
+    "removes": ["iron", "manganese"],
+    "costUSD": 300,
+    "diyDifficulty": "medium",
+    "materials": ["filter tank", "manganese greensand or birm media", "control valve", "backwash system"],
+    "minPressureBar": 0.3,
+    "scopeTags": ["whole_house"]
+  },
+  {
+    "id": "oxidation_filter",
+    "nameKey": "modules.oxidation_filter.name",
+    "descriptionKey": "modules.oxidation_filter.description",
+    "type": "oxidation_filter",
+    "removes": ["hydrogen_sulfide", "iron", "manganese"],
+    "costUSD": 350,
+    "diyDifficulty": "medium",
+    "materials": ["aeration or oxidation media tank", "KMnO4 or air injection system", "control valve"],
+    "minPressureBar": 0.3,
+    "scopeTags": ["whole_house"]
+  },
+  {
     "id": "booster_pump",
     "nameKey": "modules.booster_pump.name",
     "descriptionKey": "modules.booster_pump.description",

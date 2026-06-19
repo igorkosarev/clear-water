@@ -54,30 +54,34 @@ const BUDGET_LIMITS: Record<BudgetTier, number> = {
 
 // µm pore size — null means non-mechanical
 const MICRON_RATING: Record<string, number | null> = {
-  sediment:            5,
-  sediment_filtration: 5,
-  activated_carbon:    1,
-  biosand:             1,
-  ceramic:             0.2,
-  slow_sand:           0.1,
-  hollow_fiber:        0.01,
-  ro:                  0.0001,
-  uv:                  null,
-  chlorination:        null,
-  boiling:             null,
-  ion_exchange:        null,
-  water_softening:     null,
-  distillation:        null,
-  booster_pump:        null,
+  sediment:               5,
+  sediment_filtration:    5,
+  activated_carbon:       1,
+  biosand:                1,
+  ceramic:                0.2,
+  slow_sand:              0.1,
+  hollow_fiber:           0.01,
+  ro:                     0.0001,
+  uv:                     null,
+  chlorination:           null,
+  boiling:                null,
+  ion_exchange:           null,
+  water_softening:        null,
+  distillation:           null,
+  iron_manganese_filter:  null,
+  oxidation_filter:       null,
+  booster_pump:           null,
 }
 
 const NON_MECHANICAL_ORDER: Record<string, number> = {
-  uv:              0,
-  chlorination:    1,
-  boiling:         2,
-  ion_exchange:    3,
-  water_softening: 4,
-  distillation:    5,
+  oxidation_filter:      -2,  // aeration/oxidation before mechanical polish
+  iron_manganese_filter: -1,  // media filter before softener and UV
+  uv:                     0,
+  chlorination:           1,
+  boiling:                2,
+  ion_exchange:           3,
+  water_softening:        4,
+  distillation:           5,
 }
 
 // REQ-27: certainty weights
@@ -326,6 +330,12 @@ function computeConfidence(
   if (input.scope && remaining.length > 0 && recLevel === 'high') {
     recLevel = 'medium'
     recommendationReasons.push(`Some contaminants cannot be addressed within the selected installation scope`)
+  }
+
+  // REQ-33/T10: low data confidence must not yield high recommendation confidence
+  if (dataLevel === 'low' && recLevel === 'high') {
+    recLevel = 'medium'
+    recommendationReasons.push('Recommendation confidence capped at medium — data quality is insufficient to support a high-confidence recommendation')
   }
 
   return { data: dataLevel, recommendation: recLevel, dataReasons, recommendationReasons }

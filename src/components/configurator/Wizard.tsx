@@ -139,7 +139,7 @@ export function Wizard({ onComplete, onBack }: WizardProps) {
   const stepProps = { data, update, onNext: next, onBack: back }
 
   return (
-    <div className="max-w-lg sm:max-w-2xl mx-auto px-4 sm:px-8">
+    <div className="w-full max-w-lg mx-auto px-4">
 
       {/* ── Progress ── */}
       <div className="mb-8">

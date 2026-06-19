@@ -1,5 +1,4 @@
 import { useState, useMemo } from 'react'
-import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { Search, Layers, Wind, Wrench, ShieldAlert, FlaskConical, Gem, Zap, HelpCircle, Check, ChevronDown, X } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
@@ -7,6 +6,7 @@ import type { WaterInput, ContaminantId, WaterSourceType } from '@/types'
 import contaminants from '@/data/contaminants.json'
 import { CONTAMINANT_ICONS } from '@/components/encyclopedia/contaminantConfig'
 import { NavButtons } from './NavButtons'
+import { OptionRow, OptionList } from './OptionRow'
 
 interface StepProps {
   data: Partial<WaterInput>
@@ -139,43 +139,26 @@ export function StepProblems({ data, update, onNext, onBack }: StepProps) {
           <h2 className="text-xl sm:text-2xl font-bold text-white">{t('configurator.steps.problems.symptomsTitle')}</h2>
           <p className="text-slate-400 text-sm mt-1">{t('configurator.steps.problems.symptomsDescription')}</p>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
-          {SYMPTOMS.map(s => {
-            const active = selectedSymptoms.includes(s.key)
-            const { Icon } = s
-            return (
-              <motion.button
-                key={s.key}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.97 }}
-                className={`relative p-3 sm:p-4 rounded-xl border text-left flex flex-col gap-2 transition-colors ${
-                  active
-                    ? 'border-sky-500 bg-sky-500/10 text-white'
-                    : 'border-slate-700/60 bg-slate-800/40 text-slate-300 hover:border-slate-600 hover:bg-slate-800/70'
-                }`}
-                onClick={() => toggleSymptom(s.key)}
-              >
-                {active && (
-                  <div className="absolute top-2 right-2 w-4 h-4 rounded-full bg-sky-500 flex items-center justify-center">
-                    <Check size={9} strokeWidth={3} className="text-white" />
-                  </div>
-                )}
-                <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 ${
-                  active ? 'bg-sky-500/20' : 'bg-slate-700/50'
-                }`}>
-                  <Icon size={16} className={active ? 'text-sky-400' : 'text-slate-400'} strokeWidth={1.5} />
-                </div>
-                <span className="text-sm font-medium leading-snug pr-4">{t(`configurator.symptoms.${s.key}`)}</span>
-              </motion.button>
-            )
-          })}
-        </div>
+        <OptionList>
+          {SYMPTOMS.map(s => (
+            <OptionRow
+              key={s.key}
+              Icon={s.Icon}
+              iconColor="#64748b"
+              label={t(`configurator.symptoms.${s.key}.label`)}
+              description={t(`configurator.symptoms.${s.key}.description`)}
+              selected={selectedSymptoms.includes(s.key)}
+              onClick={() => toggleSymptom(s.key)}
+              multiSelect
+            />
+          ))}
+        </OptionList>
         <NavButtons onBack={onBack} onNext={proceedToRefine} canNext={selectedSymptoms.length > 0} />
       </div>
     )
   }
 
-  const sourceName = t(`configurator.sources.${data.source ?? 'well'}`)
+  const sourceName = t(`configurator.sources.${data.source ?? 'well'}.label`)
 
   return (
     <div className="space-y-4">

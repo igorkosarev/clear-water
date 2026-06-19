@@ -1,6 +1,6 @@
 import { useState, useRef, Fragment } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Check, Microscope } from 'lucide-react'
+import { Check, FlaskConical, MessageCircle } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { StepWaterSource } from './steps/StepWaterSource'
 import { StepTestingStatus } from './steps/StepTestingStatus'
@@ -11,6 +11,8 @@ import { StepScope } from './steps/StepScope'
 import { StepPressure } from './steps/StepPressure'
 import type { PreviewModule } from './steps/StepPressure'
 import { StepPreference } from './steps/StepPreference'
+import { OptionRow, OptionList } from './steps/OptionRow'
+import { NavButtons } from './steps/NavButtons'
 import { runSimulation } from '@/engine/simulation'
 import { useCountry } from '@/context/CountryContext'
 import modulesData from '@/data/modules.json'
@@ -45,6 +47,7 @@ export function Wizard({ onComplete, onBack }: WizardProps) {
   const [step, setStep] = useState(0)
   const [direction, setDirection] = useState(1)
   const [wizardMode, setWizardMode] = useState<'simple' | 'advanced'>('simple')
+  const [modeChosen, setModeChosen] = useState(false)
   const [data, setData] = useState<Partial<WaterInput>>({ preference: 'cost' })
   const [previewModules, setPreviewModules] = useState<PreviewModule[]>([])
   const dataRef = useRef(data)
@@ -55,6 +58,15 @@ export function Wizard({ onComplete, onBack }: WizardProps) {
   const next = () => { setDirection(1); setStep(s => Math.min(s + 1, STEPS.length - 1)) }
   const back = () => {
     if (step === 0) { onBack?.(); return }
+    if (step === 2 && modeChosen) {
+      setDirection(-1)
+      setModeChosen(false)
+      return
+    }
+    if (step === 3) {
+      // Coming back to step 2 from step 3 — always show mode selection
+      setModeChosen(false)
+    }
     setDirection(-1)
     setStep(s => Math.max(s - 1, 0))
   }
@@ -62,12 +74,15 @@ export function Wizard({ onComplete, onBack }: WizardProps) {
   const switchMode = (mode: 'simple' | 'advanced') => {
     setWizardMode(mode)
     if (mode === 'simple') {
-      // Clear advanced-mode entries when switching back
       update({ contaminantEntries: undefined })
     } else {
-      // Clear simple-mode contaminants when switching to advanced
       update({ contaminants: [] })
     }
+  }
+
+  const chooseMode = (mode: 'simple' | 'advanced') => {
+    switchMode(mode)
+    setModeChosen(true)
   }
 
   const advanceFromUse = () => {
@@ -164,7 +179,7 @@ export function Wizard({ onComplete, onBack }: WizardProps) {
       {/* ── Step content ── */}
       <AnimatePresence mode="wait" custom={direction}>
         <motion.div
-          key={`${step}-${wizardMode}`}
+          key={`${step}-${wizardMode}-${modeChosen}`}
           custom={direction}
           variants={slideVariants}
           initial="enter"
@@ -173,34 +188,42 @@ export function Wizard({ onComplete, onBack }: WizardProps) {
         >
           {step === 0 && <StepWaterSource {...stepProps} />}
           {step === 1 && <StepTestingStatus {...stepProps} />}
-          {step === 2 && wizardMode === 'simple' && (
-            <div className="space-y-4">
-              {/* Advanced mode toggle */}
-              <div className="flex justify-end">
-                <button
-                  onClick={() => switchMode('advanced')}
-                  className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-sky-400 transition-colors px-2 py-1 rounded-lg border border-slate-800 hover:border-sky-500/40"
-                >
-                  <Microscope size={12} />
-                  {t('configurator.advancedMode')}
-                </button>
+          {step === 2 && !modeChosen && (
+            <div className="space-y-5">
+              <div>
+                <h2 className="text-xl sm:text-2xl font-bold text-white">
+                  {t('configurator.steps.mode.title')}
+                </h2>
+                <p className="text-slate-400 text-sm mt-1">
+                  {t('configurator.steps.mode.description')}
+                </p>
               </div>
-              <StepProblems data={data} update={update} onNext={next} onBack={back} />
+              <OptionList>
+                <OptionRow
+                  Icon={FlaskConical}
+                  iconColor="#10b981"
+                  label={t('configurator.steps.mode.lab.label')}
+                  description={t('configurator.steps.mode.lab.description')}
+                  selected={false}
+                  onClick={() => chooseMode('advanced')}
+                />
+                <OptionRow
+                  Icon={MessageCircle}
+                  iconColor="#38bdf8"
+                  label={t('configurator.steps.mode.symptoms.label')}
+                  description={t('configurator.steps.mode.symptoms.description')}
+                  selected={false}
+                  onClick={() => chooseMode('simple')}
+                />
+              </OptionList>
+              <NavButtons onBack={back} onNext={() => {}} canNext={false} />
             </div>
           )}
-          {step === 2 && wizardMode === 'advanced' && (
-            <div className="space-y-4">
-              {/* Simple mode toggle */}
-              <div className="flex justify-end">
-                <button
-                  onClick={() => switchMode('simple')}
-                  className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-sky-400 transition-colors px-2 py-1 rounded-lg border border-slate-800 hover:border-sky-500/40"
-                >
-                  {t('configurator.simpleMode')}
-                </button>
-              </div>
-              <StepAdvancedContaminants data={data} update={update} onNext={next} onBack={back} />
-            </div>
+          {step === 2 && modeChosen && wizardMode === 'simple' && (
+            <StepProblems data={data} update={update} onNext={next} onBack={back} />
+          )}
+          {step === 2 && modeChosen && wizardMode === 'advanced' && (
+            <StepAdvancedContaminants data={data} update={update} onNext={next} onBack={back} />
           )}
           {step === 3 && <StepUse {...stepProps} onNext={advanceFromUse} />}
           {step === 4 && <StepScope {...stepProps} onNext={next} />}

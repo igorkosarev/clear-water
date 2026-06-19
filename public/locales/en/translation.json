@@ -101,6 +101,18 @@
         "description": "Choose the contaminants present in your water and indicate whether each is confirmed by testing.",
         "searchPlaceholder": "Search contaminants...",
         "selectedCount": "{{count}} contaminant(s) selected"
+      },
+      "mode": {
+        "title": "How do you know about your water?",
+        "description": "Choose how to describe your water quality.",
+        "lab": {
+          "label": "I have a lab report",
+          "description": "Select specific contaminants from your analysis"
+        },
+        "symptoms": {
+          "label": "Describe by symptoms",
+          "description": "Tell us what you notice, smell, or taste"
+        }
       }
     },
     "pressure": {
@@ -112,21 +124,21 @@
       "allWork": "All filters will work without a pump"
     },
     "sources": {
-      "well": "Well",
-      "river": "River / Stream",
-      "rain": "Rainwater",
-      "tap": "Tap / Pipe",
-      "pond": "Pond / Lake",
-      "spring": "Natural Spring"
+      "well":   { "label": "Well",           "description": "Private or shared borehole" },
+      "river":  { "label": "River / Stream", "description": "Open flowing surface water" },
+      "rain":   { "label": "Rainwater",      "description": "Collected from roof or cistern" },
+      "tap":    { "label": "Tap / Pipe",     "description": "Municipal or pipe-connected supply" },
+      "pond":   { "label": "Pond / Lake",    "description": "Standing surface water" },
+      "spring": { "label": "Natural Spring", "description": "Groundwater emerging naturally" }
     },
     "uses": {
-      "drinking": "Drinking",
-      "cooking": "Cooking",
-      "irrigation": "Irrigation",
-      "livestock": "Livestock",
-      "whole_house": "Whole House",
-      "shower_bathing": "Shower / Bathing",
-      "emergency_survival": "Emergency"
+      "drinking":           { "label": "Drinking",        "description": "Water for direct consumption" },
+      "cooking":            { "label": "Cooking",          "description": "Food preparation and boiling" },
+      "whole_house":        { "label": "Whole House",      "description": "All points of use in the home" },
+      "shower_bathing":     { "label": "Shower / Bathing", "description": "Skin contact and hygiene" },
+      "emergency_survival": { "label": "Emergency",        "description": "Survival in disaster situations" },
+      "irrigation":         { "label": "Irrigation",       "description": "Garden or agricultural watering" },
+      "livestock":          { "label": "Livestock",        "description": "Animal drinking water" }
     },
     "budget": {
       "low": {
@@ -177,14 +189,14 @@
       "preference": "Cost vs. coverage"
     },
     "symptoms": {
-      "turbid": "Cloudy or has sediment",
-      "odor": "Smells or tastes bad",
-      "rust": "Rust / brown or black colour",
-      "unsafe": "Unsafe to drink (illness risk)",
-      "chemical": "Chemical / industrial pollution",
-      "hardness": "Hard water / limescale",
-      "radiological": "Radiological risk",
-      "unknown": "I don't know — show everything"
+      "turbid":       { "label": "Cloudy or has sediment",    "description": "Visible particles or murky appearance" },
+      "odor":         { "label": "Smells or tastes bad",      "description": "Rotten egg, chlorine, metallic, or earthy odour" },
+      "rust":         { "label": "Rust or brown staining",    "description": "Orange or brown colour, metallic taste" },
+      "unsafe":       { "label": "Unsafe to drink",           "description": "Illness risk or biological contamination suspected" },
+      "chemical":     { "label": "Chemical or industrial risk","description": "Near industrial sites, agriculture, or known pollution" },
+      "hardness":     { "label": "Hard water / limescale",    "description": "Scale on kettle, poor soap lathering" },
+      "radiological": { "label": "Radiological risk",         "description": "Uranium, radon, or nuclear facility nearby" },
+      "unknown":      { "label": "Not sure — show everything","description": "Let the configurator decide based on your source" }
     },
     "testing": {
       "laboratory": {
@@ -205,11 +217,11 @@
       }
     },
     "scope": {
-      "portable": "Portable",
-      "countertop": "Countertop",
-      "under_sink": "Under Sink",
-      "whole_house": "Whole House",
-      "emergency": "Emergency Kit"
+      "portable":    { "label": "Portable",     "description": "No installation — gravity or manual" },
+      "countertop":  { "label": "Countertop",   "description": "Sits on the kitchen surface" },
+      "under_sink":  { "label": "Under Sink",   "description": "Installed under the cabinet" },
+      "whole_house": { "label": "Whole House",  "description": "Treats all incoming water" },
+      "emergency":   { "label": "Emergency Kit","description": "Pack-and-go field solution" }
     },
     "advancedMode": "Advanced: select contaminants directly",
     "simpleMode": "Back to simple mode",

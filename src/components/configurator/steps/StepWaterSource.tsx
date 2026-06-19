@@ -1,9 +1,10 @@
-import { motion } from 'framer-motion'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Droplet, Droplets, Waves, CloudRain, Layers, Mountain, Check } from 'lucide-react'
+import { Droplet, Droplets, Waves, CloudRain, Layers, Mountain } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import type { WaterInput, WaterSourceType } from '@/types'
 import { NavButtons } from './NavButtons'
+import { OptionRow, OptionList } from './OptionRow'
 
 interface StepProps {
   data: Partial<WaterInput>
@@ -12,21 +13,23 @@ interface StepProps {
   onBack: () => void
 }
 
-const SOURCES: { id: WaterSourceType; Icon: LucideIcon }[] = [
-  { id: 'tap',    Icon: Droplet   },
-  { id: 'well',   Icon: Droplets  },
-  { id: 'river',  Icon: Waves     },
-  { id: 'rain',   Icon: CloudRain },
-  { id: 'pond',   Icon: Layers    },
-  { id: 'spring', Icon: Mountain  },
+const SOURCES: { id: WaterSourceType; Icon: LucideIcon; color: string }[] = [
+  { id: 'tap',    Icon: Droplet,   color: '#38bdf8' },
+  { id: 'well',   Icon: Droplets,  color: '#a78bfa' },
+  { id: 'river',  Icon: Waves,     color: '#10b981' },
+  { id: 'rain',   Icon: CloudRain, color: '#6366f1' },
+  { id: 'pond',   Icon: Layers,    color: '#14b8a6' },
+  { id: 'spring', Icon: Mountain,  color: '#84cc16' },
 ]
 
 export function StepWaterSource({ data, update, onNext, onBack }: StepProps) {
   const { t } = useTranslation()
+  const [pending, setPending] = useState<WaterSourceType | null>(null)
 
   const handleSelect = (id: WaterSourceType) => {
+    setPending(id)
     update({ source: id })
-    setTimeout(onNext, 180)
+    setTimeout(onNext, 200)
   }
 
   return (
@@ -34,36 +37,19 @@ export function StepWaterSource({ data, update, onNext, onBack }: StepProps) {
       <div>
         <h2 className="text-xl sm:text-2xl font-bold text-white">{t('configurator.steps.source.title')}</h2>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
-        {SOURCES.map(({ id, Icon }) => {
-          const selected = data.source === id
-          return (
-            <motion.button
-              key={id}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.97 }}
-              className={`relative p-3 sm:p-5 rounded-xl border text-left flex flex-col gap-2 sm:gap-3 transition-colors ${
-                selected
-                  ? 'border-sky-500 bg-sky-500/10 text-white'
-                  : 'border-slate-700/60 bg-slate-800/40 text-slate-300 hover:border-slate-600 hover:bg-slate-800/70'
-              }`}
-              onClick={() => handleSelect(id)}
-            >
-              {selected && (
-                <div className="absolute top-2 right-2 w-4 h-4 rounded-full bg-sky-500 flex items-center justify-center">
-                  <Check size={9} strokeWidth={3} className="text-white" />
-                </div>
-              )}
-              <div className={`w-9 h-9 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center ${
-                selected ? 'bg-sky-500/20' : 'bg-slate-700/50'
-              }`}>
-                <Icon size={18} className={selected ? 'text-sky-400' : 'text-slate-400'} strokeWidth={1.5} />
-              </div>
-              <span className="font-medium text-sm sm:text-base pr-4">{t(`configurator.sources.${id}`)}</span>
-            </motion.button>
-          )
-        })}
-      </div>
+      <OptionList>
+        {SOURCES.map(({ id, Icon, color }) => (
+          <OptionRow
+            key={id}
+            Icon={Icon}
+            iconColor={color}
+            label={t(`configurator.sources.${id}.label`)}
+            description={t(`configurator.sources.${id}.description`)}
+            selected={pending === id || (pending === null && data.source === id)}
+            onClick={() => handleSelect(id)}
+          />
+        ))}
+      </OptionList>
       <NavButtons onBack={onBack} onNext={onNext} canNext={!!data.source} />
     </div>
   )
